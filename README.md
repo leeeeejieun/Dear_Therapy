@@ -105,12 +105,12 @@ const handleClick = () => {
 
 <br>
 
-### 📌 Gitfolw Rules
+### 📌 GitfLow Rules
 1. devleop 브랜치에 직접적인 commit, push는 금지합니다.
    - 모든 작업은 각자의 feature 브랜치에서 진행됩니다.
      
 2. 기능 구현 시작 전 issue를 생성합니다.
-   - projects 탭에서 해당 기능과 관련된 issue를 작성하고, issue에 맞는feature 브랜치를 생성합니다.
+   - projects 탭에서 해당 기능과 관련된 issue를 작성하고, issue에 맞는 feature 브랜치를 생성합니다.
   
 3. 기능 구현이 완료되지 않은 경우에는 각자의 feature 브랜치에 커밋을 진행하며, 완료되면 develop 브랜치로 PR을 보냅니다.
   
