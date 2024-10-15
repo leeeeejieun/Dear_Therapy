@@ -8,6 +8,9 @@ const morgan = require("morgan");
 const app = express();
 dotenv.config();
 
+// 라우팅
+const router = require("./src/routes");
+
 // 미들웨어
 app.use(cors({
     origin: "http://localhost:3000", // 클라이언트 도메인
@@ -17,5 +20,6 @@ app.use(morgan('dev'));
 app.use(cookieParser());                     
 app.use(express.json());     
 app.use(express.urlencoded({ extended: false }));  
+app.use("/", router); 
 
 module.exports = app;
