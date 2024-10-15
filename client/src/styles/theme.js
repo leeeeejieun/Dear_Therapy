@@ -1,4 +1,4 @@
-export const color = {
+export const theme = {
     // 배경 색상
     background: '#FFF8DE', 
     // 글씨

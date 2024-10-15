@@ -1,18 +1,10 @@
 import React from 'react';
-import { ThemeProvider } from './context/ThemeProvider';
-import { GlobalStyle } from './styles/GlobalStyle';
-import Router from 'routes/Router';
+import Router from 'routes/Router'; 
 
-const App = () =>{
-
-    return(
-        <>   
-            <ThemeProvider>
-                <GlobalStyle />
-                <Router  />   
-            </ThemeProvider>
-        </>
-    );
+const App = () => {
+  return (
+    <Router />
+  );
 };
 
 export default App;
