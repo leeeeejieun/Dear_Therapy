@@ -8,7 +8,7 @@ const authCtrl = {
                 const response = await auth.login();
                 responseUtils.createResponse(res, response);
            } catch(err) {
-                responseUtils.createResponse(res, 500);
+                responseUtils.createResponse(res, {code: 500});
            };
         },
 };
