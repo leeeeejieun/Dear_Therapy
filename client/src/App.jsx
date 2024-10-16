@@ -1,12 +1,12 @@
 import React from "react";
 import Container from "./components/DiaryContainer"
-import DateNavigation from "./components/DiaryNavigation"
+import diaryDate from "./components/DiaryDate"
 
 const App = () =>{
   return (
     <>
-       <DiaryContainer></DiaryContainer>
-       <DiaryDateNavigation></DiaryDateNavigation>
+       <diaryContainer></diaryContainer>
+       <diaryDate></diaryDate>
     </>
   );
 }  

@@ -3,23 +3,23 @@ import styled from 'styled-components';
 
 //날짜 
 
-const DiaryDateNavigation = () => {
+const diaryDate = () => {
 
-const DateNavigation = styled.div`
+const dateNavigation = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
 `;
 
-const CurrentDate = styled.div`
+const currentDate = styled.div`
   text-align: center;
   color: #000;
   font-size: 18px;
   font-weight: bold;
 `;
 
-const NavButton = styled.button`
+const navButton = styled.button`
   background: none;
   border: none;
   font-size: 24px;
@@ -30,4 +30,4 @@ const NavButton = styled.button`
 
 }
 
-export default DiaryDateNavigation;
+export default diaryDate;
