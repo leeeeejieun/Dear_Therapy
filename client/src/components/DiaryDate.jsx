@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 //날짜 
 
-const diaryDate = () => {
+const DiaryDate = () => {
 
 const dateNavigation = styled.div`
   display: flex;
@@ -30,4 +30,4 @@ const navButton = styled.button`
 
 }
 
-export default diaryDate;
+export default DiaryDate;
