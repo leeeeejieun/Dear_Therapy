@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 //전체 레이아웃
+
+const DiaryContainer = () =>{
+
 const Container = styled.div`
   background-color: #FFF8DC;
   border-radius: 20px;
@@ -22,4 +25,6 @@ const Content = styled.div`
   overflow: auto;
 `;
 
-export default Container;
+}
+
+export default DiaryContainer;
