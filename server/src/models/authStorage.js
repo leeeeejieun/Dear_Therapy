@@ -10,6 +10,12 @@ class authStorage {
         const result = await db.connection(query, [value]);
         return result;
     }
+    
+    // 로그인 시 해당 사용자의 refreshToken을 DB에 저장
+    static async insertRefresh(user_id, refreshToken) {
+        const query = "INSERT INTO AuthToken (user_id, refresh_token) VALUES(?, ?);"
+        await db.connection(query, [user_id, refreshToken]);
+    }
 };
 
 module.exports = authStorage;
