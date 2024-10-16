@@ -13,11 +13,12 @@ const GlobalStyle = createGlobalStyle`
       box-sizing: border-box;
    }
 
-    body {
+   body {
     width: 100%;
     height: 100vh; 
     overflow: hidden;
     font-family: 'Gaegu', sans-serif;
+    background: ${({theme}) => theme.background};
    }
 
    a {

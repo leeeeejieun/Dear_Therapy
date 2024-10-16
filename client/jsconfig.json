@@ -3,9 +3,7 @@
         "baseUrl": "src",
         "paths": {
             "components/*" : ["components/*"],
-            "context/*": ["context/*"],
-            "hooks/*": ["hooks/*"],
-            "layout/*": ["layout/*"],
+            "contexts/*": ["contexts/*"],
             "pages/*": ["pages/*"],
             "styles/*": ["styles/*"]
         }
