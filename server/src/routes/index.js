@@ -1,9 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
-// 사용자 관련 정보를 처리
-const userRoute = require("./users");
+const authRoute = require("./auth");   // 사용자 인증 관련 정보를 처리
 
-router.use("/", userRoute);
+router.use("/", authRoute);
 
 module.exports = router;
