@@ -1,13 +1,13 @@
-import React from "react";
-import FirstDiaryPage from "./pages/FirstDiaryPage";
+import React, {useState, useEffect} from "react";
+import DiaryPage from "./pages/DiaryPage";
 
 const App = () => {
   return (
-    <>
-       <FirstDiaryPage />
-    </>
+    
+       <DiaryPage />
+    
   );
-}  
+};  
 
 
 
