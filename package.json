@@ -1,0 +1,12 @@
+{
+  "name": "dear_therapy",
+  "version": "1.0.0",
+  "description": "<table border=\"1\" cellspacing=\"0\" cellpadding=\"0\" width=\"100%\">\r     <tr>\r         <td width=\"25%\" align=\"center\"><a href=\"https://github.com/leeeeejieun\">이지은</a></td>\r         <td width=\"25%\" align=\"center\"><a href=\"https://github.com/two0627\">이경윤</a></td>\r         <td width=\"25%\" align=\"center\"><a href=\"https://github.com/HJK013\">김현지</a></td>\r         <td width=\"25%\" align=\"center\"><a href=\"https://github.com/PSO01\">박새온</a></td>\r     </tr>\r     <tr>\r         <td align=\"center\"><img src=\"https://github.com/leeeeejieun.png\" alt=\"이지은\"></td>\r         <td align=\"center\"><img src=\"https://github.com/two0627.png\" alt=\"이경윤\"></td>\r         <td align=\"center\"><img src=\"https://github.com/HJK013.png\" alt=\"김현지\"></td>\r         <td align=\"center\"><img src=\"https://github.com/PSO01.png\" alt=\"박새온\"></td>\r     </tr>\r     <tr>\r         <td align=\"center\">팀장</td>\r         <td align=\"center\">팀원</td>\r         <td align=\"center\">팀원</td>\r         <td align=\"center\">팀원</td>\r     </tr>\r     <tr>\r         <td align=\"center\">백엔드 담당</td>\r         <td align=\"center\">백엔드 담당</td>\r         <td align=\"center\">프론트엔드 담당</td>\r         <td align=\"center\">프론트엔드 담당</td>\r     </tr>\r </table>",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
