@@ -1,7 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 // 모든 브라우저에서 일괄적인 스타일링 제공
 import reset from "styled-reset";
-import "@fontsource/gaegu"
 
 // 전역 스타일 컴포넌트
 const GlobalStyle = createGlobalStyle`
