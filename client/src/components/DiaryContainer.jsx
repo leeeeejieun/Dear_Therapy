@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 //전체 레이아웃
 
-const DiaryContainer = () =>{
+const DiaryContainer = () => {
 
 const Container = styled.div`
   background-color: #FFF8DC;

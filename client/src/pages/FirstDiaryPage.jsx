@@ -1,5 +1,8 @@
-import react from "react";
+import react, {useState} from "react";
 import styled from "styled-components";
+import DiaryContainer from "../components/DiaryContainer";
+import DiaryDate from "../components/DiaryDate";
+
 
 const FirstDiaryPage = () => {
     return (
