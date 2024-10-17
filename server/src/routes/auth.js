@@ -2,10 +2,10 @@ const express = require("express");
 const router = express.Router();
 
 // 컨트롤러
-const userCtrl = require("../controllers/userCtrl");
+const authCtrl = require("../controllers/authCtrl");
 
 // 라우터
-router.post("/login", userCtrl.login);
+router.post("/login", authCtrl.login);
 
 
 module.exports = router;

@@ -1,6 +1,6 @@
 const db = require("../config/db");
 
-class UserStorage {
+class authStorage {
     // 아이디 값이 일치한 사용자 정보를 반환
     static async findUser(user_id) {
         const query = "SELECT * FROM User WHERE user_id = ?;"
@@ -9,4 +9,4 @@ class UserStorage {
     }
 };
 
-module.exports = UserStorage;
+module.exports = authStorage;

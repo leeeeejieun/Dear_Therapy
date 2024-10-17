@@ -1,6 +1,6 @@
-const UserStorage = require("./userStorage");
+const authStorage = require("./authStorage");
 
-class User {
+class Auth {
 
     constructor(body) {
         this.body = body;
@@ -8,7 +8,7 @@ class User {
 
     async login() {
         const client = this.body;
-        const findUser = await UserStorage.findUser(client.user_id);  // 사용자 조회
+        const findUser = await authStorage.findUser(client.user_id);  // 사용자 조회
 
         // 아이디가 존재하는 경우
         if(findUser) {
@@ -22,5 +22,5 @@ class User {
     }
 };
 
-module.exports = User;
+module.exports = Auth;
 

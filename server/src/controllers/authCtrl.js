@@ -1,11 +1,11 @@
-const User = require("../models/userModel");
+const Auth = require("../models/authModel");
 const responseUtils = require("../utils/responseUtils"); 
 
-const userCtrl = {
+const authCtrl = {
         login: async (req, res) => {
            try {
-                const user = new User(req.body);
-                const response = await user.login();
+                const auth = new Auth(req.body);
+                const response = await auth.login();
                 responseUtils.createResponse(res, response);
            } catch(err) {
                 responseUtils.createResponse(res, 500);
@@ -13,4 +13,4 @@ const userCtrl = {
         },
 };
 
-module.exports = userCtrl;
+module.exports = authCtrl;
