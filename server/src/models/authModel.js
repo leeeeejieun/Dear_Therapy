@@ -31,7 +31,7 @@ class Auth {
         const refreshToken = this.body;
 
         if (!refreshToken) {
-            return { code: 401, message: "refreshToken가 존재하지 않습니다." };
+            return { code: 401, message: "refreshToken이 존재하지 않습니다." };
         }
     
         const findUser = await authStorage.findUser({ refresh_token: refreshToken });
@@ -44,7 +44,7 @@ class Auth {
             return { code: 200, data: {newAccessToken: newAccessToken }};
         }
     
-        return { code: 401, message: "refreshToken이 유효하지 않습니다." };
+        return { code: 403, message: "refreshToken이 유효하지 않습니다." };
     };
 }
 
