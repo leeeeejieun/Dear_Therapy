@@ -7,12 +7,11 @@ const diaryCtrl = {
       try{
         const post = new Diary(req.body, req.file || null);
         const response = await post.create();
-        responseUtils.createResponse(res, response);
+        responseUtils.createResponse(res, { code: 500 });
 
 
       } catch(err){
-        console.error("Error occurred:", err);
-        responseUtils.createResponse(res, { code: 500, message: "서버 오류 발생" });
+        responseUtils.createResponse(res, resoonse);
       };
     }
   }
