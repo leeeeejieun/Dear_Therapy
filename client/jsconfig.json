@@ -5,7 +5,8 @@
             "components/*" : ["components/*"],
             "contexts/*": ["contexts/*"],
             "pages/*": ["pages/*"],
-            "styles/*": ["styles/*"]
+            "styles/*": ["styles/*"],
+            "images/*": ["images/*"]
         }
     }
 }
