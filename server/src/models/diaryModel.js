@@ -7,7 +7,8 @@ class Diary{
   constructor(body, file){
         this.body = body;
         this.file = file; 
-        this.date = body.date;
+        console.log(this.body);
+        this.date = body.date //date에 공백 포함시 undefined 되니 주의
       }
     
       static isValidDate(dateString) {
@@ -24,10 +25,18 @@ class Diary{
     if (!content || content.trim() === "") {
      return {code: 400} 
     }
+    // date가 undefined일 경우
+    if (!this.date) {
+      return { code: 400, message: "날짜가 제공되지 않았습니다." };
+    }
+
     //날짜형식이 잘못된 경우
+    console.log("Received date:", this.date);
     if (this.date && !Diary.isValidDate(this.date)) {
       return { code: 400, message: "날짜 형식이 잘못되었습니다." };
     }
+
+    
 
     const imagePath = image ? await s3Utils.uploadImage("diary_images", image, user_id) : null; 
     const diaryInfo = { user_id, title, content, imagePath, date: this.date };
@@ -39,5 +48,3 @@ class Diary{
 }
 
   module.exports = Diary;
-
-  //날짜형식 유효성 검사 후 리턴문에 적기
