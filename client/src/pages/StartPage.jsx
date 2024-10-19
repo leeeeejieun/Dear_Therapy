@@ -65,23 +65,30 @@ const Spacer = styled.div`
 const LinkButton = styled(Link)`
   margin: 10px 0;
   padding: 10px 20px;
-  background-color: ${({ theme }) => theme.bt_green};
+  background-color: rgba(255, 255, 255, 0.329);
   border-radius: 5px;
-  color: ${({ theme }) => theme.text_bt};
-  font-size: 16px;
+  color: ${({ theme }) => theme.text};
+  font-size: 20px;
   text-align: center;
   text-decoration: none;
+  width: 300px;
   display: inline-block;
+  border: 3px dashed ${({ theme }) => theme.line1};
+  border-style: dashed;
+  border-radius: 12px;
+
 
   &:hover {
     background-color: ${({ theme }) => theme.bt_darkbg};
   }
 `;
 
+
+
 const SignUpLinkContainer = styled.div`
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
+  position: relative;
+  bottom: -10px;
+  right: -130px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -90,7 +97,7 @@ const SignUpLinkContainer = styled.div`
 const SignUpLink = styled(Link)`
   margin-top: 20px;
   font-size: 14px;
-  color: ${({ theme }) => theme.text_sat};
+  color: ${({ theme }) => theme.text};
   z-index: 10;
 
   &:hover {
