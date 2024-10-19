@@ -1,5 +1,3 @@
-src/config/s3.js
-
 const { S3Client } = require('@aws-sdk/client-s3');
 
 // s3 연결
