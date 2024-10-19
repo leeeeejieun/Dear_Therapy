@@ -5,6 +5,6 @@ const authRoute = require("./auth");   // 사용자 인증 관련 정보를 처�
 const diaryRoute = require("./diary"); 
 
 router.use("/", authRoute);
-router.use("/diary,", diaryRoute);
+router.use("/diary", diaryRoute);
 
 module.exports = router;
