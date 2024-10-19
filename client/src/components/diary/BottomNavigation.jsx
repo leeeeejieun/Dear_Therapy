@@ -1,15 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import { SlCalender } from "react-icons/sl";
-import { SlChart } from "react-icons/sl"
-import { SlUser } from "react-icons/sl"
+import { BsBarChartFill } from "react-icons/bs";
+import { FaUser } from "react-icons/fa";
 
 const BottomNavigation = () => {
   return (
     <BottomNavigationContainer>
-      <NavButton><SlChart /></NavButton>
+      <NavButton><BsBarChartFill /></NavButton>
       <NavButton><SlCalender /></NavButton>
-      <NavButton><SlUser /></NavButton>
+      <NavButton><FaUser /></NavButton>
     </BottomNavigationContainer>
   );
 };
