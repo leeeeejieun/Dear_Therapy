@@ -1,12 +1,15 @@
 import React, {useState, useEffect} from "react";
-import DateNavigation from "../components/diary/DateNavigation";
-//import ImageUploader from "../components/diary/ImageUploader";
+import DateNavigation from "components/diary/DateNavigation";
+import ImageUploader from "components/diary/ImageUploader";
+import DiaryForm from "components/diary/DiaryForm";
+import SaveButton from "components/diary/SaveButton";
+import BottomNavigation from "components/diary/BottomNavigation";
+import EmotionAnalysisButton from "components/diary/EmotionAnalysisButton";
 import styled from "styled-components";
 
 const DiaryPage = () => {
 
   const [currentDate, setCurrentDate] = useState('');
-  const [selectedImage, setSelectedImage] = useState(null);
 
 
   // 현재 날짜 가져오기
@@ -16,23 +19,12 @@ const DiaryPage = () => {
     setCurrentDate(formattedDate);
   }, []);
 
-  // 이미지 선택 핸들러
-  //const handleImageUpload = (event) => {
-  //  const file = event.target.files[0];
-  //  if (file) {
-  //    setSelectedImage(URL.createObjectURL(file));
-  //    setImageSelected(true);
-  //  }
-  //};
-
-
-
-
+  
 
   return (
     <DiaryContainer>
       <DateNavigation currentDate={currentDate} />
-     
+      <BottomNavigation />
     </DiaryContainer>
   );
 };
@@ -41,7 +33,7 @@ export default DiaryPage;
 
 const DiaryContainer = styled.div`
   padding: 20px;
-  background-color: #faf3e0; //임시색깔
+  background-color: ${props => props.theme.background};
   max-width: 400px;
   margin: 0 auto;
   border-radius: 10px;
