@@ -8,13 +8,14 @@ const diaryCtrl = {
         const response = await post.create();
 
         if (response.code === 400 && response.message) {
-          return responseUtils.createResponse(res, {code: 400}); 
+          return responseUtils.createResponse(res, response); 
         }
 
         responseUtils.createResponse(res, response );
 
 
       } catch(err){
+        
         responseUtils.createResponse(res,{code: 500} );
       };
     }
