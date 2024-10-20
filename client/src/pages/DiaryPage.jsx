@@ -24,6 +24,7 @@ const DiaryPage = () => {
   return (
     <DiaryContainer>
       <DateNavigation currentDate={currentDate} />
+      <EmotionAnalysisButton />
       <BottomNavigation />
     </DiaryContainer>
   );
