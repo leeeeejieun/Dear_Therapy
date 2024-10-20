@@ -6,7 +6,7 @@ class DiaryStorage{
     const {user_id, title, content, imagePath} = diaryInfo;
 
     const query = "INSERT INTO Diary (user_id, title, content, image) VALUES (?, ?, ?, ?)";
-    console.log(diaryInfo);
+   
     await db.connection(query, [user_id, title, content, imagePath]);
   }
 }
