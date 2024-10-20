@@ -6,15 +6,8 @@ const diaryCtrl = {
       try{
         const post = new Diary(req.body, req.file || null);
         const response = await post.create();
-
-        if (response.code === 400 && response.message) {
-          return responseUtils.createResponse(res, response); 
-        }
-
-        responseUtils.createResponse(res, response );
-
-
-      } catch(err){
+        responseUtils.createResponse(res, response); 
+        } catch(err){
         
         responseUtils.createResponse(res,{code: 500} );
       };
