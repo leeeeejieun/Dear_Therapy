@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import backgroundImage from 'images/bg1.jpg';
 import TitleContainer from 'components/TitleContainer';
 import SignUpLinkContainer from 'components/SignUpLinkContainer';
 import { Spacer1, Spacer2, Spacer3 } from 'components/Spacer';
@@ -23,7 +22,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: url(${backgroundImage}) no-repeat center center fixed;
+  background: url("https://diary-project-images.s3.ap-northeast-2.amazonaws.com/frontend/bg1.jpg") no-repeat center center fixed;
   border-radius: 15px;
   overflow: hidden;
   position: relative;

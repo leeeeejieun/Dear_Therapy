@@ -1,12 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import titleImage from 'images/ob1.png';
 
 const TitleContainer = () => (
   <Container>
     <Spacer />
     <Title>Dear Therapist</Title>
-    <TitleImage src={titleImage} alt="Title decoration" />
+    <TitleImage src="https://diary-project-images.s3.ap-northeast-2.amazonaws.com/frontend/ob1.png" />
   </Container>
 );
 

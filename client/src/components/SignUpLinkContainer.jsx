@@ -1,12 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import signUpImage from 'images/ob2.png';
 
 const SignUpLinkContainer = () => (
   <Container>
     <SignUpLink to="/signup">회원가입하기</SignUpLink>
-    <SignUpImage src={signUpImage} alt="Sign up decoration" />
+    <SignUpImage src="https://diary-project-images.s3.ap-northeast-2.amazonaws.com/frontend/ob2.png" alt="Sign up decoration" />
   </Container>
 );
 
