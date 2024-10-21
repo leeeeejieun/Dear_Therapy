@@ -7,9 +7,13 @@ import { theme }  from "styles/theme";
 const App = () =>{
     return (
       <ThemeProvider theme={theme}>
+      <UserProvider>
+        <AppWrapper>
           <GlobalStyle />
           <Router />
-      </ThemeProvider>
+        </AppWrapper>
+      </UserProvider>
+    </ThemeProvider>
     );
 };
 
