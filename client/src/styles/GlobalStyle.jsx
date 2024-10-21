@@ -42,7 +42,7 @@ const GlobalStyle = createGlobalStyle`
 
    @font-face {
     font-family:'Hakgyoansim Geurimilgi.ttf'; 
-    src: url('./fonts/nanumfont.ttf') format('truetype');
+    src: url('./fonts/Hakgyoansim Geurimilgi.ttf') format('truetype');
    }
 `;
 
