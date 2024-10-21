@@ -39,6 +39,11 @@ const GlobalStyle = createGlobalStyle`
       width: auto;
       height: 100%;
    }
+
+   @font-face {
+    font-family:'Hakgyoansim Geurimilgi.ttf'; 
+    src: url('./fonts/nanumfont.ttf') format('truetype');
+   }
 `;
 
 export default GlobalStyle;
