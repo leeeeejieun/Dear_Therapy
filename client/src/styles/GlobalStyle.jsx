@@ -15,7 +15,7 @@ const GlobalStyle = createGlobalStyle`
    body {
     width: 100%;
     height: 100vh; 
-    font-family: 'Gaegu', sans-serif;
+    font-family: '학교안심 그림일기', sans-serif;
     background: ${({theme}) => theme.background};
    }
 
