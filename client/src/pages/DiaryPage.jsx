@@ -10,7 +10,7 @@ import styled from "styled-components";
 const DiaryPage = () => {
 
   const [currentDate, setCurrentDate] = useState('');
-
+ 
 
   // 현재 날짜 가져오기
   useEffect(() => {
@@ -19,13 +19,47 @@ const DiaryPage = () => {
     setCurrentDate(formattedDate);
   }, []);
 
+    // 이미지 선택 핸들러
+    const handleImageUpload = (img, file) => {
+      setSelectedImage(img);
+    
+    };
   
+    // 저장 버튼 클릭 핸들러
+    const handleSave = () => {
+      setIsSaved(true);
+      setIsEditing(false);
+    };
+  
+    // 수정 버튼 클릭 핸들러
+    const handleEdit = () => {
+      setIsEditing(true);
+      setIsSaved(false);
+    };
+  
+    // 수정 확인 버튼 클릭 핸들러
+    const handleConfirmEdit = () => {
+      setIsEditing(false);
+      setIsSaved(true);
+    };
+  
+     // 이미지 취소 핸들러
+     const handleCancelImage = () => {
+      setSelectedImage(null);
+      setIsSaved(false);
+      setIsEditing(true);
+  };
+
+
+
 
   return (
     <DiaryContainer>
       <DateNavigation currentDate={currentDate} />
-      <EmotionAnalysisButton />
-      <BottomNavigation />
+       
+           <EmotionAnalysisButton />
+  
+              <BottomNavigation />
     </DiaryContainer>
   );
 };
