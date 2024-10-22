@@ -41,8 +41,8 @@ const GlobalStyle = createGlobalStyle`
    }
 
    @font-face {
-    font-family:'Hakgyoansim Geurimilgi.ttf'; 
-    src: url('./fonts/Hakgyoansim Geurimilgi.ttf') format('truetype');
+    font-family:'학교안심 그림일기'; 
+    src: url('./fonts/학교안심 그림일기') format('truetype');
    }
 `;
 
