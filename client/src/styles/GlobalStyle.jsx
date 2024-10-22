@@ -6,6 +6,21 @@ import reset from "styled-reset";
 const GlobalStyle = createGlobalStyle`
    ${reset}
    
+   @font-face {
+      font-family: '금은보화';
+      src: url('/fonts/geumeunbohwa.ttf') format('truetype');
+   }
+
+   @font-face {
+      font-family:'빵구니맘';
+      src: url('/fonts/bbang.ttf') format('truetype');
+   }
+
+   @font-face {
+      font-family:'학교안심 그림일기';
+      src: url('/fonts/school.ttf') format('truetype');
+   }
+
    * {
       margin: 0;
       padding: 0;
@@ -15,7 +30,7 @@ const GlobalStyle = createGlobalStyle`
    body {
     width: 100%;
     height: 100vh; 
-    font-family: '학교안심 그림일기', sans-serif;
+    font-family: '학교안심 그림일기';
     background: ${({theme}) => theme.background};
    }
 
@@ -40,16 +55,6 @@ const GlobalStyle = createGlobalStyle`
       height: 100%;
    }
 
-   @font-face {
-    font-family:'학교안심 그림일기'; 
-    src: url('./fonts/학교안심 그림일기') format('truetype');
-
-    font-family:'금은보화';
-    src: url('./fonts/금은보화') format('truetype');
-
-    font-family:'빵구니맘';
-    src: url('/fonts/빵구니맘') format('truetype');
-   }
 `;
 
 export default GlobalStyle;
