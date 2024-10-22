@@ -43,6 +43,12 @@ const GlobalStyle = createGlobalStyle`
    @font-face {
     font-family:'학교안심 그림일기'; 
     src: url('./fonts/학교안심 그림일기') format('truetype');
+
+    font-family:'금은보화';
+    src: url('./fonts/금은보화') format('truetype');
+
+    font-family:'빵구니맘';
+    src: url('/fonts/빵구니맘') format('truetype');
    }
 `;
 
