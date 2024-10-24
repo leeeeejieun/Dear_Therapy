@@ -8,13 +8,17 @@ const EmotionAnalysisButton = () => {
 export default EmotionAnalysisButton;
 
 const EmotionButton = styled.button`
-  width: 100%;
+  position: absolute;
+  left: 95px;
+  top: 400px;
+  width: 50%;
   padding: 10px;
   background-color: #4caf50;
   color: white;
   font-size: 16px;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   cursor: pointer;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  font-family: '학교안심 그림일기';
 `;//임시로 만든 버튼 UI

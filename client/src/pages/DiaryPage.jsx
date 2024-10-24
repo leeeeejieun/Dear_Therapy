@@ -10,6 +10,9 @@ import styled from "styled-components";
 const DiaryPage = () => {
 
   const [currentDate, setCurrentDate] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
+  const [diaryContent, setDiaryContent] = useState({ title: '', content: '' });
+  const [isSaved, setIsSaved] = useState(false);
  
 
   // 현재 날짜 가져오기
@@ -19,11 +22,6 @@ const DiaryPage = () => {
     setCurrentDate(formattedDate);
   }, []);
 
-    // 이미지 선택 핸들러
-    const handleImageUpload = (img, file) => {
-      setSelectedImage(img);
-    
-    };
   
     // 저장 버튼 클릭 핸들러
     const handleSave = () => {
@@ -43,12 +41,7 @@ const DiaryPage = () => {
       setIsSaved(true);
     };
   
-     // 이미지 취소 핸들러
-     const handleCancelImage = () => {
-      setSelectedImage(null);
-      setIsSaved(false);
-      setIsEditing(true);
-  };
+     
 
 
 
@@ -56,9 +49,9 @@ const DiaryPage = () => {
   return (
     <DiaryContainer>
       <DateNavigation currentDate={currentDate} />
-       
-           <EmotionAnalysisButton />
-  
+          <DiaryForm diaryContent={diaryContent} setDiaryContent={setDiaryContent} isEditing={!isSaved} />
+            {!isEditing && isSaved && <EmotionAnalysisButton />}
+            <SaveButton handleSave={handleSave} isSaved={isSaved} handleEdit={handleEdit} handleConfirmEdit={handleConfirmEdit} isEditing={isEditing} />
               <BottomNavigation />
     </DiaryContainer>
   );
@@ -72,5 +65,5 @@ const DiaryContainer = styled.div`
   max-width: 400px;
   margin: 0 auto;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  
 `;
