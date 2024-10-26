@@ -93,7 +93,7 @@ const CancelButton = styled.button`
   position: absolute;
   top: 10px;
   right: 10px;
-  background: red;
+  background: #8E1C1C;
   color: white;
   border: none;
   border-radius: 50%;

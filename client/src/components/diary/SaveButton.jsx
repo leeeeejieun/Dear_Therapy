@@ -18,17 +18,17 @@ export default SaveButton;
 
 const SaveButtonContainer = styled.button`
   position: absolute;
-  top: 300px;
-  left: 155px;
+  top: 520px;
+  left: 40px;
   width: 20%;
   padding: 10px; 
-  background-color: #ff6b6b;
+  background-color: #8E1C1C;
   color: white;
   font-size: 16px;
   border: none;
-  border-radius: 10px;
+  border-radius: 20px;
   cursor: pointer;
   margin-bottom: 20px;
   font-family: '학교안심 그림일기';
-  //임시UI
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 `;

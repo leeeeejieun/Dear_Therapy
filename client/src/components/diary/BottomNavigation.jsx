@@ -17,6 +17,7 @@ const BottomNavigation = () => {
 export default BottomNavigation;
 
 const BottomNavigationContainer = styled.div`
+  margin-top: 10px;
   position: absolute;
   right: 0.5px;
   display: flex;

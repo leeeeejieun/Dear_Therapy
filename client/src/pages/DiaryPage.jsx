@@ -63,8 +63,12 @@ const DiaryPage = () => {
       <ImageUploader image={selectedImage} handleImageUpload={handleImageUpload} isEditing={isEditing} handleCancelImage={handleCancelImage} isSaved={isSaved} />
       <DiaryForm diaryContent={diaryContent} setDiaryContent={setDiaryContent} isEditing={!isSaved} />
       {!isEditing && isSaved && <EmotionAnalysisButton />}
+      <div>
       <SaveButton handleSave={handleSave} isSaved={isSaved} handleEdit={handleEdit} handleConfirmEdit={handleConfirmEdit} isEditing={isEditing} />
+      </div>
+      <div>
       <BottomNavigation />
+      </div>
     </DiaryContainer>
   );
 };
