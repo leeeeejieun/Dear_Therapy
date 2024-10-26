@@ -18,7 +18,7 @@ export default SaveButton;
 
 const SaveButtonContainer = styled.button`
   position: absolute;
-  top: 520px;
+  top: 510px;
   left: 40px;
   width: 20%;
   padding: 10px; 
