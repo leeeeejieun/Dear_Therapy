@@ -6,9 +6,9 @@ import { SlArrowRight } from "react-icons/sl";
 const DateNavigation = ({ currentDate }) => {
   return (
     <DateNavigationContainer>
-      <ArrowButton>{<SlArrowLeft />}</ArrowButton>
-      <DateText>{currentDate}</DateText>
-      <ArrowButton>{<SlArrowRight />}</ArrowButton>
+        <ArrowButton>{<SlArrowLeft />}</ArrowButton>
+          <DateText>{currentDate}</DateText>
+            <ArrowButton>{<SlArrowRight />}</ArrowButton>
     </DateNavigationContainer>
   );
 };
@@ -24,9 +24,7 @@ const DateNavigationContainer = styled.div`
 
 const ArrowButton = styled.button`
   background: none;
-  border: none;
   font-size: 20px;
-  cursor: pointer;
 `;
 
 const DateText = styled.span`

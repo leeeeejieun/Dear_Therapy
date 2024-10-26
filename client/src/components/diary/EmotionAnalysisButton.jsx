@@ -17,9 +17,7 @@ const EmotionButton = styled.button`
   background-color: #8E1C1C;
   color: white;
   font-size: 16px;
-  border: none;
   border-radius: 20px;
-  cursor: pointer;
   margin-bottom: 10px;
   font-family: '학교안심 그림일기';
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);

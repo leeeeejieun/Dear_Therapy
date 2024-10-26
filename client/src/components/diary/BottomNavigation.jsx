@@ -7,10 +7,10 @@ import { FaUser } from "react-icons/fa";
 const BottomNavigation = () => {
   return (
     <BottomNavigationContainer>
-    <NavButton><BsBarChartFill /></NavButton>
-    <NavButton size="30px"  transform="translateY(3%)"><SlCalender /></NavButton>
-    <NavButton><FaUser /></NavButton>
-  </BottomNavigationContainer>
+      <NavButton><BsBarChartFill /></NavButton>
+        <NavButton size="30px"  transform="translateY(3%)"><SlCalender /></NavButton>
+          <NavButton><FaUser /></NavButton>
+    </BottomNavigationContainer>
   );
 };
 
@@ -35,7 +35,5 @@ const BottomNavigationContainer = styled.div`
 
 const NavButton = styled.button`
   background: none;
-  border: none;
   font-size: 24px;
-  cursor: pointer;
 `;

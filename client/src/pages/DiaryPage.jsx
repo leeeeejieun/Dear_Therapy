@@ -16,7 +16,7 @@ const DiaryPage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
  
 
-  // 현재 날짜 가져오기
+    // 현재 날짜 가져오기
   useEffect(() => {
     const today = new Date();
     const formattedDate = `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일`;
@@ -25,7 +25,7 @@ const DiaryPage = () => {
 
     // 이미지 선택 핸들러
     const handleImageUpload = (img, file) => {
-    setSelectedImage(img);
+      setSelectedImage(img);
     };
   
     // 저장 버튼 클릭 핸들러
@@ -60,16 +60,12 @@ const DiaryPage = () => {
   return (
     <DiaryContainer>
       <DateNavigation currentDate={currentDate} />
-      <ImageUploader image={selectedImage} handleImageUpload={handleImageUpload} isEditing={isEditing} handleCancelImage={handleCancelImage} isSaved={isSaved} />
-      <DiaryForm diaryContent={diaryContent} setDiaryContent={setDiaryContent} isEditing={!isSaved} />
-      {!isEditing && isSaved && <EmotionAnalysisButton />}
-      <div>
-      <SaveButton handleSave={handleSave} isSaved={isSaved} handleEdit={handleEdit} handleConfirmEdit={handleConfirmEdit} isEditing={isEditing} />
-      </div>
-      <div>
-      <BottomNavigation />
-      </div>
-    </DiaryContainer>
+        <ImageUploader image={selectedImage} handleImageUpload={handleImageUpload} isEditing={isEditing} handleCancelImage={handleCancelImage} isSaved={isSaved} />
+          <DiaryForm diaryContent={diaryContent} setDiaryContent={setDiaryContent} isEditing={!isSaved} />
+            {!isEditing && isSaved && <EmotionAnalysisButton />}
+             <SaveButton handleSave={handleSave} isSaved={isSaved} handleEdit={handleEdit} handleConfirmEdit={handleConfirmEdit} isEditing={isEditing} />
+                <BottomNavigation />
+      </DiaryContainer>
   );
 };
 
