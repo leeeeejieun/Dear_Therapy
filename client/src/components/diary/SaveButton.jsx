@@ -6,11 +6,11 @@ import { FaEdit } from "react-icons/fa";
 
 const SaveButton = ({ handleSave, isSaved, handleEdit, handleConfirmEdit, isEditing }) => {
   return isEditing ? (
-    <SaveButtonContainer onClick={handleConfirmEdit}><FaCheck />완료</SaveButtonContainer>
+    <SaveButtonContainer onClick={handleConfirmEdit}><FaCheck /> 완료</SaveButtonContainer>
   ) : isSaved ? (
-    <SaveButtonContainer onClick={handleEdit}><FaEdit />수정</SaveButtonContainer>
+    <SaveButtonContainer onClick={handleEdit}><FaEdit /> 수정</SaveButtonContainer>
   ) : (
-    <SaveButtonContainer onClick={handleSave}><RiSaveFill />저장</SaveButtonContainer>
+    <SaveButtonContainer onClick={handleSave}><RiSaveFill /> 저장</SaveButtonContainer>
   );
 };
 
