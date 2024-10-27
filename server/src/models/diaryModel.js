@@ -7,8 +7,7 @@ class Diary{
   constructor(body, file){
         this.body = body;
         this.file = file; 
-        console.log(this.body);
-        this.date = body.date //date에 공백 포함시 undefined 되니 주의
+        this.date = body.date;  //date에 공백 포함시 undefined 되니 주의
       }
     
       static isValidDate(dateString) {
@@ -18,7 +17,7 @@ class Diary{
     
 
   async create() {
-    const { user_id, title, content } = this.body;
+    const { user_id, title, content, create_date } = this.body;
     const image = this.file;  
 
     // content가 없는 경우
@@ -29,6 +28,7 @@ class Diary{
     if (!this.date) {
       return { code: 400, message: "날짜가 제공되지 않았습니다." };
     }
+    
 
     //날짜형식이 잘못된 경우
     console.log("Received date:", this.date);
@@ -36,15 +36,15 @@ class Diary{
       return { code: 400, message: "날짜 형식이 잘못되었습니다." };
     }
 
-    
-
-    const imagePath = image ? await s3Utils.uploadImage("diary_images", image, user_id) : null; 
-    const diaryInfo = { user_id, title, content, imagePath, date: this.date };
+    const createdAt = this.date;
+    const imagePath = image ? await s3Utils.uploadImage("diary_images", image, user_id, createdAt) : null; 
+    const diaryInfo = { user_id, title, content, imagePath, created_date: createdAt  };
  
     await diaryStorage.createDiary(diaryInfo); 
     
     return { code: 201 };
   }
+  
 }
 
   module.exports = Diary;
