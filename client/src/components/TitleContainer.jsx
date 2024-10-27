@@ -21,15 +21,17 @@ const Spacer = styled.div`
 `;
 
 const Title = styled.h1`
-  font-size: 40px;
+  font-size: 34px;
   color: ${({ theme }) => theme.text};
   margin: 0;
   z-index: 10;
+  font-weight: bold;
+  letter-spacing: -2.5px;
 `;
 
 const TitleImage = styled.img`
-  margin-top: -115px;
-  width: 350px;
+  margin-top: -105px;
+  width: 310px;
   height: auto;
 `;
 
