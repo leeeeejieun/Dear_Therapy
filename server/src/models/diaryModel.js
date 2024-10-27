@@ -1,13 +1,12 @@
 
 const s3Utils = require('../utils/s3Utils');
 const diaryStorage = require('./diaryStorage');
-const responseUtils = require('../utils/responseUtils');
 
 class Diary{
   constructor(body, file){
         this.body = body;
         this.file = file; 
-        this.date = body.date;  //date에 공백 포함시 undefined 되니 주의
+        this.date = body.date ? body.date.trim() : ""; // date에 공백이 있을 경우 빈 문자열로 처리하며 undifined인 경우 공백으로 뜨도록 설정
       }
     
       static isValidDate(dateString) {
@@ -17,24 +16,26 @@ class Diary{
     
 
   async create() {
-    const { user_id, title, content, create_date } = this.body;
+    const { user_id, title, content} = this.body;
     const image = this.file;  
 
-    // content가 없는 경우
-    if (!content || content.trim() === "") {
-     return {code: 400} 
+    // content, title, date가 공백이거나 undifined인 경우
+    if (!title || title.trim() === "" || !content || content.trim() === "" || !this.date) {
+     return {code: 400, message: "잘못된 형태의 데이터 입니다."}; 
     }
-    // date가 undefined일 경우
-    if (!this.date) {
-      return { code: 400, message: "날짜가 제공되지 않았습니다." };
-    }
-    
-
+  
     //날짜형식이 잘못된 경우
-    console.log("Received date:", this.date);
     if (this.date && !Diary.isValidDate(this.date)) {
-      return { code: 400, message: "날짜 형식이 잘못되었습니다." };
+      return { code: 400, message: "잘못된 형태의 데이터 입니다." };
     }
+
+    // 해당 날짜에 이미 일기가 존재하는 경우
+    const existingDiary = await diaryStorage.findDiaryByDate(user_id, this.date); 
+    if (existingDiary) {
+      return { code: 409, message: "해당 날짜의 일기가 이미 존재합니다." };
+    }
+
+    
 
     const createdAt = this.date;
     const imagePath = image ? await s3Utils.uploadImage("diary_images", image, user_id, createdAt) : null; 
