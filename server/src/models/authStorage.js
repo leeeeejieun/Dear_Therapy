@@ -16,6 +16,19 @@ class authStorage {
         const query = "INSERT INTO AuthToken (user_id, refresh_token) VALUES(?, ?);"
         await db.connection(query, [user_id, refreshToken]);
     }
+
+    // 로그아웃 시 해당 사용자의 refreshToken을 삭제
+    static async deleteRefresh(user_id, refreshToken) {
+        const query = "DELETE FROM AuthToken WHERE user_id = ? AND refresh_token = ?;";
+        await db.connection(query, [user_id, refreshToken]);
+    }
+
+    // 사용자의 refreshToken 존재 유무 확인
+    static async findRefresh(user_id, refreshToken) {
+        const query = "SELECT * FROM AuthToken WHERE user_id = ? AND refresh_token = ?;";
+        const result = await db.connection(query, [user_id, refreshToken]);
+        return result;
+    }
 };
 
 module.exports = authStorage;
