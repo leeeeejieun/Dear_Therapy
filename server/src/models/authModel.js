@@ -16,8 +16,7 @@ class Auth {
             const {user_id, password} = findUser;             
             if(client.user_id === user_id && client.password === password) {  // 입력한 아이디와 비밀번호가 모두 일치한 경우
                 const accessToken = jwtUtils.sign({user_id: user_id}); 
-                const refreshToken = jwtUtils.sign({}, {expiresIn: "14d"});   // 유효기간을 2주로 설정
-                
+                const refreshToken = jwtUtils.sign({}, {expiresIn: "14d"});   // 유효기간을 2주로 설정s
                 await authStorage.insertRefresh(user_id, refreshToken);
                 return { code: 200, data: {accessToken : accessToken }, refreshToken};
             }
@@ -46,6 +45,16 @@ class Auth {
     
         return { code: 403, message: "refreshToken이 유효하지 않습니다." };
     };
+
+    async logout() {
+        const { user_id, refreshToken } = this.body;
+        const result = await authStorage.findRefresh(user_id, refreshToken);
+        if (!result){
+            return { code: 400, message: "이미 로그아웃이 완료된 사용자입니다."};
+        }
+        await authStorage.deleteRefresh(user_id, refreshToken);
+        return { code: 200 };
+    }
 }
 
 module.exports = Auth;
