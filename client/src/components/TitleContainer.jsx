@@ -21,12 +21,13 @@ const Spacer = styled.div`
 `;
 
 const Title = styled.h1`
-  font-size: 34px;
+  font-size: 45px;
   color: ${({ theme }) => theme.text};
   margin: 0;
   z-index: 10;
   font-weight: bold;
-  letter-spacing: -2.5px;
+  letter-spacing: -1px;
+  font-family: '빵구니맘', sans-serif;
 `;
 
 const TitleImage = styled.img`
