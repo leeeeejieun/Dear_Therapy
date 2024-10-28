@@ -7,7 +7,6 @@ import TitleContainer from 'components/TitleContainer';
 import SignUpLinkContainer from 'components/SignUpLinkContainer';
 import SignUpButton from 'components/SignUpButton';
 import SignUpInput from 'components/SignUpInput';
-import SpacerSignup from 'components/SpacerSignup';
 import { Spacer1, Spacer2, Spacer3 } from 'components/SpacerSignup';
 
 const LoginPage = () => {
@@ -37,11 +36,14 @@ const LoginPage = () => {
         navigate('/homepage');
       }
     } catch (err) {
-      if (err.response.status === 401) {
-        setError('아이디 또는 비밀번호가 잘못되었습니다.');
-      } else if (err.response.status === 500) {
-        setError('서버 오류 발생');
-      } else {
+      if (err.response) {
+        if (err.response.status === 401) {
+          setError('아이디 또는 비밀번호가 잘못되었습니다.');
+        } else if (err.response.status === 500) {
+          setError('서버 오류 발생');
+        } 
+      }
+      else {
         setError('알 수 없는 오류가 발생했습니다.');
       }
     }
@@ -53,7 +55,7 @@ const LoginPage = () => {
       <TitleContainer />
       <Spacer2 />
       <InputContainer>
-        <Label>ID:
+        <Label>ID: 
           <SignUpInput 
             id="user_id" 
             type="text" 
@@ -90,25 +92,32 @@ const Container = styled.div`
   align-items: center;
   height: 100vh;
   background: url("https://diary-project-images.s3.ap-northeast-2.amazonaws.com/frontend/bg1.jpg") no-repeat center center fixed;
-  //background-size: cover;
   border-radius: 15px;
   overflow: hidden;
-  //position: relative;
+  width: 100%;
 `;
 
 const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center; 
   margin-top: 20px;
+  justify-content: center;
 `;
 
+
 const Label = styled.label`
-  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 7px;
   font-size: 20px;
   color: ${({ theme }) => theme.text};
   z-index: 10;
+  width: 100%;
 `;
+
 
 const ImageBelowInput = styled.img`
   width: 310px;

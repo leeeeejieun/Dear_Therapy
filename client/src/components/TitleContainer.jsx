@@ -21,17 +21,18 @@ const Spacer = styled.div`
 `;
 
 const Title = styled.h1`
-  font-size: 40px;
+  font-size: 45px;
   color: ${({ theme }) => theme.text};
   margin: 0;
   z-index: 10;
   font-weight: bold;
-  letter-spacing: -0.5px;
+  letter-spacing: -1px;
+  font-family: '빵구니맘', sans-serif;
 `;
 
 const TitleImage = styled.img`
-  margin-top: -115px;
-  width: 350px;
+  margin-top: -105px;
+  width: 310px;
   height: auto;
 `;
 

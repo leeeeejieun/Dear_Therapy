@@ -4,7 +4,7 @@ const SignUpButton = styled.button`
   background: none;
   border: none;
   margin: 10px 0;
-  padding: 10px 20px;
+  padding: 12px 20px;
   font-size: 16px;
   color: ${({ theme }) => theme.text};
   position: relative;
@@ -13,7 +13,7 @@ const SignUpButton = styled.button`
   cursor: pointer;
   transform: rotate(-3deg);
   z-index: 20;
-  font-family: 'Gaegu', sans-serif;
+  font-family: '학교안심 그림일기', sans-serif;
 `;
 
 export default SignUpButton;
