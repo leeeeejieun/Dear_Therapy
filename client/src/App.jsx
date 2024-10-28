@@ -17,6 +17,5 @@ const App = () => {
       </UserProvider>
     </ThemeProvider>
   );
-};
 
 export default App;
