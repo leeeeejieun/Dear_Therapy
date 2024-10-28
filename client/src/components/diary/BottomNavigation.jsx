@@ -26,7 +26,7 @@ const BottomNavigationContainer = styled.div`
   width: 100%; 
   height: 10%;
   padding: 15px;
-  background-image: url(${process.env.PUBLIC_URL}/images/1.png);
+  background-image: url(${process.env.PUBLIC_URL}/images/2.png);
   background-size: cover;
   border: 2px dashed black;    
   border-radius: 10px 10px 0 0 ;  
