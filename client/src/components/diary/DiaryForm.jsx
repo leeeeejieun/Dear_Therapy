@@ -48,8 +48,9 @@ const TitleInput = styled.input`
 const ContentTextarea = styled.textarea`
   width: 100%;
   padding: 10px;
-  height: 150px;
+  height: 170px;
   font-size: 20px;
+  resize : none;
   border: none;
   font-family : '금은보화';
   

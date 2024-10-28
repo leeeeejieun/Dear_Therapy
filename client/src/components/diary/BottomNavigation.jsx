@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { SlCalender } from "react-icons/sl";
+import { FaCalendarCheck } from "react-icons/fa";
 import { BsBarChartFill } from "react-icons/bs";
 import { FaUser } from "react-icons/fa";
 
@@ -8,7 +8,7 @@ const BottomNavigation = () => {
   return (
     <BottomNavigationContainer>
       <NavButton><BsBarChartFill /></NavButton>
-        <NavButton size="30px"  transform="translateY(3%)"><SlCalender /></NavButton>
+        <NavButton size="30px"  transform="translateY(3%)"><FaCalendarCheck /></NavButton>
           <NavButton><FaUser /></NavButton>
     </BottomNavigationContainer>
   );
