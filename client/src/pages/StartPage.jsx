@@ -1,19 +1,25 @@
 import React from 'react';
-import TitleContainer from 'components/TitleContainer';
-import SignUpLinkContainer from 'components/SignUpLinkContainer';
-import LinkButton from 'components/LinkButton';
-import { Spacer1, Spacer2, Spacer3 } from 'components/Spacer';
-import Container from 'components/StartPageContainer';
+import Title from 'components/common/Title';
+import LoginLink from 'components/start/LoginLink';
+import SignUpLinkContainer from 'components/start/SignUpLink';
+import styled from 'styled-components';
 
 const StartPage = () => (
-  <Container>
-    <Spacer1 />
-    <TitleContainer />
-    <Spacer2 />
-    <LinkButton to="/loginpage">아이디/비밀번호 로그인</LinkButton>
-    <Spacer3 />
+  <StartPageContainer>
+    <Title />
+    <LoginLink />
     <SignUpLinkContainer />
-  </Container>
-);
+  </StartPageContainer>
+)
 
 export default StartPage;
+
+const StartPageContainer = styled.div`
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    background: url("https://diary-project-images.s3.ap-northeast-2.amazonaws.com/frontend/bg1.jpg");
+    overflow: hidden;
+`;  
