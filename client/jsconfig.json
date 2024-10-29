@@ -6,7 +6,6 @@
         "contexts/*": ["contexts/*"],
         "pages/*": ["pages/*"],
         "styles/*": ["styles/*"],
-        "images/*": ["../public/images/*"]
       }
     }
   }
