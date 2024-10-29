@@ -1,14 +1,14 @@
 import React from 'react';
 import Title from 'components/common/Title';
 import LoginLink from 'components/start/LoginLink';
-import SignUpLinkContainer from 'components/start/SignUpLink';
+import SignUpLink from 'components/start/SignUpLink';
 import styled from 'styled-components';
 
 const StartPage = () => (
   <StartPageContainer>
     <Title />
     <LoginLink />
-    <SignUpLinkContainer />
+    <SignUpLink />
   </StartPageContainer>
 )
 
