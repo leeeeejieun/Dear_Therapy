@@ -1,14 +1,14 @@
 import React from 'react';
 import Title from 'components/common/Title';
 import LoginLink from 'components/start/LoginLink';
-import SignUpLink from 'components/start/SignUpLink';
+import AuthLink from 'components/common/AuthLink';
 import styled from 'styled-components';
 
 const StartPage = () => (
   <StartPageContainer>
     <Title />
     <LoginLink />
-    <SignUpLink />
+    <AuthLink link="/signUp" linkType="signUp" text="회원가입하기"/>
   </StartPageContainer>
 )
 
