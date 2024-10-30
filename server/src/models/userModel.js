@@ -10,7 +10,9 @@ class User {
         const user_id = this.body;
 
         const regex = /^[a-zA-Z0-9]*$/;   // 아이디는 영문,숫자만 포함 가능
-        if(!regex.test(user_id)) {
+
+        // 아이디 길이는 3자 이상 10자 미만이어야 함
+        if(!regex.test(user_id) || user_id.length < 3 || user_id.length >= 10) {
             return {code: 400, message: "잘못된 아이디 형식입니다."}
         }
 
