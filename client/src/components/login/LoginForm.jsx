@@ -18,7 +18,7 @@ const LoginForm = () => {
         e.preventDefault();
         try {
             const response = await postLogin(userData);
-            const { accessToken } = response.data.success; // 응답 구조에 맞게 수정
+            const { accessToken } = response.data.success;
             localStorage.setItem('accessToken', accessToken);
             setUser(userData.user_id);
             navigate("/home"); 
