@@ -13,7 +13,7 @@ export default Title;
 
 const TitleContainer = styled.div`
     position: relative;
-    top: 10%;
+    top: 8%;
     display: flex;
     justify-content: center;
     align-items: center;

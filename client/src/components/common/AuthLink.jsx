@@ -13,7 +13,6 @@ const type = {
         `,
         textStyle: css`
             font-size: 14px;
-            color: ${(props) => props.theme.text};
         `,
     },
 };
@@ -40,8 +39,10 @@ const StyledLink  = styled(Link)`
 
 const LinkText = styled.span`
     position: absolute; 
+    font-weight: 600;
     z-index: 1; 
-     ${(props) => props.$textStyle};
+    color: ${(props) => props.theme.text};
+    ${(props) => props.$textStyle};
 `;
 
 const LinkImage = styled.img`
