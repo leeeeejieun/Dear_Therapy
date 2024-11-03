@@ -12,5 +12,4 @@ const upload = multer({storage: storage}); //multer 설정
 router.post("/", upload.single("image"), diaryCtrl.create );
 router.get('/:user_id/:date', diaryCtrl.getDiaryByDate);
 
-
 module.exports = router;
