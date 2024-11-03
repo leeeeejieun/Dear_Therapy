@@ -1,4 +1,3 @@
-
 const s3Utils = require('../utils/s3Utils');
 const diaryStorage = require('./diaryStorage');
 
@@ -34,9 +33,8 @@ class Diary{
     if (existingDiary) {
       return { code: 409, message: "해당 날짜의 일기가 이미 존재합니다." };
     }
-
     
-
+    
     const createdAt = this.date;
     const imagePath = image ? await s3Utils.uploadImage("diary_images", image, user_id, createdAt) : null; 
     const diaryInfo = { user_id, title, content, imagePath, created_date: createdAt  };
@@ -45,7 +43,26 @@ class Diary{
     
     return { code: 201 };
   }
-  
+
+  // 특정 사용자의 특정 날짜에 해당하는 일기 조회
+  static async findDiaryByUserAndDate(user_id, date) {
+    const diary = await diaryStorage.findDiaryByDate(user_id, date);  
+    
+    // 일기가 없는 경우 처리
+    if (!diary) {
+      return { code: 404, message: "해당 날짜의 일기가 존재하지 않습니다." }; }
+
+      
+    // 일기가 존재할 경우 이미지 URL 생성
+    if (diary && diary.image) {
+     const signedUrl = await s3Utils.getImage(diary.image);
+     diary.imageUrl = signedUrl;
+    }
+
+    return { code: 200, data: diary };
+    
+  }
+
 }
 
   module.exports = Diary;
