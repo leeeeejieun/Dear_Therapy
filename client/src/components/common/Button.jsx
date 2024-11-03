@@ -15,6 +15,18 @@ const type = {
             font-size: 15px;
         `,
     },
+    next: { 
+        buttonStyle: css`
+            position: absolute;
+            bottom: 10px;
+            right: -1.5rem;
+            width: 140px;
+            height: 60px;
+        `,
+        textStyle: css`
+            font-size: 15px;
+        `,
+    },
 };
 
 
