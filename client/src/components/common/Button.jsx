@@ -18,12 +18,15 @@ const type = {
 };
 
 
-const Button = ({onClick, buttonType, text}) => {
-    const {buttonStyle, textStyle} = type[buttonType];
-
+const Button = ({onClick, buttonType, icon, text}) => {
+    const {buttonStyle, textStyle, iconStyle} = type[buttonType];
+    
     return(
         <StyledButton $buttonStyle={buttonStyle} onClick={onClick} >
-            <ButtonText $textStyle={textStyle}>{text}</ButtonText>
+            <ButtonContent>
+                { icon && <ButtonIcon $iconStyle={iconStyle}>{icon}</ButtonIcon> } 
+                { text && <ButtonText $textStyle={textStyle}>{text}</ButtonText> }
+            </ButtonContent>
             <ButtonImage src="https://diary-project-images.s3.ap-northeast-2.amazonaws.com/frontend/ob2.png" alt="error" />
         </StyledButton>
     );
@@ -40,15 +43,28 @@ const StyledButton = styled.button`
     ${(props) => props.$buttonStyle};
 `
 
+const ButtonContent = styled.div`
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;   // 아이콘과 텍스트 사이의 간격 조정
+`
+
 const ButtonText = styled.span`
-    position: absolute; 
     z-index: 1; 
     font-weight: 600;
     color: ${(props) => props.theme.text};
     ${(props) => props.$textStyle};
 `;
 
+const ButtonIcon = styled.span`
+    z-index: 1; 
+    ${(props) => props.$iconStyle};
+`
+
 const ButtonImage = styled.img`
     position: absolute;
     top: 0;
+    ;
 `;
