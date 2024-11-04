@@ -1,22 +1,38 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import NextButton from 'components/signup/NextButton'; 
 
 const EmailInput = () => {
     const [email, setEmail] = useState('');
     const [error, setError] = useState('');
+    const [isValid, setIsValid] = useState(false);
 
-    const checkEmailDuplication = async () => {
+    const validateEmail = (email) => {
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@naver\.com$/; // 네이버 메일
+        return emailPattern.test(email);
+    };
+
+    const checkEmailDuplication = async (e) => {
+        e.preventDefault();
+        if (!validateEmail(email)) {
+            setError('네이버 메일 주소를 입력해주세요.');
+            setIsValid(false);
+            return;
+        }
         try {
             const response = await axios.get(`/users/${email}`);
             if (response.data.status === 200) {
                 setError('');
+                setIsValid(true);
             }
         } catch (err) {
-            if (err.response) {
+            if (err.response && err.response.data && err.response.data.error && err.response.data.error.message) {
                 setError(err.response.data.error.message);
+                setIsValid(false);
             } else {
                 setError(err.response.data.error.message);
+                setIsValid(false);
             }
         }
     };
@@ -29,9 +45,13 @@ const EmailInput = () => {
                 placeholder="이메일을 입력하세요" 
                 value={email} 
                 onChange={(e) => setEmail(e.target.value)}
+                className={error ? 'error' : ''} 
             />
             <CheckButton onClick={checkEmailDuplication}>중복확인</CheckButton>
             {error && <ErrorMessage>{error}</ErrorMessage>}
+            <NextButtonWrapper>
+                <NextButton disabled={!isValid} />
+            </NextButtonWrapper>
         </EmailInputContainer>
     );
 };
@@ -59,6 +79,9 @@ const Input = styled.input`
     margin-bottom: 10px;
     border-radius: 25px;
     color: ${(props) => props.theme.text};
+    &.error { 
+        border: 1px solid ${(props) => props.theme.text_warn}; 
+    }
 `;
 
 const CheckButton = styled.button`
@@ -79,6 +102,11 @@ const ErrorMessage = styled.p`
     margin-top: 10px;
     font-size: 14px;
     color: ${(props) => props.theme.text_warn};
+`;
+
+const NextButtonWrapper = styled.div`
+    margin-top: 20px; 
+    margin-left: 20px;
 `;
 
 export default EmailInput;

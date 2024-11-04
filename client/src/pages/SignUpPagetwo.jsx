@@ -1,19 +1,19 @@
 import React from 'react';
 import ProgressIndicator from 'components/signup/ProgressIndicator';
-import EmailInput from 'components/signup/stepOne/EmailInput';
-import Instructions from 'components/signup/stepOne/Instructions';
+import IdInput from 'components/signup/stepTwo/IdInput';
+import InstructionsTwo from 'components/signup/stepTwo/InstructionsTwo';
 import NextButton from 'components/signup/NextButton';
 import SignUpPageContainer from 'components/signup/SignUpPageContainer';
 
-const SignUpPage = () => {
+const SignUpPagetwo = () => {
     return(
         <SignUpPageContainer>
             <ProgressIndicator />
-            <EmailInput />
-            <Instructions />
+            <IdInput />
+            <InstructionsTwo />
             <NextButton />
         </SignUpPageContainer>
     );
 };
 
-export default SignUpPage;
+export default SignUpPagetwo;

@@ -19,7 +19,7 @@ const type = {
         buttonStyle: css`
             position: absolute;
             bottom: 10px;
-            right: -1.5rem;
+            right: 1rem;
             width: 140px;
             height: 60px;
         `,
