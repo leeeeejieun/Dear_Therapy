@@ -20,10 +20,26 @@ class User {
         }
 
         const result = await UserStorage.checkId(user_id);
-
         if(result) {
             return {code: 409, message: "이미 존재하는 아이디입니다."}
         } 
+
+        return {code: 200}
+    }
+
+    // 이메일 중복 체크
+    async checkEmail() {
+        const email = this.body;
+
+        // 네이버 메일만 가능
+        if(!email.endsWith("@naver.com")){
+            return {code: 400, message: "잘못된 이메일 형식입니다."}
+        }
+
+        const result = await UserStorage.checkEmail(email);
+        if(result) {
+            return {code: 409, message: "이미 존재하는 이메일입니다."}
+        }
 
         return {code: 200}
     }
