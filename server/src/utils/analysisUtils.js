@@ -23,7 +23,7 @@ module.exports  = {
       }); 
       return response.choices[0].message.content;
     },
-    // 코멘트 생성 함수
+    // 감정 점수 측정 함수
     createSentiment: async (diaryContent) => {
       const response = await client.chat.completions.create({
           model: "gpt-3.5-turbo",
