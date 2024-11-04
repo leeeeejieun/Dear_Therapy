@@ -6,22 +6,25 @@ class User {
         this.body = body;
     }
 
+    // 아이디 중복 체크
     async checkId() {
         const user_id = this.body;
 
-        const regex = /^[a-zA-Z0-9]*$/;   // 아이디는 영문,숫자만 포함 가능
+        /**
+         * 아이디는 영문 소문자 및 숫자로 이루어진 3자 이상 15자 이하의 문자열만 가능
+         */
+        const regex = /^[a-z0-9]{3,15}$/;   
 
-        // 아이디 길이는 3자 이상 10자 미만이어야 함
-        if(!regex.test(user_id) || user_id.length < 3 || user_id.length >= 10) {
+        if(!regex.test(user_id)) {
             return {code: 400, message: "잘못된 아이디 형식입니다."}
         }
 
         const result = await UserStorage.checkId(user_id);
-        // 아이디가 중복인 경우
+
         if(result) {
             return {code: 409, message: "이미 존재하는 아이디입니다."}
         } 
-        // 아이디가 중복이 아닌 경우
+
         return {code: 200}
     }
 }
