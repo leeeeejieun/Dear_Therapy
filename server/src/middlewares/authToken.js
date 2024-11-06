@@ -7,7 +7,7 @@ const authToken = (req, res, next) => {
 
     if(!authHeader || !authHeader.startsWith('Bearer ')) {
         const response = {code: 401, message: "로그인을 해주세요."};
-        responseUtils.createResponse(res, response);
+        return responseUtils.createResponse(res, response);
     }
 
     // Authorization 헤더에서 토큰 추출

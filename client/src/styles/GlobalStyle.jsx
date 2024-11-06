@@ -51,8 +51,8 @@ const GlobalStyle = createGlobalStyle`
 
    img {
       cursor: pointer;
-      width: auto;
-      height: 100%;
+      width: 100%;
+      height: auto;
    }
 
 `;

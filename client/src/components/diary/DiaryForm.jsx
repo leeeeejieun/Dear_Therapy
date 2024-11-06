@@ -26,13 +26,11 @@ export default DiaryForm;
 const DiaryFormContainer = styled.div`
   display: flex;
   flex-direction: column;
-  
   background-color: #FFFF;
   height: 50%;
   margin-bottom: 20px;
   outline: 2px dashed #ccc;
   border-radius: 10px;
-  
 `;
 
 const TitleInput = styled.input`
@@ -41,8 +39,6 @@ const TitleInput = styled.input`
   border: none;
   font-size: 24px;
   font-family: '빵구니맘';
-  
-  
 `;
 
 const ContentTextarea = styled.textarea`
@@ -53,6 +49,4 @@ const ContentTextarea = styled.textarea`
   resize : none;
   border: none;
   font-family : '금은보화';
-  
-  
 `;

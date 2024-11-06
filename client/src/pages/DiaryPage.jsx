@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react";
+import axios from "axios";
 import DateNavigation from "components/diary/DateNavigation";
 import ImageUploader from "components/diary/ImageUploader";
 import DiaryForm from "components/diary/DiaryForm";
@@ -8,6 +9,8 @@ import EmotionAnalysisButton from "components/diary/EmotionAnalysisButton";
 import styled from "styled-components";
 
 const DiaryPage = () => {
+
+  const SERVER_URL = 'http://3.37.65.136:4000';
 
   const [currentDate, setCurrentDate] = useState('');
   const [isEditing, setIsEditing] = useState(false);
@@ -29,10 +32,11 @@ const DiaryPage = () => {
     };
   
     // 저장 버튼 클릭 핸들러
-    const handleSave = () => {
-      setIsSaved(true);
-      setIsEditing(false);
-    };
+  const handleSave = () => {
+    setIsSaved(true);
+    setIsEditing(false);
+  };
+
   
     // 수정 버튼 클릭 핸들러
     const handleEdit = () => {
@@ -60,12 +64,12 @@ const DiaryPage = () => {
   return (
     <DiaryContainer>
       <DateNavigation currentDate={currentDate} />
-        <ImageUploader image={selectedImage} handleImageUpload={handleImageUpload} isEditing={isEditing} handleCancelImage={handleCancelImage} isSaved={isSaved} />
-          <DiaryForm diaryContent={diaryContent} setDiaryContent={setDiaryContent} isEditing={!isSaved} />
-            {!isEditing && isSaved && <EmotionAnalysisButton />}
-             <SaveButton handleSave={handleSave} isSaved={isSaved} handleEdit={handleEdit} handleConfirmEdit={handleConfirmEdit} isEditing={isEditing} />
-                <BottomNavigation />
-      </DiaryContainer>
+      <ImageUploader image={selectedImage} handleImageUpload={handleImageUpload} isEditing={isEditing} handleCancelImage={handleCancelImage} isSaved={isSaved} />
+      <DiaryForm diaryContent={diaryContent} setDiaryContent={setDiaryContent} isEditing={!isSaved} />
+        {!isEditing && isSaved && <EmotionAnalysisButton />}
+      <SaveButton handleSave={handleSave} isSaved={isSaved} handleEdit={handleEdit} handleConfirmEdit={handleConfirmEdit} isEditing={isEditing} />
+      <BottomNavigation />
+    </DiaryContainer>
   );
 };
 
