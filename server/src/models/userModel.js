@@ -25,9 +25,7 @@ class User {
     // 이메일 중복 체크
     async checkEmail() {
         const email = this.body;
-
-        // 네이버 메일만 가능
-        if(!email.endsWith("@naver.com")){
+        if(!userUtils.isValidEmail(email)){
             return {code: 400, message: "잘못된 이메일 형식입니다."}
         }
 
