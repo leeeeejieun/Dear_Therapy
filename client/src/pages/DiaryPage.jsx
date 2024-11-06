@@ -23,7 +23,7 @@ const DiaryPage = () => {
     useEffect(() => {
       const today = new Date();
       const formattedDate = `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일`;
-    setCurrentDate(formattedDate);
+      setCurrentDate(formattedDate);
   }, []);
 
     // 이미지 선택 핸들러
@@ -32,9 +32,9 @@ const DiaryPage = () => {
     };
   
     // 저장 버튼 클릭 핸들러
-  const handleSave = () => {
-    setIsSaved(true);
-    setIsEditing(false);
+    const handleSave = () => {
+      setIsSaved(true);
+      setIsEditing(false);
   };
 
   

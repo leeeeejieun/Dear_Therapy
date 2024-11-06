@@ -8,8 +8,8 @@ const BottomNavigation = () => {
   return (
     <BottomNavigationContainer>
       <NavButton><BsBarChartFill /></NavButton>
-        <NavButton size="30px"  transform="translateY(3%)"><FaCalendarCheck /></NavButton>
-          <NavButton><FaUser /></NavButton>
+      <NavButton size="30px"  transform="translateY(3%)"><FaCalendarCheck /></NavButton>
+      <NavButton><FaUser /></NavButton>
     </BottomNavigationContainer>
   );
 };
