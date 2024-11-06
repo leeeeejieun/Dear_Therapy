@@ -1,4 +1,5 @@
 const UserStorage = require("../models/userStorage");
+const userUtils = require("../utils/userUtils")
 
 class User {
 
@@ -9,13 +10,7 @@ class User {
     // 아이디 중복 체크
     async checkId() {
         const user_id = this.body;
-
-        /**
-         * 아이디는 영문 소문자 및 숫자로 이루어진 3자 이상 15자 이하의 문자열만 가능
-         */
-        const regex = /^[a-z0-9]{3,15}$/;   
-
-        if(!regex.test(user_id)) {
+        if(!userUtils.isValidId(user_id)) {
             return {code: 400, message: "잘못된 아이디 형식입니다."}
         }
 
@@ -30,9 +25,7 @@ class User {
     // 이메일 중복 체크
     async checkEmail() {
         const email = this.body;
-
-        // 네이버 메일만 가능
-        if(!email.endsWith("@naver.com")){
+        if(!userUtils.isValidEmail(email)){
             return {code: 400, message: "잘못된 이메일 형식입니다."}
         }
 
@@ -42,6 +35,26 @@ class User {
         }
 
         return {code: 200}
+    }
+
+    async signUp() {
+        const client = this.body;
+
+        if(!userUtils.isValidData(client)){
+            return {code: 400, message: "잘못된 형태의 데이터입니다."}
+        }
+        
+        const result = await UserStorage.checkId(client.user_id);
+        
+        if(result) {
+            return {code: 409, message: "이미 존재하는 사용자입니다."}
+        }
+    
+        // 비밀번호 해싱
+        const hashedPassword = await userUtils.hashedPassword(client.password);
+        client.password = hashedPassword;
+        await UserStorage.insertUser(client);
+        return {code: 201};
     }
 }
 
