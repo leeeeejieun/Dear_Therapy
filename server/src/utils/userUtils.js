@@ -25,4 +25,16 @@ module.exports = {
     checkPassword : async (password, hashedPassword) => {
         return await bcrypt.compare(password, hashedPassword);
     },
+    isValidData: (userinfo) => {
+        const {user_id, name, email, password} = userinfo;
+
+        if(!user_id || !name || !email || !password) {
+            return false;
+        }
+
+        if(name.length > 8 || password.length < 8) {
+            return false;
+        }
+        return true;
+    },
 }
