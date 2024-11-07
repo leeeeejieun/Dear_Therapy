@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import {Link} from 'react-router-dom'
 import { FaCalendarCheck } from "react-icons/fa";
 import { BsBarChartFill } from "react-icons/bs";
 import { FaUser } from "react-icons/fa";
@@ -33,7 +34,7 @@ const BottomNavigationContainer = styled.div`
   bottom: 0;  
 `;
 
-const NavButton = styled.button`
+const NavButton = styled(Link)`
   background: none;
   font-size: 24px;
   color: black;
