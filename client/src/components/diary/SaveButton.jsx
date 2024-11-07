@@ -15,7 +15,7 @@ const SaveButton = ({ handleSave, isSaved, handleEdit, handleConfirmEdit, isEdit
     
   ) : isSaved ? (
     <Button
-      buttonType="save"
+      buttonType="change"
       icon={<FaEdit />}
       text="수정"
       onClick={handleEdit}

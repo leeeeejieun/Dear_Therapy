@@ -20,12 +20,32 @@ const type = {
         buttonStyle: css`
             position: absolute;
             bottom: 58px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 140px;
+            height: 60px;  
+        `,
+        textStyle: css`
+            font-size: 16px;
+        `,
+        iconStyle: css`
+            
+        `
+    },
+
+    change: {
+        buttonStyle: css`
+            position: absolute;
+            bottom: 58px;
             right: 25px;
             width: 140px;
             height: 60px;  
         `,
         textStyle: css`
             font-size: 16px;
+        `,
+        iconStyle: css`
+            
         `
     }
 };
