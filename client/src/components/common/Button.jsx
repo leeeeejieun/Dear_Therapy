@@ -19,12 +19,12 @@ const type = {
     save: {
         buttonStyle: css`
             position: absolute;
-            top: 508px;
+            bottom: 58px;
             right: 25px;
             width: 140px;
             height: 60px;  
         `,
-        textstyle: css`
+        textStyle: css`
             font-size: 16px;
         `
     }

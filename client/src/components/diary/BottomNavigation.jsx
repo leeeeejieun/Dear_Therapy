@@ -7,9 +7,9 @@ import { FaUser } from "react-icons/fa";
 const BottomNavigation = () => {
   return (
     <BottomNavigationContainer>
-      <NavButton><BsBarChartFill /></NavButton>
-      <NavButton size="30px"  transform="translateY(3%)"><FaCalendarCheck /></NavButton>
-      <NavButton><FaUser /></NavButton>
+      <NavButton to="/graph"><BsBarChartFill /></NavButton>
+      <NavButton to="/home"><FaCalendarCheck /></NavButton>
+      <NavButton to="/profile"><FaUser /></NavButton>
     </BottomNavigationContainer>
   );
 };
