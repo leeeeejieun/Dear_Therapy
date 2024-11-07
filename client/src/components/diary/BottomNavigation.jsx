@@ -26,7 +26,7 @@ const BottomNavigationContainer = styled.div`
   width: 100%; 
   height: 10%;
   padding: 15px;
-  background-image: url(${process.env.PUBLIC_URL}/images/2.png);
+  background: url("https://diary-project-images.s3.ap-northeast-2.amazonaws.com/frontend/2.png");
   background-size: cover;
   border: 2px dashed black;    
   border-radius: 10px 10px 0 0 ;  
@@ -36,4 +36,5 @@ const BottomNavigationContainer = styled.div`
 const NavButton = styled.button`
   background: none;
   font-size: 24px;
+  color: black;
 `;

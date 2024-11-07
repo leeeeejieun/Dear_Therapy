@@ -29,7 +29,7 @@ const type = {
             font-size: 16px;
         `,
         iconStyle: css`
-            
+            color: black;
         `
     },
 
@@ -45,7 +45,7 @@ const type = {
             font-size: 16px;
         `,
         iconStyle: css`
-            
+            color: black;
         `
     }
 };
