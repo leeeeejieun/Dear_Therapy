@@ -18,9 +18,8 @@ const BottomNavigation = () => {
 export default BottomNavigation;
 
 const BottomNavigationContainer = styled.div`
-  margin-top: 10px;
-  position: absolute;
-  right: 0.5px;
+  position: relative;
+  bottom: 0;  
   display: flex;
   justify-content: space-around;
   gap: 2rem;
@@ -31,7 +30,6 @@ const BottomNavigationContainer = styled.div`
   background-size: cover;
   border: 2px dashed black;    
   border-radius: 10px 10px 0 0 ;  
-  bottom: 0;  
 `;
 
 const NavButton = styled(Link)`

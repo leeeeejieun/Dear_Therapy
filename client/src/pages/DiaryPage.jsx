@@ -4,12 +4,9 @@ import ImageUploader from "components/diary/ImageUploader";
 import DiaryForm from "components/diary/DiaryForm";
 import SaveButton from "components/diary/SaveButton";
 import BottomNavigation from "components/diary/BottomNavigation";
-import EmotionAnalysisButton from "components/diary/EmotionAnalysisButton";
 import styled from "styled-components";
 
 const DiaryPage = () => {
-
-  const SERVER_URL = 'http://3.37.65.136:4000';
 
   const [currentDate, setCurrentDate] = useState('');
   const [isEditing, setIsEditing] = useState(false);
@@ -56,16 +53,11 @@ const DiaryPage = () => {
       
   };
   
-
-
-
-
   return (
     <DiaryContainer>
       <DateNavigation currentDate={currentDate} />
       <ImageUploader image={selectedImage} handleImageUpload={handleImageUpload} isEditing={isEditing} handleCancelImage={handleCancelImage} isSaved={isSaved} />
       <DiaryForm diaryContent={diaryContent} setDiaryContent={setDiaryContent} isEditing={!isSaved} />
-        {!isEditing && isSaved && <EmotionAnalysisButton />}
       <SaveButton handleSave={handleSave} isSaved={isSaved} handleEdit={handleEdit} handleConfirmEdit={handleConfirmEdit} isEditing={isEditing} />
       <BottomNavigation />
     </DiaryContainer>
@@ -75,10 +67,9 @@ const DiaryPage = () => {
 export default DiaryPage;
 
 const DiaryContainer = styled.div`
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
   background-color: ${props => props.theme.background};
-  max-width: 400px;
-  margin: 0 auto;
-  border-radius: 10px;
-  
 `;

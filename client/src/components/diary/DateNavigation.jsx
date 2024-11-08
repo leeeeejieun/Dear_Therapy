@@ -18,7 +18,7 @@ const DateNavigationContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin: 20px;
 `;
 
 const ArrowButton = styled.button`
@@ -30,6 +30,5 @@ const ArrowButton = styled.button`
 const DateText = styled.span`
   font-size: 18px;
   font-weight: bold;
-  color: black;
 `;
 

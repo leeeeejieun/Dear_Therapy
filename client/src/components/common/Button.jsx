@@ -18,33 +18,58 @@ const type = {
 
     save: {
         buttonStyle: css`
-            position: absolute;
-            bottom: 58px;
+            position: relative;
+            bottom: 0;
             left: 50%;
             transform: translateX(-50%);
             width: 140px;
-            height: 60px;  
+            height: 60px;
+            margin: 15px 0;  
         `,
         textStyle: css`
             font-size: 16px;
+            letter-spacing: -1px;
         `,
         iconStyle: css`
+            transform: translateY(10%);
+            font-size: 16px;
             color: black;
         `
     },
 
     change: {
         buttonStyle: css`
-            position: absolute;
-            bottom: 58px;
-            right: 25px;
+            position: relative;
+            right: 10px;
             width: 140px;
-            height: 60px;  
+            height: 60px;
+            margin: 15px 0; 
         `,
         textStyle: css`
             font-size: 16px;
+            letter-spacing: -1px;
         `,
         iconStyle: css`
+            transform: translateY(5%);
+            font-size: 16px;
+            color: black;
+        `
+    },
+
+    analysis: {
+        buttonStyle: css`
+            position: relative;
+            width: 230px;
+            height: 65px;
+            margin: 15px 0; 
+        `,
+        textStyle: css`
+            font-size: 15px;
+            letter-spacing: -1.5px;
+        `,
+        iconStyle: css`
+            transform: translateY(10%);
+            font-size: 15px;
             color: black;
         `
     }
@@ -99,5 +124,8 @@ const ButtonIcon = styled.span`
 const ButtonImage = styled.img`
     position: absolute;
     top: 0;
+    left: 50%;
+    transform: translateX(-50%); // 이미지 중앙 정렬
+    max-height: 100px;
     ;
 `;

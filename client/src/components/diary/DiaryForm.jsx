@@ -26,27 +26,36 @@ export default DiaryForm;
 const DiaryFormContainer = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: #FFFF;
-  height: 50%;
+  height: 50vh;
   margin-bottom: 20px;
+  background-color: #FFFF;
   outline: 2px dashed #ccc;
   border-radius: 10px;
+  margin: 0 20px;
 `;
 
 const TitleInput = styled.input`
   width: 100%;
   padding: 10px;
   border: none;
+  outline: none;
   font-size: 24px;
   font-family: '빵구니맘';
+  &:disabled {
+    opacity: 1;
+  }
 `;
 
 const ContentTextarea = styled.textarea`
   width: 100%;
+  height: 100%;
   padding: 10px;
-  height: 170px;
   font-size: 20px;
   resize : none;
   border: none;
+  outline: none;
   font-family : '금은보화';
+  &:disabled {
+    opacity: 1;
+  }
 `;

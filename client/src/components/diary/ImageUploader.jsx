@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { FaEdit } from "react-icons/fa";
 import { FaCamera } from "react-icons/fa";
 
 const ImageUploader = ({ image, handleImageUpload, isEditing, handleCancelImage, isSaved }) => {
@@ -20,17 +19,12 @@ const ImageUploader = ({ image, handleImageUpload, isEditing, handleCancelImage,
     }
   };
 
-  
-
   return (
     <ImageUploaderContainer>
       <label htmlFor="img" >
         {img ? (
           <ImagePreviewContainer>
             <ImagePreview src={img} alt="Uploaded Preview" />
-            {isEditing && (
-              <CancelButton onClick={handleCancelImage}><FaEdit /></CancelButton>
-            )}
           </ImagePreviewContainer>
         ) : (
             <UploadButton><FaCamera /> 사진 추가하기</UploadButton>
@@ -41,7 +35,6 @@ const ImageUploader = ({ image, handleImageUpload, isEditing, handleCancelImage,
         type="file"
         accept="image/*"
         onChange={handleUpload}
-        style={{ display: 'none' }}
         disabled={isSaved && !isEditing}
       />
     </ImageUploaderContainer>
@@ -54,13 +47,17 @@ const ImageUploaderContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 20px;
-  width: 100%;
-  height: auto;
+  margin: 20px;
   border: 2px dashed #ccc;
   border-radius: 10px;
   cursor: pointer;
-  color: #888;
+
+  > label{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 const UploadInput = styled.input`
@@ -75,23 +72,10 @@ const UploadButton = styled.div`
 
 const ImagePreviewContainer = styled.div`
   position: relative;
-  display: inline-block;
+  height: 410px;
 `;
 
 const ImagePreview = styled.img`
-  max-width: 100%;
-  max-height: 400px;
+  height: 100%;
   border-radius: 10px;
 `;
-
-const CancelButton = styled.button`
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: #8E1C1C;
-  color: white;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-`;
-
