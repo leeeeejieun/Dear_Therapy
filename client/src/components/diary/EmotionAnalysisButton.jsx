@@ -11,7 +11,7 @@ export default EmotionAnalysisButton;
 const EmotionButton = styled.button`
   position: absolute;
   left: 25px;
-  top: 517px;
+  bottom: 58px;
   width: 50%;
   padding: 10px;
   background-color: #8E1C1C;

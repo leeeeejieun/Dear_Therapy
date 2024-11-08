@@ -20,16 +20,11 @@ const ImageUploader = ({ image, handleImageUpload, isEditing, handleCancelImage,
     }
   };
 
-  const handleLabelClick = (e) => {
-    if (isEditing || !img) {
-        e.preventDefault();
-      document.getElementById('img').click();
-    }
-  };
+  
 
   return (
     <ImageUploaderContainer>
-      <label htmlFor="img" onClick={handleLabelClick}>
+      <label htmlFor="img" >
         {img ? (
           <ImagePreviewContainer>
             <ImagePreview src={img} alt="Uploaded Preview" />

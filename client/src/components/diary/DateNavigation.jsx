@@ -24,10 +24,12 @@ const DateNavigationContainer = styled.div`
 const ArrowButton = styled.button`
   background: none;
   font-size: 20px;
+  color: black;
 `;
 
 const DateText = styled.span`
   font-size: 18px;
   font-weight: bold;
+  color: black;
 `;
 

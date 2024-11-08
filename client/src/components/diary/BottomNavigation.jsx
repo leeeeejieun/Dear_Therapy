@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import {Link} from 'react-router-dom'
 import { FaCalendarCheck } from "react-icons/fa";
 import { BsBarChartFill } from "react-icons/bs";
 import { FaUser } from "react-icons/fa";
@@ -7,9 +8,9 @@ import { FaUser } from "react-icons/fa";
 const BottomNavigation = () => {
   return (
     <BottomNavigationContainer>
-      <NavButton><BsBarChartFill /></NavButton>
-      <NavButton size="30px"  transform="translateY(3%)"><FaCalendarCheck /></NavButton>
-      <NavButton><FaUser /></NavButton>
+      <NavButton to="/graph"><BsBarChartFill /></NavButton>
+      <NavButton to="/home"><FaCalendarCheck /></NavButton>
+      <NavButton to="/profile"><FaUser /></NavButton>
     </BottomNavigationContainer>
   );
 };
@@ -26,14 +27,15 @@ const BottomNavigationContainer = styled.div`
   width: 100%; 
   height: 10%;
   padding: 15px;
-  background-image: url(${process.env.PUBLIC_URL}/images/2.png);
+  background: url("https://diary-project-images.s3.ap-northeast-2.amazonaws.com/frontend/2.png");
   background-size: cover;
   border: 2px dashed black;    
   border-radius: 10px 10px 0 0 ;  
   bottom: 0;  
 `;
 
-const NavButton = styled.button`
+const NavButton = styled(Link)`
   background: none;
   font-size: 24px;
+  color: black;
 `;

@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from "react";
-import axios from "axios";
 import DateNavigation from "components/diary/DateNavigation";
 import ImageUploader from "components/diary/ImageUploader";
 import DiaryForm from "components/diary/DiaryForm";
