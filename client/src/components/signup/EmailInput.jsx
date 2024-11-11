@@ -35,14 +35,16 @@ const EmailInput = () => {
     return (
         <EmailInputContainer>
             <Label>네이버 메일 주소를 입력해주세요</Label>
-            <Input 
-                type="email" 
-                placeholder="이메일을 입력하세요" 
-                value={email} 
-                onChange={(e) => setEmail(e.target.value)}
-                className={error ? 'error' : ''} 
-            />
-            <CheckButton onClick={checkEmailDuplication}>중복확인</CheckButton>
+            <InputWrapper>
+                <Input 
+                    type="email" 
+                    placeholder="이메일을 입력하세요" 
+                    value={email} 
+                    onChange={(e) => setEmail(e.target.value)}
+                    className={error ? 'error' : ''} 
+                />
+                <CheckButton onClick={checkEmailDuplication}>중복확인</CheckButton>
+            </InputWrapper>
             {error && <ErrorMessage>{error}</ErrorMessage>}
             <NextButtonWrapper>
                 <NextButton disabled={!isValid} />
@@ -64,14 +66,18 @@ const Label = styled.label`
     margin-top: 50px;
 `;
 
+const InputWrapper = styled.div`
+    position: relative;
+    width: 80%; // 부모 컴포넌트의 너비
+`;
+
 const Input = styled.input`
     padding: 10px;
     font-size: 16px;
     font-family: inherit;
     border-radius: 5px;
     border: 1px solid ${(props) => props.theme.text_bt};
-    width: 80%;
-    margin-bottom: 10px;
+    width: 100%; 
     border-radius: 25px;
     color: ${(props) => props.theme.text};
     &.error { 
@@ -80,13 +86,17 @@ const Input = styled.input`
 `;
 
 const CheckButton = styled.button`
-    padding: 10px 20px;
+    position: absolute;
+    right: 3px; 
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 8px 18px;
     font-size: 16px;
     font-family: inherit;
     color: ${(props) => props.theme.text_bt};
     background: ${(props) => props.theme.bt_green};
     border: none;
-    border-radius: 5px;
+    border-radius: 25px;
     cursor: pointer;
     &:hover {
         background: ${(props) => props.theme.bt_green};

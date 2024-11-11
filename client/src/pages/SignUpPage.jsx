@@ -22,25 +22,33 @@ const SignUpPage = () => {
             {step === 1 && (
                 <>
                     <EmailInput />
-                    <Instructions step={1} />
+                    <ContentContainer>
+                        <Instructions step={1} />
+                    </ContentContainer>
                 </>
             )}
             {step === 2 && (
                 <>
                     <IdInput />
-                    <Instructions step={2} />
+                    <ContentContainer>
+                        <Instructions step={2} />
+                    </ContentContainer>
                 </>
             )}
             {step === 3 && (
                 <>
                     <PwInput />
-                    <Instructions step={3} />
+                    <ContentContainer>
+                        <Instructions step={3} />
+                    </ContentContainer>
                 </>
             )}
             {step === 4 && (
                 <>
                     <NameInput />
-                    <Instructions step={4} />
+                    <ContentContainer>
+                        <Instructions step={4} />
+                    </ContentContainer>
                 </>
             )}
             {step === 5 && <Completemsg />}
@@ -51,6 +59,13 @@ const SignUpPage = () => {
         </SignUpPageContainer>
     );
 };
+
+const ContentContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
+    width: 80%; 
+`;
 
 const NavigationButtons = styled.div`
     display: flex;

@@ -22,7 +22,7 @@ const Instructions = ({ step }) => {
 
 const InstructionContainer = styled.div`
   display: flex;
-  justify-content: center; 
+  justify-content: column; 
   align-items: flex-start;
   margin-top: -50px;
 `;
