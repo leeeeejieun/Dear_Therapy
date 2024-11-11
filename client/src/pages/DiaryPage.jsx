@@ -3,8 +3,9 @@ import DateNavigation from "components/diary/DateNavigation";
 import ImageUploader from "components/diary/ImageUploader";
 import DiaryForm from "components/diary/DiaryForm";
 import SaveButton from "components/diary/SaveButton";
-import BottomNavigation from "components/diary/BottomNavigation";
+import BottomNavigation from "components/common/BottomNavigation";
 import styled from "styled-components";
+import { postDiary } from "api/diary";
 
 const DiaryPage = () => {
 
@@ -28,10 +29,29 @@ const DiaryPage = () => {
     };
   
     // 저장 버튼 클릭 핸들러
-    const handleSave = () => {
-      setIsSaved(true);
-      setIsEditing(false);
-  };
+    const handleSave = async () => {
+      try {
+        const formData = new FormData();
+        formData.append('title', diaryContent.title);
+        formData.append('content', diaryContent.content);
+        if (selectedImage) {
+          formData.append('image', selectedImage);
+        }
+
+        const response = await postDiary(formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+  
+        if (response.status === 201) {
+          setIsSaved(true);
+          setIsEditing(false);
+        }
+      } catch (error) {
+        console.log(error.response.data.message);
+      }
+    };
 
   
     // 수정 버튼 클릭 핸들러
