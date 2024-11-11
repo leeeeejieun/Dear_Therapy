@@ -1,34 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useNavigate, useLocation } from 'react-router-dom';
 import Button from 'components/common/Button'; 
 
 const NextButton = () => {
-    const navigate = useNavigate();
-    const location = useLocation();
+    const [step, setStep] = useState(1);
 
-    const getNextPage = () => {
-        switch (location.pathname) {
-            case '/signUp':
-                return '/SignUpPagetwo';
-            case '/SignUpPagetwo':
-                return '/SignUpPagethree';
-            case '/SignUpPagethree':
-                return '/SignUpPagefour';
-            case '/SignUpPagefour':
-                return '/SignUpPagecomplete';
-            case '/SignUpPageComplete':
-                return '/LoginPage';
-            default:
-                return '/SignUp'; // 기본값
+    const getNextStep = () => {
+        if (step < 5) {
+            setStep(step + 1);
+        } else {
+            window.location.href = '/login';
         }
     };
 
     const getButtonText = () => {
-        if (location.pathname === '/SignUpPagecomplete') {
-            return '로그인 페이지로';
-        }
-        return '다음';
+        return step === 5 ? '로그인 페이지로' : '다음';
     };
 
     return (
@@ -36,7 +22,7 @@ const NextButton = () => {
             <Button 
                 buttonType="next" 
                 text={getButtonText()} 
-                onClick={() => navigate(getNextPage())} 
+                onClick={getNextStep} 
             />
         </ButtonWrapper>
     );

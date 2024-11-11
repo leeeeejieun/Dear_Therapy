@@ -9,32 +9,27 @@ const IdInput = () => {
     const [isValid, setIsValid] = useState(false);
 
     const validateId = (id) => {
-        const idPattern = /^[a-zA-Z0-9]{3,10}$/; // 영문과 숫자만 3-10자 사이
+        const idPattern = /^[a-z0-9]{3,15}$/; // 소문자와 숫자만, 3-15자
         return idPattern.test(id);
     };
 
     const checkIdDuplication = async (e) => {
         e.preventDefault();
         if (!validateId(id)) {
-            setError('아이디는 영문과 숫자만 포함되어야 하며, 3-10자 사이여야 합니다.');
+            setError('아이디는 영문 소문자과 숫자만 포함되어야 하며, 3-15자 사이여야 합니다.');
             setIsValid(false);
             return;
         }
 
         try {
-            const response = await axios.get(`/users/${id}`);
+            const response = await axios.get(`http://3.37.65.136:4000/users/${id}`);
             if (response.data.status === 200) {
                 setError('');
                 setIsValid(true);
             }
         } catch (err) {
-            if (err.response && err.response.data && err.response.data.error && err.response.data.error.message) {
-                setError(err.response.data.error.message);
-                setIsValid(false);
-            } else {
-                setError('서버 오류 발생');
-                setIsValid(false);
-            }
+            setError(err.response.data.error.message);
+            setIsValid(false);
         }
     };
 

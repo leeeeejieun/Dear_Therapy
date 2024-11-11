@@ -8,14 +8,14 @@ const NameInput = () => {
     const [isValid, setIsValid] = useState(false);
 
     const validateNickname = (nickname) => {
-        return nickname.length <= 8; // 닉네임 8자 이하
+        return nickname.length >= 1 && nickname.length <= 8; // 닉네임 8자 이하
     };
 
     const handleNicknameChange = (e) => {
         const newNickname = e.target.value;
         setNickname(newNickname);
         if (!validateNickname(newNickname)) {
-            setError('닉네임은 8자 이하여야 합니다.');
+            setError('닉네임은 1자 이상, 8자 이하여야 합니다.');
             setIsValid(false);
         } else {
             setError('');

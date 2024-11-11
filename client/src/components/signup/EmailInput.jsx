@@ -21,19 +21,14 @@ const EmailInput = () => {
             return;
         }
         try {
-            const response = await axios.get(`/users/${email}`);
+            const response = await axios.get(`http://3.37.65.136:4000/users/${email}`);
             if (response.data.status === 200) {
                 setError('');
                 setIsValid(true);
             }
         } catch (err) {
-            if (err.response && err.response.data && err.response.data.error && err.response.data.error.message) {
-                setError(err.response.data.error.message);
-                setIsValid(false);
-            } else {
-                setError(err.response.data.error.message);
-                setIsValid(false);
-            }
+            setError(err.response.data.error.message);
+            setIsValid(false);
         }
     };
 

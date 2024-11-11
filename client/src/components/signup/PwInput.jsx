@@ -54,6 +54,7 @@ const PwInput = () => {
                 type="password" 
                 placeholder="비밀번호를 한 번 더 입력하세요" 
                 value={confirmPassword} 
+                setState={setConfirmPassword}
                 onChange={handleConfirmPwChange}
                 className={!isConfirmPasswordValid ? 'error' : ''} 
             />
