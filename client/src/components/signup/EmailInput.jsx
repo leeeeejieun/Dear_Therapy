@@ -7,6 +7,7 @@ const EmailInput = () => {
     const [email, setEmail] = useState('');
     const [error, setError] = useState('');
     const [isValid, setIsValid] = useState(false);
+    //const [isValid, setIsValid] = useState(true);
 
     const validateEmail = (email) => {
         const emailPattern = /^[a-zA-Z0-9._%+-]+@naver\.com$/; // 네이버 메일
@@ -21,7 +22,7 @@ const EmailInput = () => {
             return;
         }
         try {
-            const response = await axios.get(`http://3.37.65.136:4000/users/${email}`);
+            const response = await axios.get(`http://3.37.65.136:4000/users/email/${email}`);
             if (response.data.status === 200) {
                 setError('');
                 setIsValid(true);
