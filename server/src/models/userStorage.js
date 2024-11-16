@@ -15,7 +15,6 @@ class UserStorage {
     };
 
     static async insertUser (userInfo) {
-        console.log(userInfo)
         const {user_id, name, email, password } = userInfo;
         const query = "INSERT INTO User(user_id, user_name, email, password) VALUES(?, ?, ?, ?);"
         await db.connection(query, [user_id, name, email, password]);
