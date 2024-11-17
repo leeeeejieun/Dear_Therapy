@@ -15,13 +15,26 @@ const type = {
             font-size: 14px;
         `,
     },
+    today: {
+        linkStyle: css`
+            position: absolute;
+            right: 10px;
+            bottom: 5rem;
+            width: 170px;
+            height: 60px;
+        `,
+        textStyle: css`
+            font-size: 15px;
+            transform: translateY(35%);
+        `,
+    }
 };
 
-const AuthLink = ({link, linkType, text}) => {
+const AuthLink = ({link, linkType, text, state}) => {
     const {linkStyle, textStyle} = type[linkType];
 
     return (
-        <StyledLink to={link} $linkStyle={linkStyle}>
+        <StyledLink to={link} $linkStyle={linkStyle} state={state} >
             <LinkText $textStyle={textStyle}>{text}</LinkText>
             <LinkImage src="https://diary-project-images.s3.ap-northeast-2.amazonaws.com/frontend/ob2.png" alt="Sign up decoration" />
         </StyledLink>
