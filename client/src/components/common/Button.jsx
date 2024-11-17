@@ -19,7 +19,7 @@ const type = {
     save: {
         buttonStyle: css`
             position: relative;
-            bottom: 0;
+            bottom: 10px;
             left: 50%;
             transform: translateX(-50%);
             width: 140px;
