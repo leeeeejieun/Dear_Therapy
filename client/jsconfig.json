@@ -6,7 +6,8 @@
         "contexts/*": ["contexts/*"],
         "pages/*": ["pages/*"],
         "styles/*": ["styles/*"],
-        "api": ["api/*"]
+        "api": ["api/*"],
+        "hooks": ["hooks/*"]
       }
     }
   }
