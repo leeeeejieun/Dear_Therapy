@@ -70,10 +70,10 @@ const DiaryPage = () => {
     const handleConfirmEdit = async () => {
       try{
         const formData = new FormData();
-        formData.append('title', diarycontent.title);
+        formData.append('title', diaryContent.title);
         formData.append('content', diaryContent.content);
         if (selectedImage) {
-          formData.append('image', selectedimage);
+          formData.append('image', selectedImage);
         }
 
         const { accessToken } = response.data.success;
