@@ -1,5 +1,5 @@
 const UserStorage = require("../models/userStorage");
-const userUtils = require("../utils/userUtils")
+const userUtils = require("../utils/userUtils");
 
 class User {
 
