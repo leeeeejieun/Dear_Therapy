@@ -36,6 +36,26 @@ class User {
 
         return {code: 200}
     }
+
+    async signUp() {
+        const client = this.body;
+
+        if(!userUtils.isValidData(client)){
+            return {code: 400, message: "잘못된 형태의 데이터입니다."}
+        }
+        
+        const result = await UserStorage.checkId(client.user_id);
+        
+        if(result) {
+            return {code: 409, message: "이미 존재하는 사용자입니다."}
+        }
+    
+        // 비밀번호 해싱
+        const hashedPassword = await userUtils.hashedPassword(client.password);
+        client.password = hashedPassword;
+        await UserStorage.insertUser(client);
+        return {code: 201};
+    }
 }
 
 module.exports = User;
