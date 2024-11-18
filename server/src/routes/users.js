@@ -5,6 +5,7 @@ const router = express.Router();
 const userCtrl = require("../controllers/userCtrl");
 
 // 라우터
-router.get("/:user_id", userCtrl.checkId);
+router.get("/id/:user_id", userCtrl.checkId);
+router.get("/email/:email", userCtrl.checkEmail);
 
 module.exports = router;
