@@ -4,6 +4,7 @@ const responseUtils = require("../utils/responseUtils");
 const diaryCtrl = {
     create: async (req, res) => {
       try{
+        
         const post = new Diary(req.body, req.file || null);
         const response = await post.create();
         return responseUtils.createResponse(res, response); 
