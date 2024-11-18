@@ -6,6 +6,7 @@ import SaveButton from "components/diary/SaveButton";
 import BottomNavigation from "components/common/BottomNavigation";
 import styled from "styled-components";
 import { postDiary } from "api/diary";
+import { putEdit } from "api/edit";
 
 const DiaryPage = () => {
 
@@ -32,15 +33,20 @@ const DiaryPage = () => {
     const handleSave = async () => {
       try {
         const formData = new FormData();
+        formData.append('user_id', 'admin');
+        formData.append('date', currentDate);
         formData.append('title', diaryContent.title);
         formData.append('content', diaryContent.content);
         if (selectedImage) {
           formData.append('image', selectedImage);
         }
 
+        const { accessToken } = response.data.success; 
+
         const response = await postDiary(formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${accessToken}`
           },
         });
   
@@ -61,9 +67,30 @@ const DiaryPage = () => {
     };
   
     // 수정 확인 버튼 클릭 핸들러
-    const handleConfirmEdit = () => {
-      setIsEditing(false);
-      setIsSaved(true);
+    const handleConfirmEdit = async () => {
+      try{
+        const formData = new FormData();
+        formData.append('title', diarycontent.title);
+        formData.append('content', diaryContent.content);
+        if (selectedImage) {
+          formData.append('image', selectedimage);
+        }
+
+        const { accessToken } = response.data.success;
+
+        const response = await putEdit(formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${accessToken}`
+          },
+        });
+        if (response.status === 201){
+          setIsEditing(false);
+          setIsSaved(true);
+        }
+      } catch (error) {
+        console.log(error.response.data.message);
+      }
     };
   
     // 이미지 취소 핸들러
