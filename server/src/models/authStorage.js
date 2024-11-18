@@ -13,8 +13,9 @@ class authStorage {
     
     // 로그인 시 해당 사용자의 refreshToken을 DB에 저장
     static async insertRefresh(user_id, refreshToken) {
-        const query = "INSERT INTO AuthToken (user_id, refresh_token) VALUES(?, ?);"
-        await db.connection(query, [user_id, refreshToken]);
+        const query = `INSERT INTO AuthToken (user_id, refresh_token) VALUES(?, ?) 
+                       ON DUPLICATE KEY UPDATE refresh_token = ?;`
+        await db.connection(query, [user_id, refreshToken, refreshToken]);
     }
 
     // 로그아웃 시 해당 사용자의 refreshToken을 삭제
