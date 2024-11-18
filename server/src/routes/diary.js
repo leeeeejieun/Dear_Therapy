@@ -12,4 +12,12 @@ const upload = multer({storage: storage}); //multer 설정
 router.post("/", upload.single("image"), diaryCtrl.create );
 router.get('/:user_id/:date', diaryCtrl.getDiary);
 
+// JWT 미들웨어
+const authToken = require("../middlewares/authToken");
+
+// 라우터
+router.post("/login", authCtrl.login);
+router.post("/tokens", authCtrl.refresh)
+router.delete("/logout", authToken, authCtrl.logout);
+
 module.exports = router;
