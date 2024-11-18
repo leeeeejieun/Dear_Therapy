@@ -10,7 +10,6 @@ const diaryCtrl = {
         
 
         } catch(err){
-        
         responseUtils.createResponse(res,{code: 500} );
       };
     },
@@ -25,7 +24,6 @@ const diaryCtrl = {
         
       } catch (err) {
         responseUtils.createResponse(res,{code: 500});
-        console.log(err);
       }
     },
     
