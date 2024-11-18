@@ -51,8 +51,7 @@ class Diary{
       return { code: 400, message: "잘못된 형태의 데이터 입니다." }; 
     }
 
-    const diary = await diaryStorage.findDate(user_id, date); // findDate 호출
-
+    const diary = await diaryStorage.findDate(user_id, date); 
     // 일기가 없는 경우 처리
     if (!diary) {
       return { code: 404, message: "해당 날짜의 일기가 존재하지 않습니다." }; }
