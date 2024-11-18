@@ -4,6 +4,7 @@ import ImageUploader from "components/diary/ImageUploader";
 import DiaryForm from "components/diary/DiaryForm";
 import SaveButton from "components/diary/SaveButton";
 import BottomNavigation from "components/common/BottomNavigation";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { postDiary } from "api/diary";
 import { putEdit } from "api/edit";
@@ -15,14 +16,14 @@ const DiaryPage = () => {
   const [diaryContent, setDiaryContent] = useState({ title: '', content: '' });
   const [isSaved, setIsSaved] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
- 
+  const location = useLocation();
 
-    // 현재 날짜 가져오기
     useEffect(() => {
-      const today = new Date();
-      const formattedDate = `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일`;
-      setCurrentDate(formattedDate);
-  }, []);
+      const selectedDate = location.state?.selectedDate;
+      const [year, month, day] = selectedDate.split("-");
+      setCurrentDate(`${year}년 ${month}월 ${day}일`);
+    }, [location.state]);
+    
 
     // 이미지 선택 핸들러
     const handleImageUpload = (img, file) => {

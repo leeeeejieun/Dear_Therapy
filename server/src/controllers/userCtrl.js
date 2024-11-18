@@ -11,6 +11,24 @@ const userCtrl = {
             responseUtils.createResponse(res, {code: 500});
         };
     },
+    checkEmail: async (req, res) => {
+        try{
+            const user = new User(req.params.email);
+            const response = await user.checkEmail();
+            responseUtils.createResponse(res, response);
+        }catch(err) {
+            responseUtils.createResponse(res, {code: 500});
+        };
+    },
+    signUp: async (req, res) => {
+        try{
+            const user = new User(req.body);
+            const response = await user.signUp();
+            responseUtils.createResponse(res, response);
+        }catch(err) {
+            responseUtils.createResponse(res, {code: 500});
+        };
+    }
 }
 
 module.exports = userCtrl;

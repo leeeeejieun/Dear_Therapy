@@ -1,5 +1,6 @@
 const authStorage = require("./authStorage");
 const jwtUtils = require("../utils/jwtUtils");
+const userUtils = require("../utils/userUtils");
 
 class Auth {
 
@@ -13,8 +14,10 @@ class Auth {
 
         // 아이디가 존재하는 경우
         if(findUser) {
-            const {user_id, password} = findUser;             
-            if(client.user_id === user_id && client.password === password) {  // 입력한 아이디와 비밀번호가 모두 일치한 경우
+            const {user_id, password} = findUser;    
+            const checkPassword = await userUtils.checkPassword(client.password, password);
+
+            if(client.user_id === user_id && checkPassword) {  // 입력한 아이디와 비밀번호가 모두 일치한 경우
                 const accessToken = jwtUtils.sign({user_id: user_id}); 
                 const refreshToken = jwtUtils.sign({}, {expiresIn: "14d"});   // 유효기간을 2주로 설정s
                 await authStorage.insertRefresh(user_id, refreshToken);
