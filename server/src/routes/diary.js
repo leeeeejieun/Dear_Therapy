@@ -10,6 +10,6 @@ const diaryCtrl = require("../controllers/diaryCtrl");
 const storage = multer.memoryStorage(); //메모리에 파일 저장
 const upload = multer({storage: storage}); //multer 설정
 router.post("/", upload.single("image"), diaryCtrl.create );
-router.get('/:user_id/:date', diaryCtrl.getDiaryByDate);
+router.get('/:user_id/:date', diaryCtrl.getDiary);
 
 module.exports = router;

@@ -15,26 +15,17 @@ const diaryCtrl = {
       };
     },
 
-     getDiaryByDate: async (req, res) => {
+     getDiary: async (req, res) => { 
       try {
         
         const { user_id, date } = req.params;
-        
-        console.log(`user_id: ${user_id}, date: ${date}`);
-        const result = await Diary.findDiaryByUserAndDate(user_id, date);
-  
-
-        responseUtils.createResponse(res, {
-          code: 200,
-          data: {
-            diary: { title: result.data.title, content: result.data.content, image: result.data.imageUrl || null},
-            recommendation: { comment: null },
-          },
-        });
-  
+        const diary = new Diary({ user_id, date }, null);
+        const response = await diary.lookUp();
+        return responseUtils.createResponse(res, response);
         
       } catch (err) {
-        responseUtils.createResponse(res, { code: 500});
+        responseUtils.createResponse(res,{code: 500});
+        console.log(err);
       }
     },
     
