@@ -19,7 +19,7 @@ const type = {
     save: {
         buttonStyle: css`
             position: relative;
-            bottom: 0;
+            bottom: 10px;
             left: 50%;
             transform: translateX(-50%);
             width: 140px;
@@ -43,7 +43,6 @@ const type = {
             right: 10px;
             width: 140px;
             height: 60px;
-            margin: 15px 0; 
         `,
         textStyle: css`
             font-size: 16px;
@@ -61,7 +60,6 @@ const type = {
             position: relative;
             width: 230px;
             height: 65px;
-            margin: 15px 0; 
         `,
         textStyle: css`
             font-size: 15px;
