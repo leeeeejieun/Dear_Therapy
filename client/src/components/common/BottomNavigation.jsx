@@ -18,7 +18,7 @@ const BottomNavigation = () => {
 export default BottomNavigation;
 
 const BottomNavigationContainer = styled.div`
-  position: absolute;
+  position: relative;
   bottom: 0;  
   display: flex;
   justify-content: space-around;
