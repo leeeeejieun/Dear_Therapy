@@ -3,7 +3,7 @@ const secretKey = process.env.JWT_SECRET_KEY;
 
 module.exports = {
     // token 생성
-    sign: (payload, options = {expiresIn: "30m"}) => {
+    sign: (payload, options = {expiresIn: "14d"}) => {
         return jwt.sign(payload, secretKey, {
             algorithm: "HS256",
             ...options   // token의 유효시간을 설정
