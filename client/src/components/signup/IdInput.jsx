@@ -1,35 +1,38 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
+import { checkIdDuplication } from 'api/id'; 
 import NextButton from 'components/signup/NextButton'; 
 
-const IdInput = () => {
-    const [id, setId] = useState('');
+const IdInput = ({ nextStep, setIsStepValid }) => {
+    const [user_id, setUserId] = useState('');
     const [error, setError] = useState('');
     const [isValid, setIsValid] = useState(false);
 
-    const validateId = (id) => {
+    const validateId = (user_id) => {
         const idPattern = /^[a-z0-9]{3,15}$/; // 소문자와 숫자만, 3-15자
-        return idPattern.test(id);
+        return idPattern.test(user_id);
     };
 
-    const checkIdDuplication = async (e) => {
+    const handleIdDuplication = async (e) => {
         e.preventDefault();
-        if (!validateId(id)) {
-            setError('아이디는 영문 소문자과 숫자만 포함되어야 하며, 3-15자 사이여야 합니다.');
+        if (!validateId(user_id)) {
+            setError('아이디는 영문 소문자와 숫자만 포함되어야 하며, 3-15자 사이여야 합니다.');
             setIsValid(false);
+            setIsStepValid(false);
             return;
         }
 
         try {
-            const response = await axios.get(`http://3.37.65.136:4000/users/${id}`);
-            if (response.data.status === 200) {
+            const data = await checkIdDuplication(user_id);
+            if (data.status === 200) {
                 setError('');
                 setIsValid(true);
+                setIsStepValid(true);
             }
         } catch (err) {
-            setError(err.response.data.error.message);
+            setError(err.response?.data?.error?.message);
             setIsValid(false);
+            setIsStepValid(false);
         }
     };
 
@@ -40,15 +43,15 @@ const IdInput = () => {
                 <Input 
                     type="text" 
                     placeholder="아이디를 입력하세요" 
-                    value={id} 
-                    onChange={(e) => setId(e.target.value)}
+                    value={user_id} 
+                    onChange={(e) => setUserId(e.target.value)}
                     className={error ? 'error' : ''} 
                 />
-                <CheckButton onClick={checkIdDuplication}>중복확인</CheckButton>
+                <CheckButton onClick={handleIdDuplication}>중복확인</CheckButton>
             </InputWrapper>
             {error && <ErrorMessage>{error}</ErrorMessage>}
             <NextButtonWrapper>
-                <NextButton disabled={!isValid} />
+                <NextButton disabled={!isValid} onClick={nextStep} /> 
             </NextButtonWrapper>
         </IdInputContainer>
     );

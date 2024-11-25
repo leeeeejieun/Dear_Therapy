@@ -1,28 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Button from 'components/common/Button'; 
 
-const NextButton = () => {
-    const [step, setStep] = useState(1);
-
-    const getNextStep = () => {
-        if (step < 5) {
-            setStep(step + 1);
-        } else {
-            window.location.href = '/login';
-        }
-    };
-
-    const getButtonText = () => {
-        return step === 5 ? '로그인 페이지로' : '다음';
-    };
-
+const NextButton = ({ text, onClick, disabled }) => {
     return (
         <ButtonWrapper>
             <Button 
                 buttonType="next" 
-                text={getButtonText()} 
-                onClick={getNextStep} 
+                text={text} 
+                onClick={onClick} 
+                disabled={disabled}
             />
         </ButtonWrapper>
     );

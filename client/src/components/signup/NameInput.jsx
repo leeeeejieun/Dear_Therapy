@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import NextButton from 'components/signup/NextButton'; 
 
-const NameInput = () => {
+const NameInput = ({ nextStep, setIsStepValid }) => {
     const [nickname, setNickname] = useState('');
     const [error, setError] = useState('');
     const [isValid, setIsValid] = useState(false);
+
+    useEffect(() => { 
+        setIsStepValid(isValid); 
+    }, [isValid, setIsStepValid]);
 
     const validateNickname = (nickname) => {
         return nickname.length >= 1 && nickname.length <= 8; // 닉네임 8자 이하
@@ -17,9 +21,11 @@ const NameInput = () => {
         if (!validateNickname(newNickname)) {
             setError('닉네임은 1자 이상, 8자 이하여야 합니다.');
             setIsValid(false);
+            setIsStepValid(false);
         } else {
             setError('');
             setIsValid(true);
+            setIsStepValid(true);
         }
     };
 
@@ -35,7 +41,7 @@ const NameInput = () => {
             />
             {error && <ErrorMessage>{error}</ErrorMessage>}
             <NextButtonWrapper>
-                <NextButton disabled={!isValid} />
+                <NextButton disabled={!isValid} onClick={nextStep} />
             </NextButtonWrapper>
         </NameInputContainer>
     );

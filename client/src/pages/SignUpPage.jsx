@@ -9,19 +9,29 @@ import Completemsg from 'components/signup/Completemsg';
 import NextButton from 'components/signup/NextButton';
 import SignUpPageContainer from 'components/signup/SignUpPageContainer';
 import Instructions from 'components/signup/Instructions';
+import { useNavigate } from 'react-router-dom';
 
 const SignUpPage = () => {
     const [step, setStep] = useState(1);
-
-    const nextStep = () => setStep((prevStep) => Math.min(prevStep + 1, 5));
-    const prevStep = () => setStep((prevStep) => Math.max(prevStep - 1, 1));
+    const [isStepValid, setIsStepValid] = useState(false);
+    const navigate = useNavigate(); 
+    
+    const nextStep = () => { 
+        if (isStepValid) { 
+            if (step === 5) { 
+                navigate('/login');  
+            } else { 
+                setStep((prevStep) => Math.min(prevStep + 1, 5)); 
+            } 
+        } 
+    };
 
     return (
         <SignUpPageContainer>
             <ProgressIndicator step={step} />
             {step === 1 && (
                 <>
-                    <EmailInput />
+                    <EmailInput setIsStepValid={setIsStepValid} nextStep={nextStep} /> 
                     <ContentContainer>
                         <Instructions step={1} />
                     </ContentContainer>
@@ -29,7 +39,7 @@ const SignUpPage = () => {
             )}
             {step === 2 && (
                 <>
-                    <IdInput />
+                    <IdInput setIsStepValid={setIsStepValid} nextStep={nextStep} />
                     <ContentContainer>
                         <Instructions step={2} />
                     </ContentContainer>
@@ -37,7 +47,7 @@ const SignUpPage = () => {
             )}
             {step === 3 && (
                 <>
-                    <PwInput />
+                    <PwInput setIsStepValid={setIsStepValid} nextStep={nextStep} />
                     <ContentContainer>
                         <Instructions step={3} />
                     </ContentContainer>
@@ -45,17 +55,14 @@ const SignUpPage = () => {
             )}
             {step === 4 && (
                 <>
-                    <NameInput />
+                    <NameInput setIsStepValid={setIsStepValid} nextStep={nextStep} />
                     <ContentContainer>
                         <Instructions step={4} />
                     </ContentContainer>
                 </>
             )}
             {step === 5 && <Completemsg />}
-            <NavigationButtons>
-                {step > 1 && <button onClick={prevStep}>이전</button>}
-                <NextButton text={step === 5 ? "로그인 페이지로" : "다음"} onClick={nextStep} />
-            </NavigationButtons>
+            <NextButton text={step === 5 ? "로그인 페이지로" : "다음"} onClick={nextStep} disabled={!isStepValid} />
         </SignUpPageContainer>
     );
 };
@@ -65,13 +72,6 @@ const ContentContainer = styled.div`
     flex-direction: column;
     align-items: flex-start; 
     width: 80%; 
-`;
-
-const NavigationButtons = styled.div`
-    display: flex;
-    justify-content: space-between;
-    width: 80%;
-    margin-top: 20px;
 `;
 
 export default SignUpPage;

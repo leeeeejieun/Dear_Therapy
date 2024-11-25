@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import NextButton from 'components/signup/NextButton'; 
 
-const PwInput = () => {
+const PwInput = ({ nextStep, setIsStepValid }) => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
     const [isPasswordValid, setIsPasswordValid] = useState(false);
     const [isConfirmPasswordValid, setIsConfirmPasswordValid] = useState(false);
+
+    useEffect(() => { 
+        setIsStepValid(isPasswordValid && isConfirmPasswordValid); 
+    }, [isPasswordValid, isConfirmPasswordValid, setIsStepValid]);
 
     const validatePassword = (password) => {
         const passwordPattern = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,}$/; // 영문과 숫자가 혼용, 8자 이상
@@ -20,9 +24,11 @@ const PwInput = () => {
         if (!validatePassword(newPassword)) {
             setError('비밀번호는 영문과 숫자가 혼용되어야 하며, 8자 이상이어야 합니다.');
             setIsPasswordValid(false);
+            setIsStepValid(false);
         } else {
             setError('');
             setIsPasswordValid(true);
+            setIsStepValid(true);
         }
     };
 
@@ -32,9 +38,11 @@ const PwInput = () => {
         if (newConfirmPassword !== password) {
             setError('비밀번호가 일치하지 않습니다.');
             setIsConfirmPasswordValid(false);
+            setIsStepValid(false);
         } else {
             setError('');
             setIsConfirmPasswordValid(true);
+            setIsStepValid(true);
         }
     };
 
@@ -60,7 +68,7 @@ const PwInput = () => {
             />
             {error && <ErrorMessage>{error}</ErrorMessage>}
             <NextButtonWrapper>
-                <NextButton disabled={!isFormValid} />
+                <NextButton disabled={!isFormValid} onClick={nextStep} /> 
             </NextButtonWrapper>
         </PwInputContainer>
     );

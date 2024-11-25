@@ -1,35 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
+import { checkEmailDuplication } from 'api/email'; 
 import NextButton from 'components/signup/NextButton'; 
 
-const EmailInput = () => {
+const EmailInput = ({ setIsStepValid, nextStep }) => {
     const [email, setEmail] = useState('');
     const [error, setError] = useState('');
-    const [isValid, setIsValid] = useState(false);
-    //const [isValid, setIsValid] = useState(true);
+    const [isEmailValid, setIsEmailValid] = useState(false);
+    const [isValid, setIsValid] = useState(false);  
+
+    useEffect(() => { 
+        setIsStepValid(isEmailValid); 
+        setIsValid(isEmailValid);  
+    }, [isEmailValid, setIsStepValid]);
 
     const validateEmail = (email) => {
         const emailPattern = /^[a-zA-Z0-9._%+-]+@naver\.com$/; // 네이버 메일
         return emailPattern.test(email);
     };
 
-    const checkEmailDuplication = async (e) => {
+    const handleEmailDuplication = async (e) => {
         e.preventDefault();
         if (!validateEmail(email)) {
             setError('네이버 메일 주소를 입력해주세요.');
-            setIsValid(false);
+            setIsEmailValid(false);
             return;
         }
         try {
-            const response = await axios.get(`http://3.37.65.136:4000/users/email/${email}`);
-            if (response.data.status === 200) {
+            const data = await checkEmailDuplication(email);
+            if (data.status === 200) {
                 setError('');
-                setIsValid(true);
+                setIsEmailValid(true);
             }
         } catch (err) {
-            setError(err.response.data.error.message);
-            setIsValid(false);
+            setError(err.response?.data?.error?.message);
+            setIsEmailValid(false);
         }
     };
 
@@ -44,11 +49,11 @@ const EmailInput = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     className={error ? 'error' : ''} 
                 />
-                <CheckButton onClick={checkEmailDuplication}>중복확인</CheckButton>
+                <CheckButton onClick={handleEmailDuplication}>중복확인</CheckButton>
             </InputWrapper>
             {error && <ErrorMessage>{error}</ErrorMessage>}
             <NextButtonWrapper>
-                <NextButton disabled={!isValid} />
+                <NextButton disabled={!isValid} onClick={nextStep} />
             </NextButtonWrapper>
         </EmailInputContainer>
     );
