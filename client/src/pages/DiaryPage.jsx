@@ -7,7 +7,7 @@ import BottomNavigation from "components/common/BottomNavigation";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { postDiary } from "api/diary";
-import { putEdit } from "api/edit";
+import { putEdit } from "api/diary";
 
 const DiaryPage = () => {
 
@@ -42,15 +42,8 @@ const DiaryPage = () => {
           formData.append('image', selectedImage);
         }
 
-        const { accessToken } = response.data.success; 
-
-        const response = await postDiary(formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            'Authorization': `Bearer ${accessToken}`
-          },
-        });
-  
+        const response = await postDiary(formData);
+    
         if (response.status === 201) {
           setIsSaved(true);
           setIsEditing(false);
@@ -77,14 +70,8 @@ const DiaryPage = () => {
           formData.append('image', selectedImage);
         }
 
-        const { accessToken } = response.data.success;
-
-        const response = await putEdit(formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            'Authorization': `Bearer ${accessToken}`
-          },
-        });
+        const response = await putEdit(formData);
+          
         if (response.status === 201){
           setIsEditing(false);
           setIsSaved(true);
