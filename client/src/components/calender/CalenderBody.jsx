@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 const CalenderBody = ({daysInMonth}) => {
     const weeks = ["일", "월", "화", "수", "목", "금", "토"];
-    const days = daysInMonth.slice(0,38);
+   
     return (
         <DiaryContainer>
             <DayContainer>
@@ -16,7 +16,7 @@ const CalenderBody = ({daysInMonth}) => {
                     <img src="https://diary-project-images.s3.ap-northeast-2.amazonaws.com/frontend/%EC%9A%94%EC%9D%BC+%ED%85%8C%EB%91%90%EB%A6%AC.svg" alt="Week Border" />
             </WeekBorder>
             <DayContainer>
-                {days.map((date) => (
+                {daysInMonth.map((date) => (
                      <Link to="/diary" state={{selectedDate: date.date}}  key={date.date}>
                         <Day
                             $isInMonth={date.isInMonth}> 
