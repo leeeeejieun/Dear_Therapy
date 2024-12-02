@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 const CalenderBody = ({daysInMonth}) => {
     const weeks = ["일", "월", "화", "수", "목", "금", "토"];
-
+   
     return (
         <DiaryContainer>
             <DayContainer>
