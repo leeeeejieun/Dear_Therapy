@@ -1,35 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useLocation } from 'react-router-dom';
 
-const ProgressIndicator = () => {
-    const location = useLocation();
-    let activeStep = 1;
-
-    // 페이지에 따라 active설정
-    switch (location.pathname) {
-        case '/SignUpPagetwo':
-            activeStep = 2;
-            break;
-        case '/SignUpPagethree':
-            activeStep = 3;
-            break;
-        case '/SignUpPagefour':
-            activeStep = 4;
-            break;
-        default:
-            activeStep = 1;
-    }
-
+const ProgressIndicator = ({step}) => {
     return (
         <Progress>
-            <Step className={activeStep === 1 ? 'active' : ''}>1</Step>
+            <Step className={step === 1 ? 'active' : ''}>1</Step>
             <Line />
-            <Step className={activeStep === 2 ? 'active' : ''}>2</Step>
+            <Step className={step === 2 ? 'active' : ''}>2</Step>
             <Line />
-            <Step className={activeStep === 3 ? 'active' : ''}>3</Step>
+            <Step className={step === 3 ? 'active' : ''}>3</Step>
             <Line />
-            <Step className={activeStep === 4 ? 'active' : ''}>4</Step>
+            <Step className={step === 4 ? 'active' : ''}>4</Step>
         </Progress>
     );
 };

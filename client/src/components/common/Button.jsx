@@ -30,11 +30,11 @@ const type = {
 };
 
 
-const Button = ({onClick, buttonType, text}) => {
+const Button = ({onClick, buttonType, text,disabled}) => {
     const {buttonStyle, textStyle} = type[buttonType];
 
     return(
-        <StyledButton $buttonStyle={buttonStyle} onClick={onClick} >
+        <StyledButton type="button" $buttonStyle={buttonStyle} onClick={onClick} disabled={disabled}>
             <ButtonText $textStyle={textStyle}>{text}</ButtonText>
             <ButtonImage src="https://diary-project-images.s3.ap-northeast-2.amazonaws.com/frontend/ob2.png" alt="error" />
         </StyledButton>

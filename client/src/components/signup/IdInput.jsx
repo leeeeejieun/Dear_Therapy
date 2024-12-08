@@ -2,20 +2,25 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { checkIdDuplication } from 'api/id'; 
 import NextButton from 'components/signup/NextButton'; 
+import { useEffect } from 'react';
 
-const IdInput = ({ nextStep, setIsStepValid }) => {
-    const [user_id, setUserId] = useState('');
+const IdInput = ({ nextStep, setIsStepValid,saveData }) => {
+    const [userId, setUserId] = useState('');
     const [error, setError] = useState('');
     const [isValid, setIsValid] = useState(false);
 
-    const validateId = (user_id) => {
+    useEffect(() => {
+        setIsStepValid(isValid);
+    }, [isValid]);
+
+    const validateId = (userId) => {
         const idPattern = /^[a-z0-9]{3,15}$/; // 소문자와 숫자만, 3-15자
-        return idPattern.test(user_id);
+        return idPattern.test(userId);
     };
 
     const handleIdDuplication = async (e) => {
         e.preventDefault();
-        if (!validateId(user_id)) {
+        if (!validateId(userId)) {
             setError('아이디는 영문 소문자와 숫자만 포함되어야 하며, 3-15자 사이여야 합니다.');
             setIsValid(false);
             setIsStepValid(false);
@@ -23,19 +28,24 @@ const IdInput = ({ nextStep, setIsStepValid }) => {
         }
 
         try {
-            const data = await checkIdDuplication(user_id);
-            if (data.status === 200) {
+            const data = await checkIdDuplication(userId);
+            if (data === 200) {
+                alert("사용 가능한 아이디입니다")
                 setError('');
                 setIsValid(true);
                 setIsStepValid(true);
+                saveData(userId);
             }
         } catch (err) {
-            setError(err.response?.data?.error?.message);
+            const errMessage = err.response.data.error.message;
+            alert(errMessage)
+            setError(errMessage);
             setIsValid(false);
             setIsStepValid(false);
         }
     };
 
+    console.log("isValid",isValid)
     return (
         <IdInputContainer>
             <Label>사용할 아이디를 입력해주세요</Label>
@@ -43,7 +53,7 @@ const IdInput = ({ nextStep, setIsStepValid }) => {
                 <Input 
                     type="text" 
                     placeholder="아이디를 입력하세요" 
-                    value={user_id} 
+                    value={userId} 
                     onChange={(e) => setUserId(e.target.value)}
                     className={error ? 'error' : ''} 
                 />

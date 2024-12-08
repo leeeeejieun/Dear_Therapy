@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import NextButton from 'components/signup/NextButton'; 
 
-const NameInput = ({ nextStep, setIsStepValid }) => {
+const NameInput = ({ nextStep, setIsStepValid,saveData }) => {
     const [nickname, setNickname] = useState('');
     const [error, setError] = useState('');
     const [isValid, setIsValid] = useState(false);
@@ -18,6 +18,7 @@ const NameInput = ({ nextStep, setIsStepValid }) => {
     const handleNicknameChange = (e) => {
         const newNickname = e.target.value;
         setNickname(newNickname);
+        saveData(newNickname);
         if (!validateNickname(newNickname)) {
             setError('닉네임은 1자 이상, 8자 이하여야 합니다.');
             setIsValid(false);

@@ -3,16 +3,15 @@ import styled from 'styled-components';
 import { checkEmailDuplication } from 'api/email'; 
 import NextButton from 'components/signup/NextButton'; 
 
-const EmailInput = ({ setIsStepValid, nextStep }) => {
+const EmailInput = ({ nextStep,saveData,setIsStepValid   }) => {
     const [email, setEmail] = useState('');
     const [error, setError] = useState('');
     const [isEmailValid, setIsEmailValid] = useState(false);
     const [isValid, setIsValid] = useState(false);  
 
     useEffect(() => { 
-        setIsStepValid(isEmailValid); 
         setIsValid(isEmailValid);  
-    }, [isEmailValid, setIsStepValid]);
+    }, [isEmailValid]);
 
     const validateEmail = (email) => {
         const emailPattern = /^[a-zA-Z0-9._%+-]+@naver\.com$/; // 네이버 메일
@@ -24,17 +23,26 @@ const EmailInput = ({ setIsStepValid, nextStep }) => {
         if (!validateEmail(email)) {
             setError('네이버 메일 주소를 입력해주세요.');
             setIsEmailValid(false);
+            setIsStepValid(false);
+            console.log(isEmailValid); // 이메일 검증 결과 확인
             return;
         }
         try {
             const data = await checkEmailDuplication(email);
-            if (data.status === 200) {
+            console.log(data); // 서버통신
+            if (data === 200) {
+                alert("사용 가능한 이메일입니다")
                 setError('');
                 setIsEmailValid(true);
+                setIsStepValid(true);
+                saveData(email);
             }
         } catch (err) {
-            setError(err.response?.data?.error?.message);
-            setIsEmailValid(false);
+            const errMessage = err.response.data.error.message;
+            console.log(err); //서버통신 오류
+            alert(errMessage)
+            setError(errMessage);
+            setIsStepValid(false);
         }
     };
 
@@ -74,7 +82,7 @@ const Label = styled.label`
 
 const InputWrapper = styled.div`
     position: relative;
-    width: 80%; // 부모 컴포넌트의 너비
+    width: 80%;
 `;
 
 const Input = styled.input`

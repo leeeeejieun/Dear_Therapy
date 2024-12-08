@@ -10,20 +10,44 @@ import NextButton from 'components/signup/NextButton';
 import SignUpPageContainer from 'components/signup/SignUpPageContainer';
 import Instructions from 'components/signup/Instructions';
 import { useNavigate } from 'react-router-dom';
+import { registerUser } from '../api/user';
 
 const SignUpPage = () => {
     const [step, setStep] = useState(1);
     const [isStepValid, setIsStepValid] = useState(false);
     const navigate = useNavigate(); 
-    
-    const nextStep = () => { 
+    const [userData, setUserData] = useState({
+        "user_id": '',
+        name: '',
+        email: '',
+        password: '',
+    });
+
+    const nextStep = async () => { 
         if (isStepValid) { 
             if (step === 5) { 
                 navigate('/login');  
-            } else { 
+            } else if (step === 4) {
+                {
+                    try {
+                        await registerUser(userData);
+                        setUserData({})
+                        setStep(5);
+                        alert("회원가입에 성공했습니다")
+                    } catch (err) {
+                        const errMessage = err.response.data.error.message;
+                        alert(errMessage)
+                    }
+                }
+            }
+            else { 
                 setStep((prevStep) => Math.min(prevStep + 1, 5)); 
             } 
         } 
+    };
+
+    const updateUserData = (key, value) => {
+        setUserData((prev) => ({ ...prev, [key]: value }));
     };
 
     return (
@@ -31,7 +55,7 @@ const SignUpPage = () => {
             <ProgressIndicator step={step} />
             {step === 1 && (
                 <>
-                    <EmailInput setIsStepValid={setIsStepValid} nextStep={nextStep} /> 
+                    <EmailInput setIsStepValid={setIsStepValid} nextStep={nextStep} saveData={(value) => updateUserData('email', value)}/> 
                     <ContentContainer>
                         <Instructions step={1} />
                     </ContentContainer>
@@ -39,7 +63,7 @@ const SignUpPage = () => {
             )}
             {step === 2 && (
                 <>
-                    <IdInput setIsStepValid={setIsStepValid} nextStep={nextStep} />
+                    <IdInput setIsStepValid={setIsStepValid} nextStep={nextStep} saveData={(value) => updateUserData('user_id', value)}/>
                     <ContentContainer>
                         <Instructions step={2} />
                     </ContentContainer>
@@ -47,7 +71,7 @@ const SignUpPage = () => {
             )}
             {step === 3 && (
                 <>
-                    <PwInput setIsStepValid={setIsStepValid} nextStep={nextStep} />
+                    <PwInput setIsStepValid={setIsStepValid} nextStep={nextStep} saveData={(value) => updateUserData('password', value)}/>
                     <ContentContainer>
                         <Instructions step={3} />
                     </ContentContainer>
@@ -55,7 +79,7 @@ const SignUpPage = () => {
             )}
             {step === 4 && (
                 <>
-                    <NameInput setIsStepValid={setIsStepValid} nextStep={nextStep} />
+                    <NameInput setIsStepValid={setIsStepValid} nextStep={nextStep} saveData={(value) => updateUserData('name', value)}/>
                     <ContentContainer>
                         <Instructions step={4} />
                     </ContentContainer>

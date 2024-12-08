@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import NextButton from 'components/signup/NextButton'; 
 
-const PwInput = ({ nextStep, setIsStepValid }) => {
+const PwInput = ({ nextStep, setIsStepValid,saveData }) => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
@@ -21,6 +21,7 @@ const PwInput = ({ nextStep, setIsStepValid }) => {
     const handlePwChange = (e) => {
         const newPassword = e.target.value;
         setPassword(newPassword);
+        saveData(newPassword);
         if (!validatePassword(newPassword)) {
             setError('비밀번호는 영문과 숫자가 혼용되어야 하며, 8자 이상이어야 합니다.');
             setIsPasswordValid(false);
@@ -61,8 +62,7 @@ const PwInput = ({ nextStep, setIsStepValid }) => {
             <Input 
                 type="password" 
                 placeholder="비밀번호를 한 번 더 입력하세요" 
-                value={confirmPassword} 
-                setState={setConfirmPassword}
+                value={confirmPassword}
                 onChange={handleConfirmPwChange}
                 className={!isConfirmPasswordValid ? 'error' : ''} 
             />
