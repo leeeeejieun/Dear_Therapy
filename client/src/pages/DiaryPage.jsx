@@ -7,6 +7,7 @@ import BottomNavigation from "components/common/BottomNavigation";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { postDiary } from "api/diary";
+import { getView } from "api/diary";
 import { putEdit } from "api/diary";
 import UserContext from "contexts/UserContext";
 
@@ -19,6 +20,10 @@ const DiaryPage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const location = useLocation();
 
+    // 로그인된 사용자 아이디 가져오기
+    const { user } = useContext(UserContext);
+
+    // 날짜 가져오기
     useEffect(() => {
       const selectedDate = location.state?.selectedDate;
       const [year, month, day] = selectedDate.split("-");
@@ -30,9 +35,6 @@ const DiaryPage = () => {
     const handleImageUpload = (img, file) => {
       setSelectedImage(img);
     };
-
-    // 로그인된 사용자 아이디 가져오기
-    const { user } = useContext(UserContext);
   
     // 저장 버튼 클릭 핸들러
     const handleSave = async () => {
@@ -76,9 +78,42 @@ const DiaryPage = () => {
     // 이미지 취소 핸들러
     const handleCancelImage = () => {
       setSelectedImage(null);
-      setIsSaved(false);
-      
-  };
+      setIsSaved(false);    
+    };
+
+    // 날짜 변경 시 해당 날짜의 일기 조회
+    useEffect(() => {
+      if (currentDate && user) {
+        fetchDiary(currentDate);
+      }
+    }, [currentDate, user]);
+
+    // 특정 날짜의 일기를 조회하는 함수
+    const fetchDiary = (async () => {
+      try {
+        const response = await getView({
+          params: {
+            user_id: user,
+            date: currentDate,
+          },
+        });
+    
+        if (response.status === 200 && response.data) {
+          setDiaryContent({
+            title: response.data.title,
+            content: response.data.content,
+          });
+          setSelectedImage(response.data.image || null);
+          setIsSaved(true);
+        } else {
+          setDiaryContent({ title: '', content: '' });
+          setSelectedImage(null);
+          setIsSaved(false);
+        }
+      } catch (error) {
+        console.log(error.response.data.message);
+      }
+    }, [user]);
   
   return (
     <DiaryContainer>

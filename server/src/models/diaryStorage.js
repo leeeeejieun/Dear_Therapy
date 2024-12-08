@@ -3,7 +3,8 @@ const db = require("../config/db");
 class DiaryStorage{
 
   // DB에 이미 존재하는 일기 조회
-  static async findDiaryByDate(user_id, date) {
+  static async findDate(user_id, date){
+    
     const query = "SELECT * FROM Diary WHERE user_id = ? AND created_date = ?";
     const result = await db.connection(query, [user_id, date]);
     return result; // 결과 반환 (없으면 null)

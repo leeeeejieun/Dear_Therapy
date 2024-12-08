@@ -11,10 +11,12 @@ const HomePage = () => {
     
     return(
         <HomeContainer>
-            <CalenderHeader dispatch={dispatch} currentMonth={currentMonth}/>
-            <CalenderBody daysInMonth={daysInMonth} selectedDate={selectedDate}/>
-            <BottomNavigation />
+            <CalenderContainer>
+                <CalenderHeader dispatch={dispatch} currentMonth={currentMonth}/>
+                <CalenderBody daysInMonth={daysInMonth} selectedDate={selectedDate}/>
+            </CalenderContainer>
             <AuthLink  link="/diary" linkType="today"  text="오늘의 일기 쓰기" state={{selectedDate: selectedDate.date}}/>
+            <BottomNavigation />
         </HomeContainer>
     );
 };
@@ -22,10 +24,11 @@ const HomePage = () => {
 export default HomePage;
 
 const HomeContainer = styled.div`
-    position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     height: 100vh;
 `;
+
+const CalenderContainer = styled.div`
+    flex-grow: 1;
+`
