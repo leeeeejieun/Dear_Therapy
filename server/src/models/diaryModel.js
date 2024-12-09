@@ -59,7 +59,7 @@ class Diary{
     // 일기가 존재할 경우 이미지 URL 생성
     if (diary.image) {
         const signedUrl = await s3Utils.getImage(diary.image);
-        diary.imageUrl = signedUrl;
+        diary.image = signedUrl;
     }
     
     return { 
@@ -81,17 +81,14 @@ class Diary{
       const { user_id, date, title, content } = this.body;
       const image = this.file; 
       
-      // 필수 데이터가 없을 경우 처리
       if (!title || !content || !date) {
         return { code: 400, message: "잘못된 형태의 데이터 입니다." };
       }
   
-      // 날짜 형식이 잘못된 경우
       if (!this.isValidDate(date)) {
         return { code: 400, message: "잘못된 날짜 형식입니다." };
       }
   
-      // 기존 일기 조회
       const diary = await diaryStorage.findDate(user_id, date);  
       if (!diary) {
         return { code: 404, message: "해당 날짜의 일기가 존재하지 않습니다." };
@@ -128,10 +125,8 @@ class Diary{
         created_date: date,
       };
       
-      // 일기 업데이트 호출
+    
      await diaryStorage.updateDiary(user_id, date, updatedDiaryInfo);
-      
-      
   
       return { code: 201 };
     }
