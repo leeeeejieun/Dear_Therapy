@@ -1,4 +1,4 @@
-const {PutObjectCommand, GetObjectCommand} = require('@aws-sdk/client-s3');
+const {PutObjectCommand, GetObjectCommand, DeleteObjectCommand} = require('@aws-sdk/client-s3');
 const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
 const multer = require('multer');
 
@@ -17,7 +17,7 @@ module.exports = {
         
         const command =  new PutObjectCommand({
             Bucket: bucket,
-            Key: path,   // 저장 위치 및 파일명 설정
+            Key: path,   
             Body: image.buffer
        });
     
@@ -41,4 +41,15 @@ module.exports = {
     return url;
    
   },
+
+  deleteImage: async (imagePath) => {
+    const command = new DeleteObjectCommand({
+      Bucket: bucket,
+      Key: imagePath,
+    });
+    
+    await s3.send(command);
+    return imagePath;;
+  }
+
 };
