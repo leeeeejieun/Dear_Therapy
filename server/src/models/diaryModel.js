@@ -8,7 +8,7 @@ class Diary{
       }
     
       isValidDate(dateString) {
-        const regex = /^\d{4}-\d{2}-\d{2}$/; // YYYY-MM-DD 형식 정규 표현식
+        const regex = /^\d{4}-\d{1,2}-\d{1,2}$/; 
         return regex.test(dateString);
       }
     
@@ -106,15 +106,13 @@ class Diary{
         }
         
         newImagePath = await s3Utils.uploadImage("diary_images", image, user_id, date);
-      }else if (image === null) {
+      }
+      else if (image === null) {
         // 이미지가 null로 설정된 경우, 기존 이미지를 삭제하고 null 처리
         if (currentImagePath) {
           await s3Utils.deleteImage(currentImagePath);
         }
         newImagePath = null;
-      }
-      if (image && image !== null) {
-        newImagePath = await s3Utils.uploadImage("diary_images", image, user_id, date);
       }
 
       const updatedDiaryInfo = {
@@ -126,7 +124,7 @@ class Diary{
       };
       
     
-     await diaryStorage.updateDiary(user_id, date, updatedDiaryInfo);
+      await diaryStorage.updateDiary(user_id, date, updatedDiaryInfo);
   
       return { code: 201 };
     }
