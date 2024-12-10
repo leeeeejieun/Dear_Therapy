@@ -15,6 +15,7 @@ const storage = multer.memoryStorage(); //메모리에 파일 저장
 const upload = multer({storage: storage}); //multer 설정
 router.post("/", authToken, upload.single("image"), diaryCtrl.create );
 router.get('/:user_id/:date',authToken, diaryCtrl.getDiary);
+router.put('/:user_id/:date',authToken, upload.single("image"), diaryCtrl.updateDiary);
 
 
 module.exports = router;
