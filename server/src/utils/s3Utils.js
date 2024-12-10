@@ -49,7 +49,6 @@ module.exports = {
     });
     
     await s3.send(command);
-    return imagePath;;
   }
 
 };
