@@ -5,12 +5,12 @@ class Diary{
   constructor(body, file){
         this.body = body;
         this.file = file; 
-      }
-    
-      isValidDate(dateString) {
-        const regex = /^\d{4}-\d{1,2}-\d{1,2}$/; 
-        return regex.test(dateString);
-      }
+   }
+
+  isValidDate(dateString) {
+    const regex = /^\d{4}-\d{1,2}-\d{1,2}$/; 
+    return regex.test(dateString);
+  }
     
 
   async create() {
@@ -70,9 +70,6 @@ class Diary{
             content: diary.content, 
             image: diary.image || null
           },
-          recommendation: { 
-            comment: null 
-          },
         }, 
       }
     };
@@ -81,12 +78,8 @@ class Diary{
       const { user_id, date, title, content } = this.body;
       const image = this.file; 
       
-      if (!title || !content || !date) {
+      if (!title || !content || !date || !this.isValidDate(date)) {
         return { code: 400, message: "잘못된 형태의 데이터 입니다." };
-      }
-  
-      if (!this.isValidDate(date)) {
-        return { code: 400, message: "잘못된 날짜 형식입니다." };
       }
   
       const diary = await diaryStorage.findDate(user_id, date);  
@@ -130,6 +123,7 @@ class Diary{
     }
   
   };
+  
   
 
 
