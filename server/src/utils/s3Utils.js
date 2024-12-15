@@ -12,7 +12,7 @@ module.exports = {
 
     // s3에 사용자 이미지 저장
     uploadImage: async (baseFolder, image, user_id, date) => {
-        const fileName = Buffer.from(image.originalname, 'utf8').toString('utf8'); // 한글 깨짐 방지
+        const fileName = Buffer.from(image.originalname, "latin1").toString("utf8"); // 한글 깨짐 방지
         const path = `${baseFolder}/${user_id}/${fileName}_${date}`; // 날짜와 파일명을 포함한 경로
         
         const command =  new PutObjectCommand({
