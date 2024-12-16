@@ -1,6 +1,8 @@
 const analysisStorage = require("./analysisStorage");
 const diaryStorage = require("../models/diaryStorage");
 const requestAnalysis = require("../utils/analysisUtils");
+const { text } = require("express");
+const AnalysisStorage = require("./analysisStorage");
 
 class Analysis {
 
@@ -45,6 +47,28 @@ class Analysis {
             comment: comment});
 
         return {code: 201}
+    }
+
+    async recommend() {
+        const userInfo =  this.body;
+        const {user_id, date} = userInfo;
+
+        if (!user_id || !date || !this.isValidDate(date)){
+            return {code: 400, message: "잘못된 형태의 데이터 입니다."};
+        }
+
+        const recommend = await AnalysisStorage.getRecommend(userInfo);
+        
+        if(!recommend) {
+            return {code: 404, message: "해당 일기는 감정 분석이 수행되지 않았습니다."}
+        }
+
+        return {code: 200,
+                data: {
+                    comment: recommend.comment,
+                    image: recommend.image,
+                    text: recommend.text
+                }};
     }
 }
 
