@@ -9,5 +9,6 @@ const authToken = require("../middlewares/authToken");
 
 // 라우터
 router.post("/:user_id/:date", authToken, analysisCtrl.analysis);
+router.get("/:user_id/:date", authToken, analysisCtrl.recommend);
 
 module.exports = router;
