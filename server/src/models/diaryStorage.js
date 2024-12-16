@@ -3,7 +3,8 @@ const db = require("../config/db");
 class DiaryStorage{
 
   // DB에 이미 존재하는 일기 조회
-  static async findDiaryByDate(user_id, date) {
+  static async findDate(user_id, date){
+    
     const query = "SELECT * FROM Diary WHERE user_id = ? AND created_date = ?";
     const result = await db.connection(query, [user_id, date]);
     return result; // 결과 반환 (없으면 null)
@@ -16,6 +17,23 @@ class DiaryStorage{
    
     await db.connection(query, [user_id, title, content, imagePath, created_date]);
   }
+
+  static async updateDiary(user_id, date, updates) {
+    const { title, content, imagePath } = updates;
+
+    const query = `
+      UPDATE Diary
+      SET title = ?, content = ?, image = ?
+      WHERE user_id = ? AND created_date = ?
+    `;
+  
+   
+    const result = await db.connection(query, [title, content, imagePath, user_id, date]);
+    
+    return result;
+  }
+  
+
 }
 
 module.exports = DiaryStorage;
