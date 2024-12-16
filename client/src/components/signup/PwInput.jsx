@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import NextButton from 'components/signup/NextButton'; 
 
-const PwInput = ({ nextStep, setIsStepValid,saveData }) => {
+const PwInput = ({ nextStep, setIsStepValid, saveData }) => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');

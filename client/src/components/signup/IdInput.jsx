@@ -101,7 +101,7 @@ const Input = styled.input`
 
 const CheckButton = styled.button`
     position: absolute;
-    right: 10px;
+    right: 3px;
     top: 50%;
     transform: translateY(-50%);
     padding: 8px 18px;

@@ -33,7 +33,6 @@ const SignUpPage = () => {
                         await registerUser(userData);
                         setUserData({})
                         setStep(5);
-                        alert("회원가입에 성공했습니다")
                     } catch (err) {
                         const errMessage = err.response.data.error.message;
                         alert(errMessage)
@@ -52,7 +51,7 @@ const SignUpPage = () => {
 
     return (
         <SignUpPageContainer>
-            <ProgressIndicator step={step} />
+            {step !== 5 && <ProgressIndicator step={step} />}
             {step === 1 && (
                 <>
                     <EmailInput setIsStepValid={setIsStepValid} nextStep={nextStep} saveData={(value) => updateUserData('email', value)}/> 
