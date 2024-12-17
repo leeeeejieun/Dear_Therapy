@@ -20,9 +20,10 @@ export const putEdit = async (formData) => {
         return response;
 };
 
-export const getView = async (date) => {
-        const response = await axios.get(`${SERVER_URL}/diary/:user_id/:date`, date, {
-                headers: { 'Auhorization': `Bearer ${localStorage.getItem("accessToken")}`
+export const getView = async (userData) => {
+        const {user_id, date} = userData;
+        const response = await axios.get(`${SERVER_URL}/diary/${user_id}/${date}`, {
+                headers: { 'Authorization': `Bearer ${localStorage.getItem("accessToken")}`
                          },
         });
         return response;

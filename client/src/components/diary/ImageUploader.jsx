@@ -1,9 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FaCamera } from "react-icons/fa";
 
 const ImageUploader = ({ image, handleImageUpload, isEditing, handleCancelImage, isSaved }) => {
   const [img, setImg] = useState(image);
+
+  useEffect(() => {
+    if (!(image instanceof File)) {
+        setImg(image);  
+    }
+  }, [image]);
 
   const handleUpload = (e) => {
     const file = e.target.files[0];
@@ -11,7 +17,7 @@ const ImageUploader = ({ image, handleImageUpload, isEditing, handleCancelImage,
       const reader = new FileReader();
       reader.onloadend = () => {
         setImg(reader.result);
-        handleImageUpload(reader.result, file);
+        handleImageUpload(file);
       };
       reader.readAsDataURL(file);
     } else {
@@ -40,24 +46,19 @@ const ImageUploader = ({ image, handleImageUpload, isEditing, handleCancelImage,
     </ImageUploaderContainer>
   );
 }
-
 export default ImageUploader;
 
 const ImageUploaderContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+  height: auto;
   border: 2px dashed #ccc;
   border-radius: 10px;
   cursor: pointer;
-
-  > label{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+  color: #888;
 `;
 
 const UploadInput = styled.input`
@@ -72,10 +73,23 @@ const UploadButton = styled.div`
 
 const ImagePreviewContainer = styled.div`
   position: relative;
-  height: 410px;
+  display: inline-block;
 `;
 
 const ImagePreview = styled.img`
-  height: 100%;
+  max-width: 100%;
+  max-height: 400px;
   border-radius: 10px;
 `;
+
+const CancelButton = styled.button`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #8E1C1C;
+  color: white;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+`;
+

@@ -81,39 +81,38 @@ const DiaryPage = () => {
       setIsSaved(false);    
     };
 
-    // 날짜 변경 시 해당 날짜의 일기 조회
+    // 초기 렌더링 시 일기 조회
     useEffect(() => {
-      if (currentDate && user) {
-        fetchDiary(currentDate);
+      const selectedDate = location.state?.selectedDate;
+      if (selectedDate) {
+        setCurrentDate(selectedDate);
+        getDiary(selectedDate); 
       }
-    }, [currentDate, user]);
+  }, [location.state]);
 
     // 특정 날짜의 일기를 조회하는 함수
-    const fetchDiary = (async () => {
+    const getDiary = async (currentDate) => {
       try {
-        const response = await getView({
-          params: {
+        const response = await getView(
+          {
             user_id: user,
             date: currentDate,
           },
-        });
+        );
     
-        if (response.status === 200 && response.data) {
+        if (response.status === 200) {
+          const diaryData = response.data.success.diary;
           setDiaryContent({
-            title: response.data.title,
-            content: response.data.content,
+            title: diaryData.title,
+            content: diaryData.content,
           });
-          setSelectedImage(response.data.image || null);
+          setSelectedImage(diaryData.image);
           setIsSaved(true);
-        } else {
-          setDiaryContent({ title: '', content: '' });
-          setSelectedImage(null);
-          setIsSaved(false);
         }
       } catch (error) {
-        console.log(error.response.data.message);
+        console.log(error.response.data.error);
       }
-    }, [user]);
+    };
   
   return (
     <DiaryContainer>
