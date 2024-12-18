@@ -19,7 +19,7 @@ const type = {
     save: {
         buttonStyle: css`
             position: relative;
-            bottom: 10px;
+            bottom: -1rem;
             left: 50%;
             transform: translateX(-50%);
             width: 140px;
@@ -40,6 +40,7 @@ const type = {
     change: {
         buttonStyle: css`
             position: relative;
+            bottom: -1rem;
             right: 10px;
             width: 140px;
             height: 60px;
@@ -58,6 +59,7 @@ const type = {
     analysis: {
         buttonStyle: css`
             position: relative;
+            bottom: -1rem;
             width: 230px;
             height: 65px;
         `,
@@ -125,5 +127,4 @@ const ButtonImage = styled.img`
     left: 50%;
     transform: translateX(-50%); // 이미지 중앙 정렬
     max-height: 100px;
-    ;
 `;
