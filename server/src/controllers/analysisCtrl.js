@@ -22,6 +22,16 @@ const analysisCtrl = {
             responseUtils.createResponse(res, {code: 500});
         }
     },
+    // 월별 감정 이모티콘 제공
+    emotion: async (req, res) => {
+        try {
+            const anal = new Analysis(req.params);
+            const response = await anal.emotion();
+            responseUtils.createResponse(res, response);
+        } catch(err) {
+            responseUtils.createResponse(res, {code: 500});
+        }
+    }
 };
 
 module.exports = analysisCtrl;
