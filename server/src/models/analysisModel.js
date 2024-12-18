@@ -25,7 +25,7 @@ class Analysis {
 
     // 감정을 나타내는 문자열을 이모티콘으로 변환
     getEmoji(emotion) {
-       const emogis = {
+       const emojis = {
         슬픔: "😢",
         분노: "😡",
         불안: "😬",
@@ -35,7 +35,7 @@ class Analysis {
        
        const data = emotion.map(emotion => ({
         "day": emotion.day,
-        "emogi": emogis[emotion.emotion],
+        "emoji": emogis[emotion.emotion],
        }));
 
        return data;
