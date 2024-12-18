@@ -19,7 +19,7 @@ const type = {
         linkStyle: css`
             position: absolute;
             right: 10px;
-            bottom: 5rem;
+            bottom: 6.5rem;
             width: 170px;
             height: 60px;
         `,
