@@ -3,6 +3,7 @@ const diaryStorage = require("../models/diaryStorage");
 const requestAnalysis = require("../utils/analysisUtils");
 const { text } = require("express");
 const AnalysisStorage = require("./analysisStorage");
+const { isEmptyObj } = require("openai/core.mjs");
 
 class Analysis {
 
@@ -10,18 +11,44 @@ class Analysis {
         this.body = body;
     }
 
+    // 날짜 유효성 검사
     isValidDate(dateString) {
         const regex = /^\d{4}-\d{1,2}-\d{1,2}$/; 
         return regex.test(dateString);
     }
 
-    async analysis() {
-        const { user_id, date} =  this.body;
-
+    // 데이터 유효성 검사
+    isValidData(userInfo) {
+        const {user_id, date} = userInfo;
         if (!user_id || !date || !this.isValidDate(date)){
             return {code: 400, message: "잘못된 형태의 데이터 입니다."};
         }
-        
+    }
+
+    // 감정을 나타내는 문자열을 이모티콘으로 변환
+    getEmoji(emotion) {
+       const emogis = {
+        슬픔: "😢",
+        분노: "😡",
+        불안: "😬",
+        중립: "😶",
+        행복: "😊",
+       }
+       
+       const data = emotion.map(emotion => ({
+        "day": emotion.day,
+        "emogi": emogis[emotion.emotion],
+       }));
+
+       return data;
+    }
+
+    async analysis() {
+        const { user_id, date} =  this.body;
+        const userInfo =  this.body;
+
+        this.isValidData(user_id, date);
+
         const diaryContent = await diaryStorage.findDate(user_id, date);
        
         if(!diaryContent) {
@@ -32,19 +59,15 @@ class Analysis {
         const response = await requestAnalysis(diaryContent.content);  
         const {sentiment, comment} = response;          
         const [emotion, score] = sentiment.split(",");  // 감정 분류와 점수 분리
+        userInfo.comment = comment;
+        userInfo.emotion = emotion;
+        userInfo.score = score;
     
-        // 감정 분류 및 점수화 결과 저장
-        await analysisStorage.insertEmotion({
-            user_id: user_id, 
-            diary_id: diaryContent.diary_id, 
-            emotion: emotion, 
-            score: score});
+        // 감정 분류 및 점수 결과 저장
+        await analysisStorage.insertEmotion(userInfo);
 
         // 코멘트 저장
-        await analysisStorage.insertRecommend({
-            user_id: user_id, 
-            diary_id: diaryContent.diary_id,
-            comment: comment});
+        await analysisStorage.insertRecommend(userInfo)
 
         return {code: 201}
     }
@@ -53,9 +76,7 @@ class Analysis {
         const userInfo =  this.body;
         const {user_id, date} = userInfo;
 
-        if (!user_id || !date || !this.isValidDate(date)){
-            return {code: 400, message: "잘못된 형태의 데이터 입니다."};
-        }
+        this.isValidData(user_id, date);
 
         const recommend = await AnalysisStorage.getRecommend(userInfo);
         
@@ -69,6 +90,23 @@ class Analysis {
                     image: recommend.image,
                     text: recommend.text
                 }};
+    }
+
+    async emotion() {
+        const userInfo =  this.body;
+        const {user_id, date} = userInfo;
+
+        this.isValidData(user_id, date);
+
+        const emotion = await AnalysisStorage.getEmotion(userInfo);
+
+        if(!emotion) {
+            return {code: 404, message: "해당 월에 작성된 일기가 없습니다."}
+        }
+
+        const data = this.getEmoji(emotion);
+
+        return {code: 200, data: data}
     }
 }
 
