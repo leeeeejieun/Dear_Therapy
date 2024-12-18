@@ -27,11 +27,10 @@ const DiaryFormContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 50vh;
-  margin-bottom: 20px;
   background-color: #FFFF;
   outline: 2px dashed #ccc;
   border-radius: 10px;
-  margin: 0 20px;
+  margin: 20px 20px;
 `;
 
 const TitleInput = styled.input`
@@ -43,6 +42,7 @@ const TitleInput = styled.input`
   font-family: '빵구니맘';
   &:disabled {
     opacity: 1;
+    background-color: #FFFFFF;
   }
 `;
 
@@ -57,5 +57,6 @@ const ContentTextarea = styled.textarea`
   font-family : '금은보화';
   &:disabled {
     opacity: 1;
+    background-color: #FFFFFF;
   }
 `;
