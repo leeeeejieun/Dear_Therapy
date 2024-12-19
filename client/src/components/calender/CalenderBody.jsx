@@ -39,7 +39,7 @@ const CalenderBody = ({daysInMonth, currentDate}) => {
                         <Day $isInMonth={date.isInMonth}> 
                             <span>{date.day}</span>
                             { date.isInMonth &&
-                              emojis.map((emoji) => emoji.day === date.date ? <Emojis>{emoji.emoji}</Emojis> : null)}
+                              emojis.map((emoji) => emoji.day === date.date ? <Emojis key={emoji.day}>{emoji.emoji}</Emojis> : null)}
                         </Day>
                     </Link>
                 ))}
