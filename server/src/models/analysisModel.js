@@ -35,7 +35,7 @@ class Analysis {
        
        const data = emotion.map(emotion => ({
         "day": emotion.day,
-        "emoji": emogis[emotion.emotion],
+        "emoji": emojis[emotion.emotion],
        }));
 
        return data;
@@ -57,6 +57,7 @@ class Analysis {
         const response = await requestAnalysis(diaryContent.content);  
         const {sentiment, comment} = response;          
         const [emotion, score] = sentiment.split(",");  // 감정 분류와 점수 분리
+        userInfo.diary_id = diaryContent.diary_id;
         userInfo.comment = comment;
         userInfo.emotion = emotion;
         userInfo.score = score;

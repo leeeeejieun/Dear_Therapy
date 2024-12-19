@@ -1,4 +1,5 @@
 const db = require("../config/db");
+const { emotion } = require("../controllers/analysisCtrl");
 
 class AnalysisStorage {
     
@@ -37,7 +38,7 @@ class AnalysisStorage {
     static async getEmotion(userInfo) {
         const {user_id, date} =  userInfo;
         
-        const query = `SELECT date_format(date, '%e') day, emotion
+        const query = `SELECT date_format(date,'%Y-%c-%e') day, emotion
                        FROM EmotionAnalysis
                        WHERE user_id = ? and date_format(date, '%Y-%c') = date_format(?, '%Y-%c')
                        order by date;`
