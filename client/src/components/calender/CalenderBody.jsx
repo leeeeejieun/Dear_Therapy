@@ -15,11 +15,11 @@ const CalenderBody = ({daysInMonth, currentDate}) => {
             setEmojis(response.data.success);
         } catch(err) {
              console.log(err.response.data.error)
-    }});
+    }},[user, currentDate]);
 
     useEffect(() => {
         getEmojis();
-    },[currentDate]);
+    },[getEmojis, currentDate]);
 
     
     return (
