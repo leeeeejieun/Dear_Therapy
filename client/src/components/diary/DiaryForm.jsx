@@ -43,6 +43,7 @@ const TitleInput = styled.input`
   &:disabled {
     opacity: 1;
     background-color: #FFFFFF;
+    color: #000000;
   }
 `;
 
@@ -58,5 +59,6 @@ const ContentTextarea = styled.textarea`
   &:disabled {
     opacity: 1;
     background-color: #FFFFFF;
+    color: #000000;
   }
 `;
