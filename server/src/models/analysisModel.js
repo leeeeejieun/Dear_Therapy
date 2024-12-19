@@ -15,14 +15,6 @@ class Analysis {
         return regex.test(dateString);
     }
 
-    // 데이터 유효성 검사
-    isValidData(userInfo) {
-        const {user_id, date} = userInfo;
-        if (!user_id || !date || !this.isValidDate(date)){
-            return {code: 400, message: "잘못된 형태의 데이터 입니다."};
-        }
-    }
-
     // 감정을 나타내는 문자열을 이모티콘으로 변환
     getEmoji(emotion) {
        const emojis = {
@@ -45,7 +37,9 @@ class Analysis {
         const { user_id, date} =  this.body;
         const userInfo =  this.body;
 
-        this.isValidData(user_id, date);
+        if (!user_id || !date || !this.isValidDate(date)){
+            return {code: 400, message: "잘못된 형태의 데이터 입니다."};
+        }
 
         const diaryContent = await diaryStorage.findDate(user_id, date);
        
@@ -75,7 +69,9 @@ class Analysis {
         const userInfo =  this.body;
         const {user_id, date} = userInfo;
 
-        this.isValidData(user_id, date);
+        if (!user_id || !date || !this.isValidDate(date)){
+            return {code: 400, message: "잘못된 형태의 데이터 입니다."};
+        }
 
         const recommend = await AnalysisStorage.getRecommend(userInfo);
         
@@ -95,18 +91,37 @@ class Analysis {
         const userInfo =  this.body;
         const {user_id, date} = userInfo;
 
-        this.isValidData(user_id, date);
+        if (!user_id || !date || !this.isValidDate(date)){
+            return {code: 400, message: "잘못된 형태의 데이터 입니다."};
+        }
 
         const emotion = await AnalysisStorage.getEmotion(userInfo);
 
         if(!emotion) {
-            return {code: 404, message: "해당 월에 작성된 일기가 없습니다."}
+            return {code: 404, message: "해당 월에 분석된 일기가 없습니다."}
         }
 
         const data = this.getEmoji(emotion);
 
         return {code: 200, data: data}
     }
-}
+
+    async score() {
+        const userInfo =  this.body;
+        const {user_id, date} = userInfo;
+
+        if (!user_id || !date || !this.isValidDate(date)){
+            return {code: 400, message: "잘못된 형태의 데이터 입니다."};
+        }
+
+        const score = await AnalysisStorage.getScore(userInfo);
+
+        if(!score) {
+            return {code: 404, message: "해당 연도에 분석된 일기가 없습니다."}
+        }
+
+        return {code: 200, data: score}
+    }
+ }
 
 module.exports = Analysis;
