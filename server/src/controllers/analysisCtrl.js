@@ -31,6 +31,16 @@ const analysisCtrl = {
         } catch(err) {
             responseUtils.createResponse(res, {code: 500});
         }
+    },
+    // 월별 감정 통계 점수 제공공
+    score: async (req, res) => {
+        try {
+            const anal = new Analysis(req.params);
+            const response = await anal.score();
+            responseUtils.createResponse(res, response);
+        }catch(err) {
+            responseUtils.createResponse(res, {code: 500});
+        }
     }
 };
 
