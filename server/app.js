@@ -13,7 +13,7 @@ const router = require("./src/routes");
 
 // 미들웨어
 app.use(cors({
-    origin: "http://localhost:3000", // 클라이언트 도메인
+    origin: "*", // 클라이언트 도메인
     credentials: true // 쿠키와 같은 인증 정보를 허용
 }));
 app.use(morgan('dev'));
