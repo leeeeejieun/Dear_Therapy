@@ -3,7 +3,7 @@ const db = require("../config/db");
 class UserStorage {
   
     static async checkId(user_id) {
-        const query =  "SELECT user_id FROM User WHERE user_id = ?;"
+        const query = "SELECT user_id FROM User WHERE user_id = ?;";
         const result = await db.connection(query, [user_id]);
         return result;
     }
@@ -14,11 +14,17 @@ class UserStorage {
         return result;
     };
 
-    static async insertUser (userInfo) {
+    static async insertUser(userInfo) {
         const {user_id, name, email, password } = userInfo;
         const query = "INSERT INTO User(user_id, user_name, email, password) VALUES(?, ?, ?, ?);"
         await db.connection(query, [user_id, name, email, password]);
     }
+
+    static async deleteUser(user_id) {
+        const query = "DELETE FROM User WHERE user_id = ?;"
+        await db.connection(query, [user_id]);
+    }
+
 };
 
 module.exports = UserStorage;

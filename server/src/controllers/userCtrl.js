@@ -28,6 +28,15 @@ const userCtrl = {
         }catch(err) {
             responseUtils.createResponse(res, {code: 500});
         };
+    },
+    withdraw: async (req, res)  => {
+        try {
+            const user = new User(req.params.user_id);
+            const response = await user.withdraw();
+            responseUtils.createResponse(res, response);
+        }catch(err) {
+            responseUtils.createResponse(res, {code: 500});
+        }
     }
 }
 

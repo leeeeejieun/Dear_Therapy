@@ -56,6 +56,19 @@ class User {
         await UserStorage.insertUser(client);
         return {code: 201};
     }
+
+    async withdraw(){
+        const user_id = this.body;
+
+        const result = await UserStorage.checkId(user_id);
+        console.log(result)
+        if(!result) {
+            return {code: 404, message: "이미 회원 탈퇴가 완료된 사용자입니다."}
+        }
+
+        await UserStorage.deleteUser(user_id);
+        return {code: 200};
+    }
 }
 
 module.exports = User;

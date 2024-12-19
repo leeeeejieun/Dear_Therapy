@@ -53,7 +53,7 @@ class Auth {
         const { user_id, refreshToken } = this.body;
         const result = await authStorage.findRefresh(user_id, refreshToken);
         if (!result){
-            return { code: 400, message: "이미 로그아웃이 완료된 사용자입니다."};
+            return { code: 401, message: "이미 로그아웃이 완료된 사용자입니다."};
         }
         await authStorage.deleteRefresh(user_id, refreshToken);
         return { code: 200 };

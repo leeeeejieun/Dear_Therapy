@@ -54,6 +54,7 @@ const useCalender = () => {
     }});
 
    return {
+        currentDate: format(currentDate, "yyyy-MM-d"),
         currentMonth,
         daysInMonth,
         dispatch: {
