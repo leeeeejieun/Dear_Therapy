@@ -31,7 +31,7 @@ const type = {
     save: {
         buttonStyle: css`
             position: relative;
-            bottom: -1rem;
+            bottom: 10px;
             left: 50%;
             transform: translateX(-50%);
             width: 140px;
@@ -51,7 +51,6 @@ const type = {
     change: {
         buttonStyle: css`
             position: relative;
-            bottom: -1rem;
             right: 10px;
             width: 140px;
             height: 60px;
@@ -69,7 +68,6 @@ const type = {
     analysis: {
         buttonStyle: css`
             position: relative;
-            bottom: -1rem;
             width: 230px;
             height: 65px;
         `,
