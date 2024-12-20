@@ -45,6 +45,17 @@ class AnalysisStorage {
         const response = await db.connection(query, [user_id, date]);
         return response;
     }
-}
 
+    // 월별 감정 점수 통계 제공
+    static async getScore(userInfo) {
+        const {user_id, date} =  userInfo;
+        const query =  `SELECT month(date) month, truncate(AVG(score),1) score
+                        FROM EmotionAnalysis 
+                        WHERE user_id = ? and year(date) = year(?)
+                        GROUP BY month
+                        order by date;`
+        const response = await db.connection(query, [user_id, date]);
+        return response;
+    }
+}
 module.exports = AnalysisStorage;
