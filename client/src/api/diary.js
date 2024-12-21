@@ -11,8 +11,9 @@ export const postDiary = async (formData) => {
         return response;
 };
 
-export const putEdit = async (formData) => {
-        const response = await axios.put(`${SERVER_URL}/diary`, formData, {
+export const putEdit = async (diaryData, userData) => {
+        const {user_id, date} = userData;
+        const response = await axios.put(`${SERVER_URL}/diary/${user_id}/${date}`, diaryData, {
                 headers: { 'Content-Type': 'multipart/form-data',
                            'Authorization': `Bearer ${localStorage.getItem("accessToken")}`
                          },
