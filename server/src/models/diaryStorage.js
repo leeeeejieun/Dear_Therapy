@@ -32,7 +32,12 @@ class DiaryStorage{
     
     return result;
   }
-  
+  static async deleteDiary (user_id, date) {
+    console.log(user_id, date);
+    const query = `DELETE FROM Diary WHERE user_id = ? AND created_date = ?`;
+    await db.connection(query, [user_id, date]);
+    
+  }
 
 }
 
