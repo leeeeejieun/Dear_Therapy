@@ -97,6 +97,6 @@ const Day = styled.div`
 
 const Emojis = styled.span`
     position: relative;
-    top: 1rem;
+    top: 0.6rem;
     font-size: 20px;
 `;
