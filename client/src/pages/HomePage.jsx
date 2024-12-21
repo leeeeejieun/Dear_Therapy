@@ -7,15 +7,15 @@ import AuthLink from 'components/common/AuthLink';
 import styled from 'styled-components';
 
 const HomePage = () => {
-    const { currentMonth, dispatch, daysInMonth, selectedDate, currentDate } =  useCalender();
-    
+    const { currentMonth, dispatch, daysInMonth, currentDate } =  useCalender();
+
     return(
         <HomeContainer>
             <CalenderContainer>
                 <CalenderHeader dispatch={dispatch} currentMonth={currentMonth}/>
                 <CalenderBody daysInMonth={daysInMonth} currentDate={currentDate}/>
             </CalenderContainer>
-            <AuthLink  link="/diary" linkType="today"  text="오늘의 일기 쓰기" state={{selectedDate: selectedDate.date}}/>
+            <AuthLink  link="/diary" linkType="today"  text="오늘의 일기 쓰기" state={{selectedDate: currentDate}}/>
             <BottomNavigation />
         </HomeContainer>
     );

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FaCamera } from "react-icons/fa";
 
-const ImageUploader = ({ image, handleImageUpload, isEditing, handleCancelImage, isSaved }) => {
+const ImageUploader = ({ image, handleImageUpload, isEditing, isSaved }) => {
   const [img, setImg] = useState(image);
 
   useEffect(() => {
@@ -52,13 +52,17 @@ const ImageUploaderContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 20px;
-  width: 100%;
-  height: auto;
+  margin: 20px;
   border: 2px dashed #ccc;
   border-radius: 10px;
   cursor: pointer;
-  color: #888;
+
+  > label{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 const UploadInput = styled.input`
@@ -73,23 +77,10 @@ const UploadButton = styled.div`
 
 const ImagePreviewContainer = styled.div`
   position: relative;
-  display: inline-block;
+  height: 410px;
 `;
 
 const ImagePreview = styled.img`
-  max-width: 100%;
-  max-height: 400px;
+  height: 100%;
   border-radius: 10px;
 `;
-
-const CancelButton = styled.button`
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: #8E1C1C;
-  color: white;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-`;
-
