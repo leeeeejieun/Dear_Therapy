@@ -16,6 +16,7 @@ const upload = multer({storage: storage}); //multer 설정
 router.post("/", authToken, upload.single("image"), diaryCtrl.create );
 router.get('/:user_id/:date',authToken, diaryCtrl.getDiary);
 router.put('/:user_id/:date',authToken, upload.single("image"), diaryCtrl.updateDiary);
+router.delete('/:user_id/:date',authToken, diaryCtrl.deleteDiary);
 
 
 module.exports = router;
