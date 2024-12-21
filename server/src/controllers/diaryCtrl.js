@@ -45,6 +45,19 @@ const diaryCtrl = {
         responseUtils.createResponse(res, { code: 500 });
       }
     },
+
+    deleteDiary: async (req, res) => {
+      try {
+        const { user_id, date } = req.params;
+        
+        const diary = new Diary({ user_id, date });
+        const response = await diary.delete();
+  
+        return responseUtils.createResponse(res, response);
+      } catch (err) {
+        return responseUtils.createResponse(res, { code: 500});
+      }
+    },
   };
 
 module.exports = diaryCtrl;
