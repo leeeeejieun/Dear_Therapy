@@ -25,11 +25,15 @@ class Analysis {
         행복: "😊",
        }
        
-       const data = emotion.map(emotion => ({
-        "day": emotion.day,
-        "emoji": emojis[emotion.emotion],
-       }));
-
+       let data;
+       if(Array.isArray(emotion)) {
+         data = emotion.map(emotion => ({
+            "day": emotion.day,
+            "emoji": emojis[emotion.emotion],
+        }));
+       } else {
+        data = [{"day": emotion.day, "emoji": emojis[emotion.emotion]}]
+       }
        return data;
     }
 
@@ -120,7 +124,7 @@ class Analysis {
             return {code: 404, message: "해당 연도에 분석된 일기가 없습니다."}
         }
 
-        return {code: 200, data: score}
+        return {code: 200, data: Array.isArray(score) ? score : [score]}
     }
  }
 
