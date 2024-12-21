@@ -17,6 +17,23 @@ class DiaryStorage{
    
     await db.connection(query, [user_id, title, content, imagePath, created_date]);
   }
+
+  static async updateDiary(user_id, date, updates) {
+    const { title, content, imagePath } = updates;
+
+    const query = `
+      UPDATE Diary
+      SET title = ?, content = ?, image = ?
+      WHERE user_id = ? AND created_date = ?
+    `;
+  
+   
+    const result = await db.connection(query, [title, content, imagePath, user_id, date]);
+    
+    return result;
+  }
+  
+
 }
 
 module.exports = DiaryStorage;

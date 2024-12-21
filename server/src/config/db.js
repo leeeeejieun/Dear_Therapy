@@ -15,8 +15,11 @@ module.exports = {
     connection: async(query, values = []) => {
         try {
             const [result] = await pool.query(query, values);
-            return result[0];
-        }catch(err) {
+            if (result.length <= 1) {
+                return result[0];
+            }
+                return result;
+        } catch(err) {
             return err;
         }
     }

@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, {css} from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const type = {
     login: {
@@ -15,7 +15,18 @@ const type = {
             font-size: 15px;
         `,
     },
-
+    next: { 
+        buttonStyle: css`
+            position: absolute;
+            bottom: 23%;
+            right: 1rem;
+            width: 140px;
+            height: 60px;
+        `,
+        textStyle: css`
+            font-size: 15px;
+        `,
+    },
     save: {
         buttonStyle: css`
             position: relative;
@@ -36,7 +47,6 @@ const type = {
             color: black;
         `
     },
-
     change: {
         buttonStyle: css`
             position: relative;
@@ -54,7 +64,6 @@ const type = {
             color: black;
         `
     },
-
     analysis: {
         buttonStyle: css`
             position: relative;
@@ -73,15 +82,14 @@ const type = {
     }
 };
 
-
-const Button = ({onClick, buttonType, icon, text}) => {
-    const {buttonStyle, textStyle, iconStyle} = type[buttonType];
+const Button = ({ onClick, buttonType, icon, text, disabled}) => {
+    const { buttonStyle, textStyle, iconStyle } = type[buttonType];
     
-    return(
-        <StyledButton $buttonStyle={buttonStyle} onClick={onClick} >
+    return (
+        <StyledButton $buttonStyle={buttonStyle} onClick={onClick} disabled={disabled}>
             <ButtonContent>
-                { icon && <ButtonIcon $iconStyle={iconStyle}>{icon}</ButtonIcon> } 
-                { text && <ButtonText $textStyle={textStyle}>{text}</ButtonText> }
+                {icon && <ButtonIcon $iconStyle={iconStyle}>{icon}</ButtonIcon>} 
+                {text && <ButtonText $textStyle={textStyle}>{text}</ButtonText>}
             </ButtonContent>
             <ButtonImage src="https://diary-project-images.s3.ap-northeast-2.amazonaws.com/frontend/ob2.png" alt="error" />
         </StyledButton>
@@ -97,7 +105,7 @@ const StyledButton = styled.button`
     background: transparent;  // 기본 배경 제거
     font-family: inherit;
     ${(props) => props.$buttonStyle};
-`
+`;
 
 const ButtonContent = styled.div`
     position: relative;
@@ -105,7 +113,7 @@ const ButtonContent = styled.div`
     justify-content: center;
     align-items: center;
     gap: 10px;   // 아이콘과 텍스트 사이의 간격 조정
-`
+`;
 
 const ButtonText = styled.span`
     z-index: 1; 
@@ -117,7 +125,7 @@ const ButtonText = styled.span`
 const ButtonIcon = styled.span`
     z-index: 1; 
     ${(props) => props.$iconStyle};
-`
+`;
 
 const ButtonImage = styled.img`
     position: absolute;
@@ -125,5 +133,4 @@ const ButtonImage = styled.img`
     left: 50%;
     transform: translateX(-50%); // 이미지 중앙 정렬
     max-height: 100px;
-    ;
 `;

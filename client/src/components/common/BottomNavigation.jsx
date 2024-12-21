@@ -18,14 +18,12 @@ const BottomNavigation = () => {
 export default BottomNavigation;
 
 const BottomNavigationContainer = styled.div`
-  position: relative;
-  bottom: 0;  
   display: flex;
   justify-content: space-around;
   gap: 2rem;
-  width: 100%; 
-  height: 10%;
-  padding: 15px;
+  height: 10vh;
+  padding: 20px;
+  margin-top: 20px;
   background: url("https://diary-project-images.s3.ap-northeast-2.amazonaws.com/frontend/2.png");
   background-size: cover;
   border: 2px dashed black;    

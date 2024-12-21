@@ -115,22 +115,27 @@ const DiaryPage = () => {
     };
   
   return (
-    <DiaryContainer>
-      <DateNavigation currentDate={currentDate} />
-      <ImageUploader image={selectedImage} handleImageUpload={handleImageUpload} isEditing={isEditing} handleCancelImage={handleCancelImage} isSaved={isSaved} />
-      <DiaryForm diaryContent={diaryContent} setDiaryContent={setDiaryContent} isEditing={!isSaved} />
-      <SaveButton handleSave={handleSave} isSaved={isSaved} handleEdit={handleEdit} handleConfirmEdit={handleConfirmEdit} isEditing={isEditing} />
+    <DiaryPageContainer>
+        <DiaryContainer>
+            <DateNavigation currentDate={currentDate} />
+            <ImageUploader image={selectedImage} handleImageUpload={handleImageUpload} isEditing={isEditing} handleCancelImage={handleCancelImage} isSaved={isSaved} />
+            <DiaryForm diaryContent={diaryContent} setDiaryContent={setDiaryContent} isEditing={!isSaved} />
+            <SaveButton handleSave={handleSave} isSaved={isSaved} handleEdit={handleEdit} handleConfirmEdit={handleConfirmEdit} isEditing={isEditing} />
+        </DiaryContainer>
       <BottomNavigation />
-    </DiaryContainer>
+    </DiaryPageContainer>
+    
   );
 };
 
 export default DiaryPage;
 
 const DiaryContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-  background-color: ${props => props.theme.background};
-`;
+    flex-grow: 1;
+`
+
+const DiaryPageContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+`
