@@ -6,9 +6,7 @@ import SaveButton from "components/diary/SaveButton";
 import BottomNavigation from "components/common/BottomNavigation";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
-import { postDiary } from "api/diary";
-import { getView } from "api/diary";
-import { putEdit } from "api/diary";
+import { postDiary, getView, putEdit } from "api/diary";
 import UserContext from "contexts/UserContext";
 
 const DiaryPage = () => {
@@ -23,73 +21,67 @@ const DiaryPage = () => {
     // 로그인된 사용자 아이디 가져오기
     const { user } = useContext(UserContext);
 
-    // 날짜 가져오기
+    // 초기 렌더링 시 일기 조회
     useEffect(() => {
       const selectedDate = location.state?.selectedDate;
-      const [year, month, day] = selectedDate.split("-");
-      const formattedDay = day.padStart(2, '0');
-       setCurrentDate(`${year}-${month}-${formattedDay}`); // YYYY-MM-DD 형식
-      }, [location.state]);
+      console.log(selectedDate)
+      if (selectedDate) {
+        setCurrentDate(selectedDate);
+        getDiary(selectedDate); 
+      }
+    }, [location.state]);
 
     // 이미지 선택 핸들러
-    const handleImageUpload = (img, file) => {
+    const handleImageUpload = (img) => {
       setSelectedImage(img);
     };
-  
+    
     // 저장 버튼 클릭 핸들러
     const handleSave = async () => {
       try {
-        const formData = new FormData();
-        formData.append('user_id', user);
-        formData.append('date', currentDate);
-        formData.append('title', diaryContent.title);
-        formData.append('content', diaryContent.content);
-        if (selectedImage) {
-          formData.append('image', selectedImage);
-        }
+        const diaryData = new FormData();
+        diaryData.append('user_id', user);
+        diaryData.append('date', currentDate);
+        diaryData.append('title', diaryContent.title);
+        diaryData.append('content', diaryContent.content);
+        diaryData.append('image', selectedImage);
 
-        for (let pair of formData.entries()) {
-          console.log(pair[0] + ', ' + pair[1]);
-        }
-
-        const response = await postDiary(formData);
+        const response = await postDiary(diaryData);
     
         if (response.status === 201) {
           setIsSaved(true);
           setIsEditing(false);
         }
       } catch (error) {
-        console.log(error.response.data.message);
+        console.log(error.response.data.error);
       }
     };
   
     // 수정 버튼 클릭 핸들러
-    const handleEdit = () => {
-      setIsEditing(true);
+    const handleEdit = async () => {
       setIsSaved(false);
+      setIsEditing(true);
     };
   
     // 수정 확인 버튼 클릭 핸들러
-    const handleConfirmEdit = () => {
-       setIsEditing(false);
-       setIsSaved(true);
+    const handleConfirmEdit = async () => {
+      try {
+        const diaryData = new FormData();
+        diaryData.append('title', diaryContent.title);
+        diaryData.append('content', diaryContent.content);
+        diaryData.append('image', selectedImage);
+        const userInfo = {user_id: user, date: currentDate}
+        const response = await putEdit(diaryData, userInfo);
+
+        if (response.status === 201) {
+          setIsSaved(true);
+          setIsEditing(false);
+        }
+      } catch (error) {
+        console.log(error.response.data.error);
+      }
     };
   
-    // 이미지 취소 핸들러
-    const handleCancelImage = () => {
-      setSelectedImage(null);
-      setIsSaved(false);    
-    };
-
-    // 초기 렌더링 시 일기 조회
-    useEffect(() => {
-      const selectedDate = location.state?.selectedDate;
-      if (selectedDate) {
-        setCurrentDate(selectedDate);
-        getDiary(selectedDate); 
-      }
-  }, [location.state]);
-
     // 특정 날짜의 일기를 조회하는 함수
     const getDiary = async (currentDate) => {
       try {
@@ -118,7 +110,7 @@ const DiaryPage = () => {
     <DiaryPageContainer>
         <DiaryContainer>
             <DateNavigation currentDate={currentDate} />
-            <ImageUploader image={selectedImage} handleImageUpload={handleImageUpload} isEditing={isEditing} handleCancelImage={handleCancelImage} isSaved={isSaved} />
+            <ImageUploader image={selectedImage} handleImageUpload={handleImageUpload} isEditing={isEditing} isSaved={isSaved} />
             <DiaryForm diaryContent={diaryContent} setDiaryContent={setDiaryContent} isEditing={!isSaved} />
             <SaveButton handleSave={handleSave} isSaved={isSaved} handleEdit={handleEdit} handleConfirmEdit={handleConfirmEdit} isEditing={isEditing} />
         </DiaryContainer>
