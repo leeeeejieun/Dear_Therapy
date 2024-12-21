@@ -23,19 +23,18 @@ const Instructions = ({ step }) => {
 const InstructionContainer = styled.div`
   display: flex;
   justify-content: column; 
-  align-items: flex-start;
-  margin-top: -50px;
+  margin-top: -10px;
 `;
 
 const InstructionList = styled.ul`
   list-style: disc;
   margin: 20px 0;
-  padding: 0;
 `;
 
 const InstructionItem = styled.li`
   margin-bottom: 10px;
   font-size: 14px;
+  width: 100%;
 `;
 
 export default Instructions;

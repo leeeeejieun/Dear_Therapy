@@ -1,46 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { checkEmailDuplication } from 'api/email'; 
-import NextButton from 'components/signup/NextButton'; 
 
-const EmailInput = ({ nextStep,saveData,setIsStepValid   }) => {
+const EmailInput = ({ saveData,setIsStepValid   }) => {
     const [email, setEmail] = useState('');
     const [error, setError] = useState('');
-    const [isEmailValid, setIsEmailValid] = useState(false);
-    const [isValid, setIsValid] = useState(false);  
 
-    useEffect(() => { 
-        setIsValid(isEmailValid);  
-    }, [isEmailValid]);
-
-    const validateEmail = (email) => {
+    const validEmail = (email) => {
         const emailPattern = /^[a-zA-Z0-9._%+-]+@naver\.com$/; // 네이버 메일
         return emailPattern.test(email);
     };
 
     const handleEmailDuplication = async (e) => {
         e.preventDefault();
-        if (!validateEmail(email)) {
+        if (!validEmail(email)) {
             setError('네이버 메일 주소를 입력해주세요.');
-            setIsEmailValid(false);
             setIsStepValid(false);
-            console.log(isEmailValid); // 이메일 검증 결과 확인
             return;
         }
         try {
             const data = await checkEmailDuplication(email);
-            console.log(data); // 서버통신
+           
             if (data === 200) {
-                alert("사용 가능한 이메일입니다")
-                setError('');
-                setIsEmailValid(true);
+                setError("사용 가능한 이메일입니다");
                 setIsStepValid(true);
                 saveData(email);
             }
         } catch (err) {
             const errMessage = err.response.data.error.message;
-            console.log(err); //서버통신 오류
-            alert(errMessage)
             setError(errMessage);
             setIsStepValid(false);
         }
@@ -60,9 +47,7 @@ const EmailInput = ({ nextStep,saveData,setIsStepValid   }) => {
                 <CheckButton onClick={handleEmailDuplication}>중복확인</CheckButton>
             </InputWrapper>
             {error && <ErrorMessage>{error}</ErrorMessage>}
-            <NextButtonWrapper>
-                <NextButton disabled={!isValid} onClick={nextStep} />
-            </NextButtonWrapper>
+           
         </EmailInputContainer>
     );
 };
@@ -123,9 +108,5 @@ const ErrorMessage = styled.p`
     color: ${(props) => props.theme.text_warn};
 `;
 
-const NextButtonWrapper = styled.div`
-    margin-top: 20px; 
-    margin-left: 20px;
-`;
 
 export default EmailInput;

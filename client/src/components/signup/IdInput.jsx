@@ -1,17 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { checkIdDuplication } from 'api/id'; 
-import NextButton from 'components/signup/NextButton'; 
-import { useEffect } from 'react';
 
-const IdInput = ({ nextStep, setIsStepValid,saveData }) => {
+const IdInput = ({ setIsStepValid,saveData }) => {
     const [userId, setUserId] = useState('');
     const [error, setError] = useState('');
-    const [isValid, setIsValid] = useState(false);
-
-    useEffect(() => {
-        setIsStepValid(isValid);
-    }, [isValid]);
 
     const validateId = (userId) => {
         const idPattern = /^[a-z0-9]{3,15}$/; // 소문자와 숫자만, 3-15자
@@ -22,7 +15,6 @@ const IdInput = ({ nextStep, setIsStepValid,saveData }) => {
         e.preventDefault();
         if (!validateId(userId)) {
             setError('아이디는 영문 소문자와 숫자만 포함되어야 하며, 3-15자 사이여야 합니다.');
-            setIsValid(false);
             setIsStepValid(false);
             return;
         }
@@ -30,22 +22,17 @@ const IdInput = ({ nextStep, setIsStepValid,saveData }) => {
         try {
             const data = await checkIdDuplication(userId);
             if (data === 200) {
-                alert("사용 가능한 아이디입니다")
-                setError('');
-                setIsValid(true);
+                setError("사용 가능한 아이디입니다");
                 setIsStepValid(true);
                 saveData(userId);
             }
         } catch (err) {
             const errMessage = err.response.data.error.message;
-            alert(errMessage)
             setError(errMessage);
-            setIsValid(false);
             setIsStepValid(false);
         }
     };
 
-    console.log("isValid",isValid)
     return (
         <IdInputContainer>
             <Label>사용할 아이디를 입력해주세요</Label>
@@ -59,10 +46,7 @@ const IdInput = ({ nextStep, setIsStepValid,saveData }) => {
                 />
                 <CheckButton onClick={handleIdDuplication}>중복확인</CheckButton>
             </InputWrapper>
-            {error && <ErrorMessage>{error}</ErrorMessage>}
-            <NextButtonWrapper>
-                <NextButton disabled={!isValid} onClick={nextStep} /> 
-            </NextButtonWrapper>
+            {error && <ErrorMessage>{error}</ErrorMessage>}  
         </IdInputContainer>
     );
 };
@@ -121,11 +105,6 @@ const ErrorMessage = styled.p`
     margin-top: 10px;
     font-size: 14px;
     color: ${(props) => props.theme.text_warn};
-`;
-
-const NextButtonWrapper = styled.div`
-    margin-top: 20px; 
-    margin-left: 20px;
 `;
 
 export default IdInput;

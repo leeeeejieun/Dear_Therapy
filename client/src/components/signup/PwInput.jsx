@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import NextButton from 'components/signup/NextButton'; 
 
-const PwInput = ({ nextStep, setIsStepValid, saveData }) => {
+const PwInput = ({ setIsStepValid, saveData }) => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
@@ -47,8 +46,6 @@ const PwInput = ({ nextStep, setIsStepValid, saveData }) => {
         }
     };
 
-    const isFormValid = isPasswordValid && isConfirmPasswordValid;
-
     return (
         <PwInputContainer>
             <Label>비밀번호를 입력해주세요</Label>
@@ -67,9 +64,6 @@ const PwInput = ({ nextStep, setIsStepValid, saveData }) => {
                 className={!isConfirmPasswordValid ? 'error' : ''} 
             />
             {error && <ErrorMessage>{error}</ErrorMessage>}
-            <NextButtonWrapper>
-                <NextButton disabled={!isFormValid} onClick={nextStep} /> 
-            </NextButtonWrapper>
         </PwInputContainer>
     );
 };
@@ -106,11 +100,6 @@ const ErrorMessage = styled.p`
     margin-top: 10px;
     font-size: 14px;
     color: ${(props) => props.theme.text_warn};
-`;
-
-const NextButtonWrapper = styled.div`
-    margin-top: 20px; 
-    margin-left: 20px;
 `;
 
 export default PwInput;

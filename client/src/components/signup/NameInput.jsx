@@ -1,15 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import NextButton from 'components/signup/NextButton'; 
 
-const NameInput = ({ nextStep, setIsStepValid,saveData }) => {
+const NameInput = ({ setIsStepValid,saveData }) => {
     const [nickname, setNickname] = useState('');
     const [error, setError] = useState('');
-    const [isValid, setIsValid] = useState(false);
-
-    useEffect(() => { 
-        setIsStepValid(isValid); 
-    }, [isValid, setIsStepValid]);
 
     const validateNickname = (nickname) => {
         return nickname.length >= 1 && nickname.length <= 8; // 닉네임 8자 이하
@@ -21,11 +15,9 @@ const NameInput = ({ nextStep, setIsStepValid,saveData }) => {
         saveData(newNickname);
         if (!validateNickname(newNickname)) {
             setError('닉네임은 1자 이상, 8자 이하여야 합니다.');
-            setIsValid(false);
             setIsStepValid(false);
         } else {
             setError('');
-            setIsValid(true);
             setIsStepValid(true);
         }
     };
@@ -41,9 +33,6 @@ const NameInput = ({ nextStep, setIsStepValid,saveData }) => {
                 className={error ? 'error' : ''} 
             />
             {error && <ErrorMessage>{error}</ErrorMessage>}
-            <NextButtonWrapper>
-                <NextButton disabled={!isValid} onClick={nextStep} />
-            </NextButtonWrapper>
         </NameInputContainer>
     );
 };
@@ -80,11 +69,6 @@ const ErrorMessage = styled.p`
     margin-top: 10px;
     font-size: 14px;
     color: ${(props) => props.theme.text_warn};
-`;
-
-const NextButtonWrapper = styled.div`
-    margin-top: 20px; 
-    margin-left: 20px;
 `;
 
 export default NameInput;

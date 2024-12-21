@@ -5,9 +5,8 @@ import EmailInput from 'components/signup/EmailInput';
 import IdInput from 'components/signup/IdInput';
 import PwInput from 'components/signup/PwInput';
 import NameInput from 'components/signup/NameInput';
-import Completemsg from 'components/signup/Completemsg';
-import NextButton from 'components/signup/NextButton';
-import SignUpPageContainer from 'components/signup/SignUpPageContainer';
+import CompleteMsg from 'components/signup/CompleteMsg';
+import Button from 'components/common/Button'; 
 import Instructions from 'components/signup/Instructions';
 import { useNavigate } from 'react-router-dom';
 import { registerUser } from '../api/user';
@@ -17,10 +16,10 @@ const SignUpPage = () => {
     const [isStepValid, setIsStepValid] = useState(false);
     const navigate = useNavigate(); 
     const [userData, setUserData] = useState({
-        "user_id": '',
+        user_id: '',
         name: '',
         email: '',
-        password: '',
+        password: '', 
     });
 
     const nextStep = async () => { 
@@ -28,15 +27,12 @@ const SignUpPage = () => {
             if (step === 5) { 
                 navigate('/login');  
             } else if (step === 4) {
-                {
-                    try {
-                        await registerUser(userData);
-                        setUserData({})
-                        setStep(5);
-                    } catch (err) {
-                        const errMessage = err.response.data.error.message;
-                        alert(errMessage)
-                    }
+                try {
+                    await registerUser(userData);
+                    setUserData({})
+                    setStep(5);
+                } catch (err) {
+                    console.log(err.response.data.error.message);
                 }
             }
             else { 
@@ -55,46 +51,45 @@ const SignUpPage = () => {
             {step === 1 && (
                 <>
                     <EmailInput setIsStepValid={setIsStepValid} nextStep={nextStep} saveData={(value) => updateUserData('email', value)}/> 
-                    <ContentContainer>
-                        <Instructions step={1} />
-                    </ContentContainer>
+                    <Instructions step={1} />
                 </>
             )}
             {step === 2 && (
                 <>
                     <IdInput setIsStepValid={setIsStepValid} nextStep={nextStep} saveData={(value) => updateUserData('user_id', value)}/>
-                    <ContentContainer>
-                        <Instructions step={2} />
-                    </ContentContainer>
+                    <Instructions step={2} />
+                    
                 </>
             )}
             {step === 3 && (
                 <>
                     <PwInput setIsStepValid={setIsStepValid} nextStep={nextStep} saveData={(value) => updateUserData('password', value)}/>
-                    <ContentContainer>
-                        <Instructions step={3} />
-                    </ContentContainer>
+                    <Instructions step={3} />
+                    
                 </>
             )}
             {step === 4 && (
                 <>
                     <NameInput setIsStepValid={setIsStepValid} nextStep={nextStep} saveData={(value) => updateUserData('name', value)}/>
-                    <ContentContainer>
-                        <Instructions step={4} />
-                    </ContentContainer>
+                    <Instructions step={4} />
                 </>
             )}
-            {step === 5 && <Completemsg />}
-            <NextButton text={step === 5 ? "로그인 페이지로" : "다음"} onClick={nextStep} disabled={!isStepValid} />
+            {step === 5 && <CompleteMsg />}
+            <Button buttonType="next" text={step === 5 ? "로그인 페이지로" : "다음"} onClick={nextStep} disabled={!isStepValid} />
         </SignUpPageContainer>
     );
 };
 
-const ContentContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start; 
-    width: 80%; 
+
+const SignUpPageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px; 
+  gap: 20px; 
+  width: 100%;
+  margin-top: 90px;
 `;
 
 export default SignUpPage;

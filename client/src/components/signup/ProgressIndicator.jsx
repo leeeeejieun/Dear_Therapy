@@ -35,16 +35,6 @@ const Step = styled.div`
     }
 `;
 
-const currentStep = styled.div`
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background: ${(props) => props.theme.background};
-    text-align: center;
-    line-height: 25px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-`;
-
 const Line = styled.div`
     height: 2px;
     flex-grow: 1;

@@ -15,11 +15,10 @@ const type = {
             font-size: 15px;
         `,
     },
-
     next: { 
         buttonStyle: css`
             position: absolute;
-            bottom: 30%;
+            bottom: 23%;
             right: 1rem;
             width: 140px;
             height: 60px;
@@ -83,11 +82,11 @@ const type = {
     }
 };
 
-const Button = ({ onClick, buttonType, icon, text, disabled }) => {
+const Button = ({ onClick, buttonType, icon, text, disabled}) => {
     const { buttonStyle, textStyle, iconStyle } = type[buttonType];
     
     return (
-        <StyledButton type="button" $buttonStyle={buttonStyle} onClick={onClick} disabled={disabled}>
+        <StyledButton $buttonStyle={buttonStyle} onClick={onClick} disabled={disabled}>
             <ButtonContent>
                 {icon && <ButtonIcon $iconStyle={iconStyle}>{icon}</ButtonIcon>} 
                 {text && <ButtonText $textStyle={textStyle}>{text}</ButtonText>}

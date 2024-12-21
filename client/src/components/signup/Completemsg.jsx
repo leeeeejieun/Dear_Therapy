@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Completemsg = () => {
+const CompleteMsg = () => {
     return (
         <CompleteContainer>
             <CheckImage src="https://diary-project-images.s3.ap-northeast-2.amazonaws.com/frontend/signup_check.png" alt="초록색 체크" />
@@ -31,4 +31,4 @@ const Message = styled.h1`
     color: ${(props) => props.theme.text};
 `;
 
-export default Completemsg;
+export default CompleteMsg;
