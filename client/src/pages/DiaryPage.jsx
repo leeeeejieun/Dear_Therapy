@@ -24,7 +24,6 @@ const DiaryPage = () => {
     // 초기 렌더링 시 일기 조회
     useEffect(() => {
       const selectedDate = location.state?.selectedDate;
-      console.log(selectedDate)
       if (selectedDate) {
         setCurrentDate(selectedDate);
         getDiary(selectedDate); 
