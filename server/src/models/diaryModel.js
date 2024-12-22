@@ -121,6 +121,26 @@ class Diary{
   
       return { code: 201 };
     }
+
+    async delete(){
+      const { user_id, date } = this.body;
+     
+      if (!user_id || !date || !this.isValidDate(date)) {
+        return { code: 400, message: "잘못된 형태의 데이터 입니다." }; 
+      }
+  
+      const diary = await diaryStorage.findDate(user_id, date);  
+      if (!diary) {
+        return { code: 404, message: "해당 날짜의 일기가 존재하지 않습니다." };
+      }
+  
+      if (diary.image) {
+        await s3Utils.deleteImage(diary.image);
+      }
+  
+      await diaryStorage.deleteDiary(user_id, date);
+      return { code: 200 };
+    }
   
   };
   
