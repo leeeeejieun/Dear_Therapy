@@ -15,7 +15,6 @@ import { useState } from "react";
 
 const useCalender = () => {
     const [currentDate, setCurrantDate] = useState(new Date());  // Sun Nov 17 2024 00:30:08 GMT+0900 (한국 표준시)과 같은 데이터 반환
-    const [selectedDate, setSelectedDate] = useState(format(new Date(), "yyyy-MM-d"));  // 사용자가 선택한 날짜를 저장(기본 값은 현재 날짜)
     const currentMonth = format(currentDate, "M"); // 현재 월 반환
     const currentYear = format(currentDate, "yyyy") // 현재 연도 반환
 
@@ -50,11 +49,6 @@ const useCalender = () => {
         setCurrantDate((prevDate) => addYears(prevDate, 1));
     }
 
-    // 특정 날짜 선택
-    const handleSelectDate = (date) => {
-        setSelectedDate(date);
-    }
-
     // 각 날짜에 대한 정보 반환
     const daysInMonth = days.map((day) => {
         const isCurrentMonth = format(day, "M") === currentMonth // 주어진 날짜가 해당 월에 속하는지 확인
@@ -75,10 +69,6 @@ const useCalender = () => {
             handleNextMonth,
             handlePrevYear,
             handleNextYear,
-        },
-        selectedDate: {
-            date: selectedDate,
-            selectDate: handleSelectDate,
         },
     }; 
 };

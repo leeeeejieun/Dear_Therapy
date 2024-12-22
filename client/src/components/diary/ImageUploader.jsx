@@ -1,9 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FaCamera } from "react-icons/fa";
 
-const ImageUploader = ({ image, handleImageUpload, isEditing, handleCancelImage, isSaved }) => {
+const ImageUploader = ({ image, handleImageUpload, isEditing, isSaved }) => {
   const [img, setImg] = useState(image);
+
+  useEffect(() => {
+    if (!(image instanceof File)) {
+        setImg(image);  
+    }
+  }, [image]);
 
   const handleUpload = (e) => {
     const file = e.target.files[0];
@@ -11,7 +17,7 @@ const ImageUploader = ({ image, handleImageUpload, isEditing, handleCancelImage,
       const reader = new FileReader();
       reader.onloadend = () => {
         setImg(reader.result);
-        handleImageUpload(reader.result, file);
+        handleImageUpload(file);
       };
       reader.readAsDataURL(file);
     } else {
@@ -40,7 +46,6 @@ const ImageUploader = ({ image, handleImageUpload, isEditing, handleCancelImage,
     </ImageUploaderContainer>
   );
 }
-
 export default ImageUploader;
 
 const ImageUploaderContainer = styled.div`

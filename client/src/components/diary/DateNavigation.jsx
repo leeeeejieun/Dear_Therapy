@@ -3,10 +3,13 @@ import { SlArrowLeft } from "react-icons/sl";
 import { SlArrowRight } from "react-icons/sl";
 
 const DateNavigation = ({ currentDate }) => {
+  const [year, month, day] = currentDate.split("-");
+  const date = `${year}년 ${month}월 ${day}일`; 
+
   return (
     <DateNavigationContainer>
       <ArrowButton>{<SlArrowLeft />}</ArrowButton>
-      <DateText>{currentDate}</DateText>
+      <DateText>{date}</DateText>
       <ArrowButton>{<SlArrowRight />}</ArrowButton>
     </DateNavigationContainer>
   );
