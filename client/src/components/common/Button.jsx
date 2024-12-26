@@ -79,6 +79,26 @@ const type = {
             font-size: 15px;
             color: black;
         `
+    },
+    delete: {
+        buttonStyle: css`
+            position: relative;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 140px;
+            height: 60px;
+            margin: 15px 0;  
+        `,
+        textStyle: css`
+            font-size: 16px;
+            letter-spacing: -1px;
+        `,
+        iconStyle: css`
+            transform: translateY(10%);
+            font-size: 16px;
+            color: black;
+        `
     }
 };
 

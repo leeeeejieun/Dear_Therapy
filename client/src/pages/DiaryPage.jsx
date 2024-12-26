@@ -4,9 +4,10 @@ import ImageUploader from "components/diary/ImageUploader";
 import DiaryForm from "components/diary/DiaryForm";
 import SaveButton from "components/diary/SaveButton";
 import BottomNavigation from "components/common/BottomNavigation";
+import DeleteButton from "components/diary/DeleteButton"
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
-import { postDiary, getView, putEdit } from "api/diary";
+import { postDiary, getView, putEdit, deleteDiary } from "api/diary";
 import UserContext from "contexts/UserContext";
 
 const DiaryPage = () => {
@@ -104,6 +105,27 @@ const DiaryPage = () => {
         console.log(error.response.data.error);
       }
     };
+
+    const handleDelete = async () => {
+      try {
+        const response = await deleteDiary(
+          {
+          data: {
+            user_id: user,
+            date: currentDate,
+          },
+          }
+        );
+  
+        if (response.status === 200) {
+          setDiaryContent({ title: '', content: '' });
+          setSelectedImage(null);
+          setIsSaved(false);
+        }
+      } catch (error) {
+        console.log(error.response.data.error);
+      }
+    };
   
   return (
     <DiaryPageContainer>
@@ -111,6 +133,7 @@ const DiaryPage = () => {
             <DateNavigation currentDate={currentDate} />
             <ImageUploader image={selectedImage} handleImageUpload={handleImageUpload} isEditing={isEditing} isSaved={isSaved} />
             <DiaryForm diaryContent={diaryContent} setDiaryContent={setDiaryContent} isEditing={!isSaved} />
+            {isSaved && <DeleteButton handleDelete={handleDelete} />}
             <SaveButton handleSave={handleSave} isSaved={isSaved} handleEdit={handleEdit} handleConfirmEdit={handleConfirmEdit} isEditing={isEditing} />
         </DiaryContainer>
       <BottomNavigation />
