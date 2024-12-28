@@ -1,0 +1,14 @@
+@font-face {
+    font-family: '금은보화';
+    src: url('../../public/fonts/geumeunbohwa.ttf') format('truetype');
+ }
+
+ @font-face {
+    font-family:'빵구니맘';
+    src: url('../../public/fonts/bbang.ttf') format('truetype');
+ }
+
+ @font-face {
+    font-family:'학교안심 그림일기';
+    src: url('../../public/fonts/school.ttf') format('truetype');
+ }
