@@ -9,6 +9,7 @@ const authToken = require("../middlewares/authToken");
 
 // 라우터
 router.post("/login", authCtrl.login);
+router.post("/login/kakao/:code", authCtrl.kakaoLogin);
 router.post("/tokens", authCtrl.refresh)
 router.delete("/logout", authToken, authCtrl.logout);
 
