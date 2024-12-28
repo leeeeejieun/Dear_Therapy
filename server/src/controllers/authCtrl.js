@@ -43,6 +43,16 @@ const authCtrl = {
                responseUtils.createResponse(res, {code: 500});
           }
      },
+     kakaoLogin: async (req, res) => {
+          const code = req.params.code;
+          try {
+               const auth = new Auth(code);
+               const response = await auth.kakaoLogin();
+               responseUtils.createResponse(res, response);
+          }catch(err) {
+               responseUtils.createResponse(res, {code: 500});
+          }
+     }
 };
 
 module.exports = authCtrl;
