@@ -1,16 +1,19 @@
 import styled from "styled-components";
-import { SlArrowLeft } from "react-icons/sl";
-import { SlArrowRight } from "react-icons/sl";
+import { FaEllipsisH } from "react-icons/fa";
 
-const DateNavigation = ({ currentDate }) => {
+const DateNavigation = ({ currentDate, setIsMenu, setIsSaved }) => {
   const [year, month, day] = currentDate.split("-");
   const date = `${year}년 ${month}월 ${day}일`; 
+  
+  const handelMenu = () => {
+    setIsSaved(false)
+    setIsMenu(true);
+  }
 
   return (
     <DateNavigationContainer>
-      <ArrowButton>{<SlArrowLeft />}</ArrowButton>
       <DateText>{date}</DateText>
-      <ArrowButton>{<SlArrowRight />}</ArrowButton>
+      <MenuIcon onClick={handelMenu}><FaEllipsisH  /></MenuIcon>
     </DateNavigationContainer>
   );
 };
@@ -19,14 +22,16 @@ export default DateNavigation;
 
 const DateNavigationContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   margin: 20px;
 `;
 
-const ArrowButton = styled.button`
+const MenuIcon = styled.button`
+  position: absolute;
+  right: 1.5rem;
   background: none;
-  font-size: 20px;
+  font-size: 16.5px;
   color: black;
 `;
 

@@ -4,8 +4,7 @@ import ImageUploader from "components/diary/ImageUploader";
 import DiaryForm from "components/diary/DiaryForm";
 import SaveButton from "components/diary/SaveButton";
 import BottomNavigation from "components/common/BottomNavigation";
-import DeleteButton from "components/diary/DeleteButton"
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { postDiary, getView, putEdit, deleteDiary } from "api/diary";
 import UserContext from "contexts/UserContext";
@@ -13,11 +12,13 @@ import UserContext from "contexts/UserContext";
 const DiaryPage = () => {
 
   const [currentDate, setCurrentDate] = useState('');
-  const [isEditing, setIsEditing] = useState(false);
   const [diaryContent, setDiaryContent] = useState({ title: '', content: '' });
+  const [isEditing, setIsEditing] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
+  const [isMenu, setIsMenu] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const location = useLocation();
+  const navigate = useNavigate();
 
     // 로그인된 사용자 아이디 가져오기
     const { user } = useContext(UserContext);
@@ -110,18 +111,14 @@ const DiaryPage = () => {
       try {
         const response = await deleteDiary(
           {
-          data: {
             user_id: user,
             date: currentDate,
-          },
           }
         );
-  
         if (response.status === 200) {
-          setDiaryContent({ title: '', content: '' });
-          setSelectedImage(null);
-          setIsSaved(false);
-        }
+            setSelectedImage(null);
+            navigate("/home")
+        };
       } catch (error) {
         console.log(error.response.data.error);
       }
@@ -130,11 +127,10 @@ const DiaryPage = () => {
   return (
     <DiaryPageContainer>
         <DiaryContainer>
-            <DateNavigation currentDate={currentDate} />
+            <DateNavigation currentDate={currentDate} setIsMenu={setIsMenu} setIsSaved={setIsSaved}/>
             <ImageUploader image={selectedImage} handleImageUpload={handleImageUpload} isEditing={isEditing} isSaved={isSaved} />
             <DiaryForm diaryContent={diaryContent} setDiaryContent={setDiaryContent} isEditing={!isSaved} />
-            {isSaved && <DeleteButton handleDelete={handleDelete} />}
-            <SaveButton handleSave={handleSave} isSaved={isSaved} handleEdit={handleEdit} handleConfirmEdit={handleConfirmEdit} isEditing={isEditing} />
+            <SaveButton handleSave={handleSave} isSaved={isSaved} handleEdit={handleEdit} handleConfirmEdit={handleConfirmEdit} handleDelete={handleDelete} isEditing={isEditing} isMenu={isMenu} />
         </DiaryContainer>
       <BottomNavigation />
     </DiaryPageContainer>

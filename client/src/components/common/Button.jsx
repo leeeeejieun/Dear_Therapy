@@ -30,7 +30,6 @@ const type = {
     save: {
         buttonStyle: css`
             position: relative;
-            bottom: 10px;
             left: 50%;
             transform: translateX(-50%);
             width: 140px;
@@ -50,7 +49,6 @@ const type = {
     change: {
         buttonStyle: css`
             position: relative;
-            right: 10px;
             width: 140px;
             height: 60px;
         `,
@@ -69,6 +67,7 @@ const type = {
             position: relative;
             width: 230px;
             height: 65px;
+            transform: translateX(35%);
         `,
         textStyle: css`
             font-size: 15px;
@@ -80,26 +79,6 @@ const type = {
             color: black;
         `
     },
-    delete: {
-        buttonStyle: css`
-            position: relative;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 140px;
-            height: 60px;
-            margin: 15px 0;  
-        `,
-        textStyle: css`
-            font-size: 16px;
-            letter-spacing: -1px;
-        `,
-        iconStyle: css`
-            transform: translateY(10%);
-            font-size: 16px;
-            color: black;
-        `
-    }
 };
 
 const Button = ({ onClick, buttonType, icon, text, disabled}) => {

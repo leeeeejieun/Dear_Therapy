@@ -5,7 +5,7 @@ import EmailInput from 'components/signup/EmailInput';
 import IdInput from 'components/signup/IdInput';
 import PwInput from 'components/signup/PwInput';
 import NameInput from 'components/signup/NameInput';
-import CompleteMsg from 'components/signup/Completemsg';
+import CompleteMsg from 'components/signup/CompleteMsg';
 import Button from 'components/common/Button'; 
 import Instructions from 'components/signup/Instructions';
 import { useNavigate } from 'react-router-dom';
