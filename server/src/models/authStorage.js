@@ -30,6 +30,12 @@ class authStorage {
         const result = await db.connection(query, [user_id, refreshToken]);
         return result;
     }
+
+    static async insertKakaoUser(userData) {
+        const {user_id, user_name, image} = userData;
+        const query = "INSERT INTO User (user_id, user_name, profile_image) VALUES(?, ?, ?);"
+        await db.connection(query, [user_id, user_name, image]);
+    }
 };
 
 module.exports = authStorage;

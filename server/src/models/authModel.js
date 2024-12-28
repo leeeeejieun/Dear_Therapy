@@ -1,6 +1,7 @@
 const authStorage = require("./authStorage");
 const jwtUtils = require("../utils/jwtUtils");
 const userUtils = require("../utils/userUtils");
+const kakaoUtis = require("../utils/kakaoUtils");
 
 class Auth {
 
@@ -19,7 +20,7 @@ class Auth {
 
             if(client.user_id === user_id && checkPassword) {  // 입력한 아이디와 비밀번호가 모두 일치한 경우
                 const accessToken = jwtUtils.sign({user_id: user_id}); 
-                const refreshToken = jwtUtils.sign({}, {expiresIn: "14d"});   // 유효기간을 2주로 설정s
+                const refreshToken = jwtUtils.sign({}, {expiresIn: "14d"});   // 유효기간을 2주로 설정
                 await authStorage.insertRefresh(user_id, refreshToken);
                 return { code: 200, data: {accessToken : accessToken }, refreshToken};
             }
@@ -58,6 +59,31 @@ class Auth {
         await authStorage.deleteRefresh(user_id, refreshToken);
         return { code: 200 };
     }
+
+    async kakaoLogin() {
+        const code = this.body;
+        
+        if(!code) {
+            return {code: 401, message: "인가코드가 존재하지 않습니다."};
+        }
+
+        const token = await kakaoUtis.getAccessToken(code);
+        const user = await kakaoUtis.getUserInfo(token);
+
+        const user_id = String(user.id);
+        const userData = user.kakao_account.profile;
+
+        const findUser = await authStorage.findUser({user_id: user_id});  // 사용자 조회
+        
+        if(!findUser) {
+           await authStorage.insertKakaoUser({user_id: user_id, user_name: userData.nickname, image: userData.profile_image_url});
+        }
+        
+        const accessToken = jwtUtils.sign({user_id: user_id}); 
+        const refreshToken = jwtUtils.sign({}, {expiresIn: "14d"});   // 유효기간을 2주로 설정
+        await authStorage.insertRefresh(user_id, refreshToken);
+        return { code: 200, data: {accessToken : accessToken, user_id: user_id }, refreshToken};
+    };
 }
 
 module.exports = Auth;
