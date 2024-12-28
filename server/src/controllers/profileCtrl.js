@@ -10,5 +10,14 @@ module.exports = {
         } catch(err){
             responseUtils.createResponse(res, {code: 500});
         }
+    },
+    getProfile: async (req, res) => {
+        try {
+            const profile = new Profile({user_id: req.params.user_id});
+            const response = await profile.getProfile();
+            responseUtils.createResponse(res, response);
+        } catch(err){
+            responseUtils.createResponse(res, {code: 500});
+        }
     }
 };
