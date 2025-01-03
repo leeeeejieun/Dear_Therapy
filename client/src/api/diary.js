@@ -26,6 +26,15 @@ export const deleteDiary = async (userData) => {
         const response = await api.delete(`/diary/${user_id}/${date}`);
         return response;
 };
+
+export const postAnalyze = async (userData) => {
+        const  {user_id, date} = userData;
+        const response = await axios.post(`${SERVER_URL}/analysis/${user_id}/${date}`, {
+                headers: { 'Authorization': `Bearer ${localStorage.getItem("accessToken")}`
+                         },
+        });
+        return response;
+}
         
         
 
