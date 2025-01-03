@@ -28,4 +28,16 @@ export const getView = async (userData) => {
                          },
         });
         return response;
-}
+};
+
+export const deleteDiary = async (userData) => {
+        const {user_id, date} = userData;
+        const response = await axios.delete(`${SERVER_URL}/diary/${user_id}/${date}`, {
+                headers: { 'Authorization': `Bearer ${localStorage.getItem("accessToken")}`
+                         },
+        });
+        return response;
+};
+        
+        
+
