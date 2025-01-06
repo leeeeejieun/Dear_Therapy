@@ -8,7 +8,7 @@ import BottomNavigation from "components/common/BottomNavigation";
 import Modal from "components/common/Modal";
 import useModal from "hooks/useModal";
 import styled from "styled-components";
-import { postDiary, getView, putEdit, deleteDiary } from "api/diary";
+import { postDiary, getView, putEdit, deleteDiary, postAnalysis } from "api/diary";
 import UserContext from "contexts/UserContext";
 
 const DiaryPage = () => {
@@ -111,6 +111,7 @@ const DiaryPage = () => {
       }
     };
 
+    // 일기삭제 함수
     const handleDelete = async () => {
       try {
         const response = await deleteDiary(
@@ -122,6 +123,23 @@ const DiaryPage = () => {
         if (response.status === 200) {
             setSelectedImage(null);
             navigate("/home")
+        };
+      } catch (error) {
+        console.log(error.response.data.error);
+      }
+    };
+
+    // 감정분석요청 함수
+    const handleEmotionAnalysis = async () => {
+      try {
+        const response = await postAnalysis(
+          {
+            user_id: user,
+            date: currentDate,
+          }
+        );
+        if (response.status === 201) {
+
         };
       } catch (error) {
         console.log(error.response.data.error);
@@ -158,6 +176,7 @@ const DiaryPage = () => {
               isEditing={isEditing} 
               isMenu={isMenu} 
               openModal={openModal}
+              handleEmotionAnalysis={handleEmotionAnalysis}
             />
         </DiaryContainer>
       <BottomNavigation />
