@@ -19,7 +19,7 @@ const authToken = (req, res, next) => {
         next();     // 다음 미들웨어로 이동
     } 
     else {
-        const response = {code: 403, message: "accessToken이 만료되었습니다."};
+        const response = {code: 401, message: "accessToken이 만료되었습니다."};
         responseUtils.createResponse(res, response);
     }
 };
