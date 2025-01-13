@@ -6,7 +6,6 @@ const DateNavigation = ({ currentDate, setIsMenu, setIsSaved, isSaved }) => {
   const date = `${year}년 ${month}월 ${day}일`; 
   
   const handelMenu = () => {
-    setIsSaved(false)
     setIsMenu(true);
   }
 

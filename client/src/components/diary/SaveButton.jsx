@@ -8,7 +8,7 @@ import { FaSearch } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 
 const SaveButton = ({ handleSave, isSaved, handleEdit, handleConfirmEdit, isEditing, isMenu, openModal }) => {
- 
+  
   return isEditing ? (
     <Button
       buttonType="save"
@@ -16,27 +16,27 @@ const SaveButton = ({ handleSave, isSaved, handleEdit, handleConfirmEdit, isEdit
       text="완료"
       onClick={handleConfirmEdit}
     />
+  ): isMenu ? (
+      <ButtonContainer>
+          <Button
+            buttonType="change"
+            icon={<MdDelete />}
+            text="삭제"
+            onClick={openModal}
+          />
+         <Button
+          buttonType="change"
+          icon={<FaEdit />}
+          text="수정"
+          onClick={handleEdit}
+        /> 
+      </ButtonContainer>
   ) : isSaved ? (
       <Button 
         buttonType="analysis"
         icon={<FaSearch />}
         text="테피에게 감정분석 요청"
         />
-  ) : isMenu ? (
-    <ButtonContainer>
-        <Button
-          buttonType="change"
-          icon={<MdDelete />}
-          text="삭제"
-          onClick={openModal}
-        />
-       <Button
-        buttonType="change"
-        icon={<FaEdit />}
-        text="수정"
-        onClick={handleEdit}
-      /> 
-    </ButtonContainer>
   ) : (
     <Button
       buttonType="save"
