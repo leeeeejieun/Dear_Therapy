@@ -90,7 +90,7 @@ class Diary{
       let imagePath = diary.image;  // 기존 경로 저장
       
       // 이미지가 변경된 경우
-      if(typeof(image) === "object") {
+      if(typeof(image) === "object" || image === "") {
         // 기존 이미지 경로가 존재하는 경우
         if(imagePath) {
           await s3Utils.deleteImage(imagePath);
