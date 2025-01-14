@@ -139,7 +139,13 @@ const DiaryPage = () => {
           }
         );
         if (response.status === 201) {
-
+          navigate('/emotion-analysis', {
+            state: {
+              user_id: user.id, // 사용자 ID 전달
+              date: currentDate, // 현재 날짜 전달
+              analysisResult: response.data, // 감정분석 결과 전달
+            },
+          });
         };
       } catch (error) {
         console.log(error.response.data.error);
@@ -165,7 +171,7 @@ const DiaryPage = () => {
             <DiaryForm 
               diaryContent={diaryContent} 
               setDiaryContent={setDiaryContent} 
-              isEditing={!isSaved} 
+              isEditing={!isSaved}
             />
             <SaveButton 
               handleSave={handleSave} 
@@ -173,10 +179,10 @@ const DiaryPage = () => {
               handleEdit={handleEdit} 
               handleConfirmEdit={handleConfirmEdit} 
               handleDelete={handleDelete} 
+              handleEmotionAnalysis={handleEmotionAnalysis}
               isEditing={isEditing} 
               isMenu={isMenu} 
               openModal={openModal}
-              handleEmotionAnalysis={handleEmotionAnalysis}
             />
         </DiaryContainer>
       <BottomNavigation />

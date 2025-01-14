@@ -29,7 +29,7 @@ export const deleteDiary = async (userData) => {
 
 export const postAnalysis = async (userData) => {
         const  {user_id, date} = userData;
-        const response = await axios.post(`${SERVER_URL}/analysis/${user_id}/${date}`, {
+        const response = await axios.post(`${SERVER_URL}/analysis/${user_id}/${date}`, null, {
                 headers: { 'Authorization': `Bearer ${localStorage.getItem("accessToken")}`
                          },
         });

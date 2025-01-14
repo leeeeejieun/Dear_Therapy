@@ -36,7 +36,7 @@ const SaveButton = ({ handleSave, isSaved, handleEdit, handleConfirmEdit, isEdit
         buttonType="analysis"
         icon={<FaSearch />}
         text="테피에게 감정분석 요청"
-        onclick={handleEmotionAnalysis}
+        onClick={handleEmotionAnalysis}
         />
   ) : (
     <Button
