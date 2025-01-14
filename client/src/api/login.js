@@ -1,13 +1,11 @@
-import axios from 'axios';
-
-const SERVER_URL = process.env.REACT_APP_SERVER_URL;
+import api from "api/token";
 
 export const postLogin = async (userData) => {
-        const response = await axios.post(`${SERVER_URL}/login`, userData);
+        const response = await api.post("/login", userData);
         return response;
 };
 
 export const kakaoLogin = async (code) => {
-        const response = await axios.post(`${SERVER_URL}/login/kakao/${code}`);
+        const response = await api.post(`/login/kakao/${code}`);
         return response;
 }

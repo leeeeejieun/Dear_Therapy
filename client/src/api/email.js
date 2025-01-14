@@ -1,12 +1,10 @@
-import axios from 'axios';
-
-const SERVER_URL = process.env.REACT_APP_SERVER_URL;
+import api from "api/token";
 
 export const checkEmailDuplication = async (email) => {
     try {
-        const response = await axios.get(`${SERVER_URL}/users/email/${email}`);
+        const response = await api.get(`/users/email/${email}`);
         return response.status;
     } catch (error) {
-        throw error
+        throw error;
     }
 };
