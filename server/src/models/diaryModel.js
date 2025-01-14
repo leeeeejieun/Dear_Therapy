@@ -77,7 +77,7 @@ class Diary{
     async update() {
       const { user_id, date, title, content } = this.body;
       const image = this.file; 
-      
+    
       if (!title || !content || !date || !this.isValidDate(date)) {
         return { code: 400, message: "잘못된 형태의 데이터 입니다." };
       }
@@ -86,33 +86,23 @@ class Diary{
       if (!diary) {
         return { code: 404, message: "해당 날짜의 일기가 존재하지 않습니다." };
       }
-  
-      // 기존 이미지 경로
-      const currentImagePath = diary.image || null;
-      let newImagePath = currentImagePath;  // 새 이미지 경로, 기존 이미지가 없으면 null
-  
       
-      if (image) {
-        // 기존 이미지가 있고 새 이미지 경로가 다르면 기존 이미지 삭제
-        if (currentImagePath) {
-          await s3Utils.deleteImage(currentImagePath);
-        }
-        
-        newImagePath = await s3Utils.uploadImage("diary_images", image, user_id, date);
-      }
-      else if (image === null) {
-        // 이미지가 null로 설정된 경우, 기존 이미지를 삭제하고 null 처리
-        if (currentImagePath) {
-          await s3Utils.deleteImage(currentImagePath);
-        }
-        newImagePath = null;
-      }
+      let imagePath = diary.image;  // 기존 경로 저장
+      
+      // 이미지가 변경된 경우
+      if(typeof(image) === "object" || image === "") {
+        // 기존 이미지 경로가 존재하는 경우
+        if(imagePath) {
+          await s3Utils.deleteImage(imagePath);
+        } 
+        imagePath = image ? await s3Utils.uploadImage("diary_images", image, user_id, date) : null;
+      };
 
       const updatedDiaryInfo = {
         user_id,
         title,
         content,
-        imagePath: newImagePath,  
+        imagePath: imagePath,  
         created_date: date,
       };
       

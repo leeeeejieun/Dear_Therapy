@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FaCamera } from "react-icons/fa";
+import { IoClose } from "react-icons/io5";
 
 const ImageUploader = ({ image, handleImageUpload, isEditing, isSaved }) => {
   const [img, setImg] = useState(image);
@@ -25,6 +26,11 @@ const ImageUploader = ({ image, handleImageUpload, isEditing, isSaved }) => {
     }
   };
 
+  const handleDelete = () => {
+    setImg(null);
+    handleImageUpload("");
+  }
+
   return (
     <ImageUploaderContainer>
       <label htmlFor="img" >
@@ -36,6 +42,7 @@ const ImageUploader = ({ image, handleImageUpload, isEditing, isSaved }) => {
             <UploadButton><FaCamera /> 사진 추가하기</UploadButton>
         )}
       </label>
+      {isEditing && img && <Icon onClick={handleDelete}><IoClose /></Icon>}
       <UploadInput
         id="img"
         type="file"
@@ -83,4 +90,13 @@ const ImagePreviewContainer = styled.div`
 const ImagePreview = styled.img`
   height: 100%;
   border-radius: 10px;
+`;
+
+const Icon = styled.button`
+  position: absolute;
+  top: 70px;
+  right: 30px;
+  font-size: 23px;
+  z-index: 10;
+  background: none;
 `;

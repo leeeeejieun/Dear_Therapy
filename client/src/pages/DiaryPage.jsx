@@ -39,7 +39,7 @@ const DiaryPage = () => {
     const handleImageUpload = (img) => {
       setSelectedImage(img);
     };
-    
+
     // 저장 버튼 클릭 핸들러
     const handleSave = async () => {
       try {
@@ -76,10 +76,11 @@ const DiaryPage = () => {
         diaryData.append('image', selectedImage);
         const userInfo = {user_id: user, date: currentDate}
         const response = await putEdit(diaryData, userInfo);
-
+        
         if (response.status === 201) {
-          setIsSaved(true);
+          setIsMenu(false);
           setIsEditing(false);
+          setIsSaved(true);
         }
       } catch (error) {
         console.log(error.response.data.error);
