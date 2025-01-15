@@ -1,20 +1,48 @@
 import ReactDOM from "react-dom";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-const Modal = ({content, closeModal, onDelete}) => {
-    
-    const handleModal =  () => {
-        onDelete();
+const Modal = ({
+        content, 
+        subContent, 
+        closeModal, 
+        onConfirm,
+        children,
+        modalType="default" 
+    }) => {
+
+    const type = {
+        default: {
+            modalStyle: css`
+                width: 280px;
+                height: 230px;
+            `
+        },
+        profile: {
+            modalStyle: css`
+                width: 300px;
+                height: 260px;
+                gap: 20px;
+            `
+        },
+    };
+
+    const handleModal =  async () => {
+        await onConfirm();
         closeModal();
     }
+    
+    const { modalStyle } = type[modalType]
+    const confirmContent = modalType === "default" ? "확인" : "완료";
 
     return ReactDOM.createPortal(
         <ModalContainer>
-           <ModalContent>
-                <Content>{content}</Content>
+           <ModalContent $modalStyle={modalStyle}>
+                <Content $isSubContent={subContent}>{content}</Content>
+                {subContent && <SubContent $isSubContent>{subContent}</SubContent> }
+                {children}
                 <ButtonWrapper>
                     <Button onClick={closeModal}>취소</Button>
-                    <Button style={{color: "#b13b3b"}} onClick={handleModal}>확인</Button>
+                    <Button style={{color: "#b13b3b"}} onClick={handleModal}>{confirmContent}</Button>
                 </ButtonWrapper>
            </ModalContent>
         </ModalContainer>
@@ -39,14 +67,16 @@ const ModalContent = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 270px;
-    height: 230px;
     text-align: center;
+    width: 280px;
+    height: 230px;
     border: 2px solid #938585;
     border-radius: 10px;
     background-color: #FFFFFF;;
     box-shadow: 3px 3px 15px rgb(0,0,0,0.3);
     animation: scale-up-center 0.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+    ${(props) => props.$modalStyle};
+
     @keyframes scale-up-center {
      0% {
         transform: scale(0.5);
@@ -59,14 +89,20 @@ const ModalContent = styled.div`
 
 const Content = styled.p`
     position: relative;
-    top: 4.5rem;
+    top: ${({ $isSubContent }) => ($isSubContent ? "3rem" : "5rem")};
     font-size: 20px;
     font-weight: 700;
 `;
 
+const SubContent = styled.p`
+    margin-top: 10px;
+    font-size: 15px;
+    color: #b13b3b;
+`;
+
 const ButtonWrapper = styled.div`
     position: relative;
-    bottom: 2.5rem;
+    bottom: 2rem;
     display: flex;
     justify-content: space-around;
 `
