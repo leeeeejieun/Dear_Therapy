@@ -162,7 +162,7 @@ const DiaryPage = () => {
         </DiaryContainer>
       <BottomNavigation />
       </DiaryPageContainer>
-      {modal && <Modal content={"정말 일기를 삭제하시겠습니까?"} closeModal={closeModal} onDelete={handleDelete}/> }
+      {modal && <Modal content={"정말 일기를 삭제하시겠습니까?"} closeModal={closeModal} onConfirm={handleDelete}/> }
     </>
   );
 };
