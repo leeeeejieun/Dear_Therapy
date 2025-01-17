@@ -34,9 +34,8 @@ const authCtrl = {
      },
      logout: async (req, res) => {  
           const user_id = req.user.user_id;  // JWT 미들웨어로부터 받은 인증된 사용자 아이디
-          const refreshToken = req.cookies.refreshToken;  
           try {
-               const auth = new Auth({user_id, refreshToken});
+               const auth = new Auth(user_id);
                const response =  await auth.logout();
                responseUtils.createResponse(res, response);
           }catch(err) {

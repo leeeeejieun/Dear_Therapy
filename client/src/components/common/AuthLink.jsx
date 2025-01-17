@@ -25,7 +25,7 @@ const type = {
         `,
         textStyle: css`
             font-size: 15px;
-            transform: translateY(35%);
+            transform: translateY(50%);
         `,
     }
 };

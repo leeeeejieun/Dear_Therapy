@@ -21,13 +21,13 @@ api.interceptors.request.use(
 api.interceptors.response.use(
     response => response,
     async error => {
-        if(error.response?.status === 401) {
-            try {
+        if(error.response?.status === 401 && 
+            (error.response?.data.error.message === "accessToken이 만료되었습니다." ||
+             error.response?.data.error.message === "로그인을 해주세요.")
+            ){  
+                localStorage.removeItem("accessToken");
                 window.location.href = "/";
-            } catch(err) {
-                return Promise.reject(err);
-            }
-        };
+            };
         return Promise.reject(error);
     }
 );

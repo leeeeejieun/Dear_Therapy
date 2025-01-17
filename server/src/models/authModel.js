@@ -51,12 +51,13 @@ class Auth {
     };
 
     async logout() {
-        const { user_id, refreshToken } = this.body;
-        const result = await authStorage.findRefresh(user_id, refreshToken);
+        const user_id = this.body;
+        const result = await authStorage.findRefresh(user_id);
+    
         if (!result){
             return { code: 401, message: "이미 로그아웃이 완료된 사용자입니다."};
         }
-        await authStorage.deleteRefresh(user_id, refreshToken);
+        await authStorage.deleteRefresh(user_id, result.refresh_token);
         return { code: 200 };
     }
 

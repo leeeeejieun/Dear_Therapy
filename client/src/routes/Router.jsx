@@ -6,7 +6,9 @@ import SignUpPage from "pages/SignUpPage";
 import DiaryPage from "pages/DiaryPage";
 import HomePage from "pages/HomePage";
 import GraphPage from "pages/GraphPage";
+import ProfilePage from "pages/ProfilePage";
 import Kakao from "components/login/KaKao";
+
 
 const Router = () => {
     return(
@@ -18,6 +20,7 @@ const Router = () => {
             <Route path="/home" element={<HomePage />} />
             <Route path="/graph" element={<GraphPage />} />
             <Route path="/oauth/callback/kakao" element={<Kakao />}/>
+            <Route path="/profile" element={<ProfilePage />}/>
         </Routes>
     )
 };
