@@ -1,7 +1,7 @@
 const OpenAI = require("openai");
 
 const client = new OpenAI({
-    api_key: process.env.OPENAI_API_KEY
+    apiKey: process.env.OPENAI_API_KEY
 });
 
 // 감정 분류 및 점수화 
@@ -38,6 +38,15 @@ const createComment = async (diaryContent) => {
     }
   ]}); 
   return response.choices[0].message.content;
+};
+
+const createImage = async () => {
+  const response = await client.images.generate({
+    model: "dall-e-3",
+    prompt: "",                   // 이미지에 맞는 프롬프트 설정
+    size: "1024x1024",            
+  });
+  return response.data[0].url;
 };
 
 const requestAnalysis = async (diaryContent) => {
