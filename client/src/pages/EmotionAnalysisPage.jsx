@@ -25,6 +25,10 @@ const PageContainer = styled.div`
 `;
 
 const Title = styled.h3`
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translate(-50%);
   font-weight: bold;
   font-family: '빵구니맘';
   font-size: 24px;
