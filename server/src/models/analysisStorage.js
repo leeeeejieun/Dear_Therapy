@@ -1,6 +1,7 @@
 const db = require("../config/db");
 const { emotion } = require("../controllers/analysisCtrl");
 
+
 class AnalysisStorage {
     
     // 감정 분석 결과 저장(감정 종류&점수)
@@ -13,16 +14,18 @@ class AnalysisStorage {
 
     // 추천 정보 저장(추후에 추천 정보 & 이미지 추가 필요)
     static async insertRecommend(userInfo) {
-        const {user_id, diary_id, comment} = userInfo;
+        const {user_id, diary_id, comment, text, image} = userInfo;
+        const query = `INSERT INTO Recommendation (user_id, diary_id, comment, image, text) VALUES(?, ?, ?, ?, ?)
+                       ON DUPLICATE KEY UPDATE comment = ?, image = ?, text =?`         
+                       
+        await db.connection(query, [user_id, diary_id, comment, image, text, comment, image, text]);
         
-        const query = `INSERT INTO Recommendation (user_id, diary_id, comment) VALUES(?, ?, ?)
-                       ON DUPLICATE KEY UPDATE comment = ?`
-        await db.connection(query, [user_id, diary_id, comment, comment]);
     }
 
     // 추천 정보 조회
     static async getRecommend(userInfo){
         const {user_id, date} = userInfo;
+
         
         const query = `SELECT comment, image, text
                       FROM Recommendation
@@ -30,7 +33,9 @@ class AnalysisStorage {
                                                      FROM Diary
                                                      WHERE user_id = ? AND created_date = ?
                                                     );`
+                                                    
         const response = await db.connection(query, [user_id, date]);
+        
         return response;
     }
 
