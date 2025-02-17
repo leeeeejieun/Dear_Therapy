@@ -53,12 +53,15 @@ class Analysis {
 
         // 감정 분석 요청
         const response = await requestAnalysis(diaryContent.content);  
-        const {sentiment, comment} = response;          
+        const {sentiment, comment,text, image} = response;          
         const [emotion, score] = sentiment.split(",");  // 감정 분류와 점수 분리
         userInfo.diary_id = diaryContent.diary_id;
         userInfo.comment = comment;
         userInfo.emotion = emotion;
         userInfo.score = score;
+        userInfo.image = image;
+        userInfo.text = text;
+      
     
         // 감정 분류 및 점수 결과 저장
         await analysisStorage.insertEmotion(userInfo);
@@ -76,10 +79,11 @@ class Analysis {
         if (!user_id || !date || !this.isValidDate(date)){
             return {code: 400, message: "잘못된 형태의 데이터 입니다."};
         }
-
-        const recommend = await AnalysisStorage.getRecommend(userInfo);
+     
+    
+        const recommend = await analysisStorage.getRecommend(userInfo);
         
-        if(!recommend) {
+        if(!recommend ) {
             return {code: 404, message: "해당 일기는 감정 분석이 수행되지 않았습니다."}
         }
 
@@ -88,8 +92,10 @@ class Analysis {
                     comment: recommend.comment,
                     image: recommend.image,
                     text: recommend.text
+
                 }};
-    }
+                
+                }
 
     async emotion() {
         const userInfo =  this.body;
