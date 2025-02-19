@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from "react";
+import { useState, useEffect, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import DateNavigation from "components/diary/DateNavigation";
 import ImageUploader from "components/diary/ImageUploader";
@@ -7,8 +7,10 @@ import SaveButton from "components/diary/SaveButton";
 import BottomNavigation from "components/common/BottomNavigation";
 import Modal from "components/common/Modal";
 import useModal from "hooks/useModal";
+import Loading from "components/common/Loading";
 import styled from "styled-components";
-import { postDiary, getView, putEdit, deleteDiary, postAnalysis } from "api/diary";
+import { postDiary, getView, putEdit, deleteDiary } from "api/diary";
+import { postAnalysis } from "api/analysis";
 import UserContext from "contexts/UserContext";
 
 const DiaryPage = () => {
@@ -19,6 +21,7 @@ const DiaryPage = () => {
   const [isSaved, setIsSaved] = useState(false);
   const [isMenu, setIsMenu] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [loading, setLoading] = useState(false);
   const { modal, openModal, closeModal } = useModal();
   const location = useLocation();
   const navigate = useNavigate();
@@ -129,9 +132,11 @@ const DiaryPage = () => {
       }
     };
 
-    // 감정분석요청 함수
+    // 감정 분석 요청 함수
     const handleEmotionAnalysis = async () => {
       try {
+        setLoading(true);
+
         const response = await postAnalysis(
           {
             user_id: user,
@@ -139,13 +144,7 @@ const DiaryPage = () => {
           }
         );
         if (response.status === 201) {
-          navigate('/emotion-analysis', {
-            state: {
-              user_id: user.id, // 사용자 ID 전달
-              date: currentDate, // 현재 날짜 전달
-              analysisResult: response.data, // 감정분석 결과 전달
-            },
-          });
+            navigate(`/analysis?date=${currentDate}`); // 쿼리 파라미터로 날짜 전달
         };
       } catch (error) {
         console.log(error.response.data.error);
@@ -155,7 +154,8 @@ const DiaryPage = () => {
   return (
     <>
       <DiaryPageContainer>
-        <DiaryContainer>
+        <DiaryContainer $isLoading={loading}>
+            {loading && <Loading />}
             <DateNavigation 
               currentDate={currentDate} 
               setIsMenu={setIsMenu} 
