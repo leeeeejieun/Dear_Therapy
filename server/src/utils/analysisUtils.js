@@ -43,7 +43,7 @@ const createComment = async (diaryContent) => {
 
 // 추천 정보 기반 이미지 생성
 const createImage = async (recommendationText) => {
-    const prompt = `${recommendationText}에 어울리는 이미지를 생성해줘`;
+    const prompt = `${recommendationText}에 어울리는 귀여운 느낌과 자연스러운 일러스트 스타일의 이미지를 생성해줘. 단, 사진에는 문자가 포함되지 않아야 해.`;
 
     const response = await client.images.generate({
       model: "dall-e-3",
