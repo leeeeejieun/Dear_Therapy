@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from "react";
+import { useState, useEffect, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import DateNavigation from "components/diary/DateNavigation";
 import ImageUploader from "components/diary/ImageUploader";
@@ -7,8 +7,10 @@ import SaveButton from "components/diary/SaveButton";
 import BottomNavigation from "components/common/BottomNavigation";
 import Modal from "components/common/Modal";
 import useModal from "hooks/useModal";
+import Loading from "components/common/Loading";
 import styled from "styled-components";
 import { postDiary, getView, putEdit, deleteDiary } from "api/diary";
+import { postAnalysis } from "api/analysis";
 import UserContext from "contexts/UserContext";
 
 const DiaryPage = () => {
@@ -19,6 +21,7 @@ const DiaryPage = () => {
   const [isSaved, setIsSaved] = useState(false);
   const [isMenu, setIsMenu] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [loading, setLoading] = useState(false);
   const { modal, openModal, closeModal } = useModal();
   const location = useLocation();
   const navigate = useNavigate();
@@ -111,6 +114,7 @@ const DiaryPage = () => {
       }
     };
 
+    // 일기삭제 함수
     const handleDelete = async () => {
       try {
         const response = await deleteDiary(
@@ -127,11 +131,31 @@ const DiaryPage = () => {
         console.log(error.response.data.error);
       }
     };
+
+    // 감정 분석 요청 함수
+    const handleEmotionAnalysis = async () => {
+      try {
+        setLoading(true);
+
+        const response = await postAnalysis(
+          {
+            user_id: user,
+            date: currentDate,
+          }
+        );
+        if (response.status === 201) {
+            navigate(`/analysis?date=${currentDate}`); // 쿼리 파라미터로 날짜 전달
+        };
+      } catch (error) {
+        console.log(error.response.data.error);
+      }
+    };
  
   return (
     <>
       <DiaryPageContainer>
-        <DiaryContainer>
+        <DiaryContainer $isLoading={loading}>
+            {loading && <Loading />}
             <DateNavigation 
               currentDate={currentDate} 
               setIsMenu={setIsMenu} 
@@ -147,7 +171,7 @@ const DiaryPage = () => {
             <DiaryForm 
               diaryContent={diaryContent} 
               setDiaryContent={setDiaryContent} 
-              isEditing={!isSaved} 
+              isEditing={!isSaved}
             />
             <SaveButton 
               handleSave={handleSave} 
@@ -155,6 +179,7 @@ const DiaryPage = () => {
               handleEdit={handleEdit} 
               handleConfirmEdit={handleConfirmEdit} 
               handleDelete={handleDelete} 
+              handleEmotionAnalysis={handleEmotionAnalysis}
               isEditing={isEditing} 
               isMenu={isMenu} 
               openModal={openModal}

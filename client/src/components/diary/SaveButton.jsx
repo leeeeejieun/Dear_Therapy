@@ -7,8 +7,8 @@ import { FaEdit } from "react-icons/fa";
 import { FaSearch } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 
-const SaveButton = ({ handleSave, isSaved, handleEdit, handleConfirmEdit, isEditing, isMenu, openModal }) => {
-  
+const SaveButton = ({ handleSave, isSaved, handleEdit, handleConfirmEdit, isEditing, isMenu, openModal, handleEmotionAnalysis }) => {
+ 
   return isEditing ? (
     <Button
       buttonType="save"
@@ -36,6 +36,7 @@ const SaveButton = ({ handleSave, isSaved, handleEdit, handleConfirmEdit, isEdit
         buttonType="analysis"
         icon={<FaSearch />}
         text="테피에게 감정분석 요청"
+        onClick={handleEmotionAnalysis}
         />
   ) : (
     <Button

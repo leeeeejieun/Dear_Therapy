@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { FaEllipsisH } from "react-icons/fa";
 
-const DateNavigation = ({ currentDate, setIsMenu, setIsSaved, isSaved }) => {
+const DateNavigation = ({ currentDate, setIsMenu, isSaved }) => {
   const [year, month, day] = currentDate.split("-");
   const date = `${year}년 ${month}월 ${day}일`; 
   

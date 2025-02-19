@@ -26,6 +26,8 @@ export const deleteDiary = async (userData) => {
         const response = await api.delete(`/diary/${user_id}/${date}`);
         return response;
 };
+
+
         
         
 
