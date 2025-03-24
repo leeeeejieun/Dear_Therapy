@@ -1,9 +1,9 @@
-import React from 'react';
 import styled from 'styled-components';
 
-const DiaryForm = ({ diaryContent, setDiaryContent, isEditing }) => {
+const DiaryForm = ({ diaryContent, setDiaryContent, isEditing, isSaved }) => {
+
   return (
-    <DiaryFormContainer>
+    <DiaryFormContainer $isSaved={isSaved} >
       <TitleInput
         type="text"
         placeholder="제목"
@@ -30,7 +30,7 @@ const DiaryFormContainer = styled.div`
   background-color: #FFFF;
   outline: 2px dashed #ccc;
   border-radius: 10px;
-  margin: 25px 20px;
+  margin: 15px 20px;
 `;
 
 const TitleInput = styled.input`

@@ -8,6 +8,7 @@ import BottomNavigation from "components/common/BottomNavigation";
 import Modal from "components/common/Modal";
 import useModal from "hooks/useModal";
 import Loading from "components/common/Loading";
+import Analysis from "components/analysis/Analysis";
 import styled from "styled-components";
 import { postDiary, getView, putEdit, deleteDiary } from "api/diary";
 import UserContext from "contexts/UserContext";
@@ -53,13 +54,14 @@ const DiaryPage = () => {
         diaryData.append('image', selectedImage);
 
         setLoading(true);
-        
+      
         const response = await postDiary(diaryData);
     
         if (response.status === 201) {
           setIsSaved(true);
-          navigate(`/analysis?date=${currentDate}`);
+          setLoading(false);
         }
+        
       } catch (error) {
         console.log(error.response.data.error);
       }
@@ -89,7 +91,7 @@ const DiaryPage = () => {
           setIsMenu(false);
           setIsEditing(false);
           setIsSaved(true);
-          navigate(`/analysis?date=${currentDate}`);
+          setLoading(false);
         }
       } catch (error) {
         console.log(error.response.data.error);
@@ -160,6 +162,7 @@ const DiaryPage = () => {
               diaryContent={diaryContent} 
               setDiaryContent={setDiaryContent} 
               isEditing={!isSaved}
+              isSaved={isSaved}
             />
             <SaveButton 
               handleSave={handleSave} 
@@ -172,7 +175,8 @@ const DiaryPage = () => {
               openModal={openModal}
             />
         </DiaryContainer>
-      <BottomNavigation />
+        {isSaved && !isMenu && !isEditing && <Analysis date={currentDate} />}
+        <BottomNavigation />
       </DiaryPageContainer>
       {modal && <Modal content={"정말 일기를 삭제하시겠습니까?"} closeModal={closeModal} onConfirm={handleDelete}/> }
     </>
@@ -190,3 +194,4 @@ const DiaryPageContainer = styled.div`
     flex-direction: column;
     height: 100vh;
 `
+

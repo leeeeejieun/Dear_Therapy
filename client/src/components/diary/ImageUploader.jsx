@@ -38,7 +38,7 @@ const ImageUploader = ({ image, handleImageUpload, isEditing, isSaved }) => {
           <ImagePreviewContainer>
             <ImagePreview src={img} alt="Uploaded Preview" />
           </ImagePreviewContainer>
-        ) : (
+        ) : !isSaved && (
             <UploadButton><FaCamera /> 사진 추가하기</UploadButton>
         )}
       </label>
@@ -48,7 +48,7 @@ const ImageUploader = ({ image, handleImageUpload, isEditing, isSaved }) => {
         type="file"
         accept="image/*"
         onChange={handleUpload}
-        disabled={isSaved && !isEditing}
+        disabled={isSaved || !isEditing}
       />
     </ImageUploaderContainer>
   );
@@ -60,10 +60,7 @@ const ImageUploaderContainer = styled.div`
   justify-content: center;
   align-items: center;
   margin: 20px;
-  border: 2px dashed #ccc;
-  border-radius: 10px;
-  cursor: pointer;
-
+  
   > label{
     width: 100%;
     display: flex;
@@ -77,6 +74,10 @@ const UploadInput = styled.input`
 `;
 
 const UploadButton = styled.div`
+  border: 2px dashed #ccc;
+  border-radius: 10px;
+  width: 100%;
+  text-align: center;
   padding: 20px;
   color: #888;
   cursor: pointer;
@@ -94,7 +95,7 @@ const ImagePreview = styled.img`
 
 const Icon = styled.button`
   position: absolute;
-  top: 70px;
+  top: 90px;
   right: 30px;
   font-size: 23px;
   z-index: 10;

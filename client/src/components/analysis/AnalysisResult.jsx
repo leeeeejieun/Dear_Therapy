@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, useRef } from "react";
+import { useState, useEffect, useContext } from "react";
 import { getAnalysis  } from "api/analysis";
 import UserContext from "contexts/UserContext";
 import styled from "styled-components";
@@ -21,6 +21,7 @@ const AnalysisResult = ({date}) => {
                 }
             );
         if(response.status === 200) {
+            console.log(response.data.success)
             setAnalysisData(response.data.success);
             
         }
@@ -65,7 +66,8 @@ export default AnalysisResult;
 
 const ResultContainer = styled.div`
     position: relative;
-    top: 4rem;
+    top: 3.5rem;
+    margin-bottom: 5rem;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -98,7 +100,7 @@ const RecommendationText = styled.div`
     background-color: #FFFF;
     border-radius: 20px;
     padding: 12px;
-    animation:slide-top .5s cubic-bezier(.25,.46,.45,.94) both;
+    animation:slide-top 1s cubic-bezier(.25,.46,.45,.94) both;
 
     @keyframes slide-top {
         0% {
