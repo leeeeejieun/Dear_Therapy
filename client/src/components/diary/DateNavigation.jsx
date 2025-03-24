@@ -23,7 +23,7 @@ const DateNavigationContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 20px;
+  margin: 30px;
 `;
 
 const MenuIcon = styled.button`

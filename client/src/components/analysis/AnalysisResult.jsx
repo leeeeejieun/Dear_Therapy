@@ -93,7 +93,7 @@ const TextContainer = styled.div`
 const RecommendationText = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
     height: 7rem;
     background-color: #FFFF;
     border-radius: 20px;

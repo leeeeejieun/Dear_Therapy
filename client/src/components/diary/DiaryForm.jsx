@@ -30,7 +30,7 @@ const DiaryFormContainer = styled.div`
   background-color: #FFFF;
   outline: 2px dashed #ccc;
   border-radius: 10px;
-  margin: 20px 20px;
+  margin: 25px 20px;
 `;
 
 const TitleInput = styled.input`

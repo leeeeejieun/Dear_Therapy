@@ -1,9 +1,14 @@
 const db = require("../config/db");
-const { emotion } = require("../controllers/analysisCtrl");
-
 
 class AnalysisStorage {
     
+    // 일기 정보 가져오기
+    static async findDiary(user_id, date) {
+        const query = "SELECT diary_id, content FROM Diary WHERE user_id = ? AND created_date = ?";
+        const result = await db.connection(query, [user_id, date]);
+        return result; 
+    }
+
     // 감정 분석 결과 저장(감정 종류&점수)
     static async insertEmotion(userInfo){
         const {user_id, diary_id, emotion, score, date} = userInfo
@@ -26,7 +31,6 @@ class AnalysisStorage {
     static async getRecommend(userInfo){
         const {user_id, date} = userInfo;
 
-        
         const query = `SELECT comment, image, text
                       FROM Recommendation
                       WHERE (user_id, diary_id) IN ( SELECT user_id, diary_id
