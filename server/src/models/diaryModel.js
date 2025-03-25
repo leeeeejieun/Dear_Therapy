@@ -44,7 +44,7 @@ class Diary {
     // 일기 저장이 완료되면 감정 분석 수행
     const anal = new Analysis({"user_id": user_id, "date" : date });
     await anal.analysis();
-    
+
     return { code: 201 };
   }
   
@@ -118,7 +118,7 @@ class Diary {
       // 일기 수정이 완료되면 감정 분석 수행
       const anal = new Analysis({"user_id": user_id, "date" : date });
       await anal.analysis();
-  
+      
       return { code: 201 };
     }
 

@@ -1,5 +1,7 @@
 const analysisStorage = require("./analysisStorage");
+const calculateEMAScore = require("../utils/scoreUtils");
 const requestAnalysis = require("../utils/analysisUtils");
+
 
 class Analysis {
 
@@ -45,12 +47,18 @@ class Analysis {
         const response = await requestAnalysis(diaryContent.content);  
         const {sentiment, comment,text, image} = response;          
         const [emotion, score] = sentiment.split(",");  // 감정 분류와 점수 분리
+
+        // 감정 점수 재계산
+        const recentInfo = await analysisStorage.dateDiff(user_id, date);
+        const updateScore = await calculateEMAScore(recentInfo, {todayEmotion: emotion, todayScore: score});
+
         userInfo.diary_id = diaryContent.diary_id;
         userInfo.comment = comment;
         userInfo.emotion = emotion;
-        userInfo.score = score;
+        userInfo.score = updateScore;
         userInfo.image = image;
         userInfo.text = text;
+      
       
         // 감정 분류 및 점수 결과 저장
         await analysisStorage.insertEmotion(userInfo);

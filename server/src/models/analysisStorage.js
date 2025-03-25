@@ -66,5 +66,22 @@ class AnalysisStorage {
         const response = await db.connection(query, [user_id, date]);
         return response;
     }
+
+    // 최근 과거 날짜 감정 점수 반환 및 주어진 날짜와의 간격 계산
+    static async dateDiff (user_id, date) {
+        const query = `SELECT 
+                    ea.score AS recent_score,
+                    CASE
+                        WHEN ea.date IS NOT NULL THEN datediff(?, ea.date)
+                        ELSE 0
+                    END 'day_diff'
+                    FROM EmotionAnalysis ea
+                    WHERE
+                        ea.user_id = ? AND
+                        ea.date = (SELECT max(date) FROM EmotionAnalysis WHERE user_id = ? AND date < ?)`;
+        const result = await db.connection(query, [date, user_id, user_id, date]);
+
+        return result;
+  }
 }
 module.exports = AnalysisStorage;
