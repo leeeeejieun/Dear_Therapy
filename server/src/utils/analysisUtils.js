@@ -85,6 +85,7 @@ const recommendation = async(diaryContent, sentiment) =>{
 
       
   const requestAnalysis = async (diaryContent) => {
+  
   // 비동기 작업을 병렬로 처리
   const [sentiment, comment] = await Promise.all([createSentiment(diaryContent), createComment(diaryContent)]);
   const{ text, image }  = await recommendation(diaryContent, sentiment);

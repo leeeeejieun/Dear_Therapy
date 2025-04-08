@@ -83,5 +83,18 @@ class AnalysisStorage {
 
         return result;
   }
+
+    // 주어진 날짜를 기준으로, 같은 달에 작성된 과거 일기 정보(내용, 감정 종류) 반환
+    static async getPastDiaries (date) {
+        const query = `SELECT d.content, e.emotion
+                       FROM Diary d
+                       JOIN EmotionAnalysis e ON d.created_date = e.date 
+                       WHERE date_format(created_date, '%Y-%m') = date_format(?, '%Y-%m')
+                       AND created_date < ?
+                       ORDER BY created_date;`
+        const result = await db.connection(query, [date, date]);
+       
+        return result;
+    }
 }
 module.exports = AnalysisStorage;

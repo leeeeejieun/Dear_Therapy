@@ -1,9 +1,27 @@
-// 가중치 계산
-const calculateWeight = (dayDiff) => {  
+const axios = require("axios");
+
+// 시간 간격에 따른 가중치 반환
+const calculateTimeWeight = (dayDiff) => {  
    if(dayDiff <= 0 || dayDiff > 31) return 0;  
    if(dayDiff <= 3) return 0.3;    
    if(dayDiff <= 7) return 0.2;    
    if(dayDiff <= 31) return 0.1;   
+};
+
+// 키워드 일치 점수 계산
+const calculateKeywordMatch = async (today, past) => {
+    if(!past) return 0;
+    
+    try {
+        const result = await axios.post("http://127.0.0.1:5000/analyze", {
+            today: today, 
+            past: past
+        });
+        return result.data.matchScore;
+    } catch(err) {
+        console.log(err)
+        return 0;   
+    }
 };
 
 // 감정 종류에 맞는 점수 범위 설정
@@ -26,16 +44,19 @@ const scoreRange = (emotion, score) => {
 
 
 
-// 시간에 따른 가중치 적용
-const calculateEMAScore = (recentInfo, todayInfo) => {
-   const recentScore = recentInfo.recent_score;
-   const dayDiff = recentInfo.day_diff
-   const { todayEmotion, todayScore } =  todayInfo;
+// 키워드 일치율 및 시간에 따른 가중치를 적용한 감정 점수 추산
+const calculateScore = async (pastInfo, todayInfo) => {
+   const { recentScore, dayDiff, pastDiaries } = pastInfo
+   const { todayEmotion, todayScore, todayDiary } =  todayInfo;
+
+   const weight = calculateTimeWeight(dayDiff);
+   const emaScore = weight * recentScore + (1 - weight) * todayScore;  
+   const keywordMatchScore = await calculateKeywordMatch({"content": todayDiary, "emotion": todayEmotion}, pastDiaries); 
    
-   const weight = calculateWeight(dayDiff);
-   const updateScore = scoreRange(todayEmotion, Math.round(weight * recentScore + (1 - weight) * todayScore));
+   // 최종 점수 계산
+   const updateScore = scoreRange(todayEmotion, Math.round(emaScore + keywordMatchScore))
    
    return updateScore;   
 }
 
-module.exports = calculateEMAScore;
+module.exports = calculateScore;

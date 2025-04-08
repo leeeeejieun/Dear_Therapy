@@ -1,5 +1,5 @@
 const analysisStorage = require("./analysisStorage");
-const calculateEMAScore = require("../utils/scoreUtils");
+const calculateScore = require("../utils/scoreUtils")
 const requestAnalysis = require("../utils/analysisUtils");
 
 
@@ -45,24 +45,50 @@ class Analysis {
        
         // 감정 분석 요청
         const response = await requestAnalysis(diaryContent.content);  
-        const {sentiment, comment,text, image} = response;          
+        const {sentiment, comment, text, image} = response;          
         const [emotion, score] = sentiment.split(",");  // 감정 분류와 점수 분리
-
-        // 감정 점수 재계산
+        console.log(score)
+        
+        // 최근 과거 일기의 감정 점수 반환 및 현재 날짜와의 간격 계산
         const recentInfo = await analysisStorage.dateDiff(user_id, date);
-        const updateScore = await calculateEMAScore(recentInfo, {todayEmotion: emotion, todayScore: score});
 
+        let finalScore  = score;
+
+        if(recentInfo) {
+            const todayInfo = {
+                todayEmotion: emotion,
+                todayScore: score,
+                todayDiary: diaryContent.content
+            };
+
+            // 현재 날짜를 기준으로, 같은 달에 작성된 과거 일기들을 불러오기
+            const pastDiaries = await analysisStorage.getPastDiaries(date);
+            
+            // 배열로 변환
+            const pastDiariesArray = Array.isArray(pastDiaries) ? pastDiaries : [{"content": pastDiaries.content, "emotion": pastDiaries.emotion}];
+            
+            const pastInfo = {
+                recentScore: recentInfo.recent_score,
+                dayDiff: recentInfo.day_diff,
+                pastDiaries: pastDiariesArray
+            }
+
+            // 감정 점수 재계산
+            const updateScore = await calculateScore(pastInfo, todayInfo);
+            
+            finalScore = updateScore;
+        }
+        
         userInfo.diary_id = diaryContent.diary_id;
         userInfo.comment = comment;
-        userInfo.emotion = emotion;
-        userInfo.score = updateScore;
+        userInfo.emotion = emotion
+        userInfo.score = finalScore,
         userInfo.image = image;
         userInfo.text = text;
-      
-      
+        
         // 감정 분류 및 점수 결과 저장
         await analysisStorage.insertEmotion(userInfo);
-
+        
         // 코멘트 저장
         await analysisStorage.insertRecommend(userInfo)
 
@@ -70,7 +96,6 @@ class Analysis {
     }
 
     async recommend() {
-        console.log(this.body)
         const userInfo =  this.body;
         const {user_id, date} = userInfo;
         
