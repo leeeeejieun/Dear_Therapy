@@ -1,7 +1,7 @@
 const analysisStorage = require("./analysisStorage");
 const calculateScore = require("../utils/scoreUtils")
 const requestAnalysis = require("../utils/analysisUtils");
-
+const getEmotionFeedBack = require("../utils/emotionUtils");
 
 class Analysis {
 
@@ -47,7 +47,6 @@ class Analysis {
         const response = await requestAnalysis(diaryContent.content);  
         const {sentiment, comment, text, image} = response;          
         const [emotion, score] = sentiment.split(",");  // 감정 분류와 점수 분리
-        console.log(score)
         
         // 최근 과거 일기의 감정 점수 반환 및 현재 날짜와의 간격 계산
         const recentInfo = await analysisStorage.dateDiff(user_id, date);
@@ -62,7 +61,7 @@ class Analysis {
             };
 
             // 현재 날짜를 기준으로, 같은 달에 작성된 과거 일기들을 불러오기
-            const pastDiaries = await analysisStorage.getPastDiaries(date);
+            const pastDiaries = await analysisStorage.getPastDiaries(user_id, date);
             
             // 배열로 변환
             const pastDiariesArray = Array.isArray(pastDiaries) ? pastDiaries : [{"content": pastDiaries.content, "emotion": pastDiaries.emotion}];
@@ -109,11 +108,19 @@ class Analysis {
             return {code: 404, message: "해당 일기는 감정 분석이 수행되지 않았습니다."}
         }
 
+        const emotion = await analysisStorage.getEmotionResult(user_id, date);
+        
+        const emotionFeedBack = getEmotionFeedBack(emotion);
+       
+
         return { code: 200,
                  data: {
                     comment: recommend.comment,
                     image: recommend.image,
-                    text: recommend.text
+                    text: recommend.text,
+                    emotion: emotion.emotion,
+                    score: emotion.score,
+                    feedback: emotionFeedBack,
                 }}; 
     }
 

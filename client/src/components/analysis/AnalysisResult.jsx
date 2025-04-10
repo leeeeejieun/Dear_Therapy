@@ -21,7 +21,6 @@ const AnalysisResult = ({date}) => {
                 }
             );
         if(response.status === 200) {
-            console.log(response.data.success)
             setAnalysisData(response.data.success);
             
         }
@@ -30,7 +29,7 @@ const AnalysisResult = ({date}) => {
         }
     }
 
-    const { comment, text, image } = analysisData;
+    const { comment, text, image, emotion, score, feedback } = analysisData;
     const description = text ? text.split(":")[1] : "";
     
     return(
@@ -40,22 +39,26 @@ const AnalysisResult = ({date}) => {
             </ImageContainer>
             <TextContainer>
                 <RecommendationText>
+                    <Title>
+                        <h1>오늘의 감정 상태</h1>
+                        <p>📝</p>
+                    </Title>
+                    <Description style={{padding:"5px 0"}}>{`${emotion}, ${score}점`}</Description>
+                    <Description>{feedback}</Description>
+                </RecommendationText>
+                <RecommendationText>
                     <Title> 
                         <h1>오늘의 추천 정보</h1>
                         <p>✨</p>
                     </Title>
-                    <Description>
-                       {description}
-                    </Description>
+                    <Description>{description}</Description>
                 </RecommendationText>
                 <RecommendationText style={{ animationDelay: "0.5s" }}>
                     <Title>
                         <h1>오늘의 코멘트</h1>
                         <p>🍀</p>
                     </Title>
-                    <Description>
-                       {comment}
-                    </Description>
+                    <Description>{comment}</Description>
                 </RecommendationText>
             </TextContainer>
        </ResultContainer>
@@ -96,7 +99,7 @@ const RecommendationText = styled.div`
     display: flex;
     flex-direction: column;
     gap: 6px;
-    height: 7rem;
+    height: 7.5rem;
     background-color: #FFFF;
     border-radius: 20px;
     padding: 12px;
@@ -125,10 +128,10 @@ const Title = styled.div`
     }
     > p {
         font-size: 15px;
+        transform: translateY(5%);
     }
 `
 
 const Description = styled.p`
     font-size: 15px;
-   
 `

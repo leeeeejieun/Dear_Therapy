@@ -2,10 +2,10 @@ const axios = require("axios");
 
 // 시간 간격에 따른 가중치 반환
 const calculateTimeWeight = (dayDiff) => {  
-   if(dayDiff <= 0 || dayDiff > 31) return 0;  
-   if(dayDiff <= 3) return 0.3;    
-   if(dayDiff <= 7) return 0.2;    
-   if(dayDiff <= 31) return 0.1;   
+   if(dayDiff <= 0 || dayDiff > 31) return 0;  // 과거 0% 현재 100% 반영
+   if(dayDiff <= 3) return 0.3;    // 과거 30% 현재 70% 반영
+   if(dayDiff <= 7) return 0.2;    // 과거 20% 현재 80% 반영
+   if(dayDiff <= 31) return 0.1;   // 과거 10% 현재 90% 반영
 };
 
 // 키워드 일치 점수 계산

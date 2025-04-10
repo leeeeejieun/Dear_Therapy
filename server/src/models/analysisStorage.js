@@ -85,14 +85,28 @@ class AnalysisStorage {
   }
 
     // 주어진 날짜를 기준으로, 같은 달에 작성된 과거 일기 정보(내용, 감정 종류) 반환
-    static async getPastDiaries (date) {
+    static async getPastDiaries (user_id, date) {
         const query = `SELECT d.content, e.emotion
                        FROM Diary d
                        JOIN EmotionAnalysis e ON d.created_date = e.date 
                        WHERE date_format(created_date, '%Y-%m') = date_format(?, '%Y-%m')
                        AND created_date < ?
+                       AND d.user_id = ?
                        ORDER BY created_date;`
-        const result = await db.connection(query, [date, date]);
+        const result = await db.connection(query, [date, date, user_id]);
+       
+        return result;
+    }
+
+    // 주어진 날짜의 감정 분석 결과 및 최근 과거 날짜의 감정 점수 제공
+    static async getEmotionResult (user_id, date) {
+        const query = `SELECT emotion, score,
+                       (SELECT score FROM EmotionAnalysis WHERE user_id = ? and date < ?  order by date desc limit 1) as recent_score
+                       FROM EmotionAnalysis
+                       WHERE (user_id, diary_id) IN ( SELECT user_id, diary_id
+								FROM Diary
+								WHERE user_id = ? AND created_date = ?);`
+        const result = await db.connection(query, [user_id, date, user_id, date])
        
         return result;
     }
