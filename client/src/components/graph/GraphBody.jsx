@@ -26,12 +26,13 @@ const GraphBody = ({currentDate}) => {
   const monthData = months.map((month) => {
       const found = scores.find(score => score.month === parseInt(month));
       if(found) {
-        return {name: month, score: parseFloat(found.score)};
+        return {name: month, "평균 점수": parseFloat(found.score), "주요 감정": found.emotion};
       }
       else {
-        return {name: month, score: 0};
+        return {name: month, "평균 점수": 0};
       }
   });
+  console.log(monthData)
   
   return (
     <GraphContainer>
@@ -55,7 +56,14 @@ const GraphBody = ({currentDate}) => {
             />
             <Line 
               type="monotone" 
-              dataKey="score" 
+              dataKey="평균 점수" 
+              stroke="#696666" 
+              dot={{ r: 3 }} 
+              activeDot={{ r: 5 }}
+              />
+             <Line 
+              type="monotone" 
+              dataKey="주요 감정" 
               stroke="#696666" 
               dot={{ r: 3 }} 
               activeDot={{ r: 5 }}

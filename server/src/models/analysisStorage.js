@@ -55,7 +55,7 @@ class AnalysisStorage {
         return response;
     }
 
-    // 월별 감정 점수 통계 제공
+    // 월별 평균 감정 점수 통계 제공
     static async getScore(userInfo) {
         const {user_id, date} =  userInfo;
         const query =  `SELECT month(date) month, truncate(AVG(score),1) score
@@ -66,6 +66,26 @@ class AnalysisStorage {
         const response = await db.connection(query, [user_id, date]);
         return response;
     }
+
+    // 월별 주요 감정 제공
+    static async getMonthEmotion(userInfo) {
+        const {user_id, date} =  userInfo;
+        const query = `SELECT emotion, month
+                       FROM (SELECT 
+                                emotion,
+                                month(date) as month,
+                                count(*) as frequency,
+                                rank() over(partition by month(date) order by count(*) desc) as rnk
+                             FROM EmotionAnalysis
+                             WHERE user_id = ?
+                             AND year(date) = year(?)
+                             GROUP BY emotion, month(date)) as ranked
+                             WHERE rnk = 1`;
+        const result = await db.connection(query, [user_id, date]);
+        
+        return result;  
+    }
+   
 
     // 최근 과거 날짜 감정 점수 반환 및 주어진 날짜와의 간격 계산
     static async dateDiff (user_id, date) {
