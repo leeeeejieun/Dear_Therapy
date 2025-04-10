@@ -8,17 +8,17 @@ import BottomNavigation from "components/common/BottomNavigation";
 import Modal from "components/common/Modal";
 import useModal from "hooks/useModal";
 import Loading from "components/common/Loading";
+import Analysis from "components/analysis/Analysis";
 import styled from "styled-components";
 import { postDiary, getView, putEdit, deleteDiary } from "api/diary";
-import { postAnalysis } from "api/analysis";
 import UserContext from "contexts/UserContext";
 
 const DiaryPage = () => {
 
   const [currentDate, setCurrentDate] = useState('');
   const [diaryContent, setDiaryContent] = useState({ title: '', content: '' });
+  const [isSaved, setIsSaved] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
-  const [isSaved, setIsSaved] = useState(false);
   const [isMenu, setIsMenu] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -53,12 +53,15 @@ const DiaryPage = () => {
         diaryData.append('content', diaryContent.content);
         diaryData.append('image', selectedImage);
 
+        setLoading(true);
+      
         const response = await postDiary(diaryData);
     
         if (response.status === 201) {
           setIsSaved(true);
-          setIsEditing(false);
+          setLoading(false);
         }
+        
       } catch (error) {
         console.log(error.response.data.error);
       }
@@ -70,20 +73,25 @@ const DiaryPage = () => {
       setIsEditing(true);
     };
   
-    // 수정 확인 버튼 클릭 핸들러
+    // 수정 완료 버튼 클릭 핸들러
     const handleConfirmEdit = async () => {
+  
       try {
         const diaryData = new FormData();
         diaryData.append('title', diaryContent.title);
         diaryData.append('content', diaryContent.content);
         diaryData.append('image', selectedImage);
         const userInfo = {user_id: user, date: currentDate}
+        
+        setLoading(true);
+
         const response = await putEdit(diaryData, userInfo);
         
         if (response.status === 201) {
           setIsMenu(false);
           setIsEditing(false);
           setIsSaved(true);
+          setLoading(false);
         }
       } catch (error) {
         console.log(error.response.data.error);
@@ -110,11 +118,12 @@ const DiaryPage = () => {
           setIsSaved(true);
         }
       } catch (error) {
+        setIsSaved(false);
         console.log(error.response.data.error);
       }
     };
 
-    // 일기삭제 함수
+    // 일기 삭제 함수
     const handleDelete = async () => {
       try {
         const response = await deleteDiary(
@@ -130,27 +139,8 @@ const DiaryPage = () => {
       } catch (error) {
         console.log(error.response.data.error);
       }
-    };
+  };
 
-    // 감정 분석 요청 함수
-    const handleEmotionAnalysis = async () => {
-      try {
-        setLoading(true);
-
-        const response = await postAnalysis(
-          {
-            user_id: user,
-            date: currentDate,
-          }
-        );
-        if (response.status === 201) {
-            navigate(`/analysis?date=${currentDate}`); // 쿼리 파라미터로 날짜 전달
-        };
-      } catch (error) {
-        console.log(error.response.data.error);
-      }
-    };
- 
   return (
     <>
       <DiaryPageContainer>
@@ -172,6 +162,7 @@ const DiaryPage = () => {
               diaryContent={diaryContent} 
               setDiaryContent={setDiaryContent} 
               isEditing={!isSaved}
+              isSaved={isSaved}
             />
             <SaveButton 
               handleSave={handleSave} 
@@ -179,13 +170,13 @@ const DiaryPage = () => {
               handleEdit={handleEdit} 
               handleConfirmEdit={handleConfirmEdit} 
               handleDelete={handleDelete} 
-              handleEmotionAnalysis={handleEmotionAnalysis}
               isEditing={isEditing} 
               isMenu={isMenu} 
               openModal={openModal}
             />
         </DiaryContainer>
-      <BottomNavigation />
+        {isSaved && !isMenu && !isEditing && <Analysis date={currentDate} />}
+        <BottomNavigation />
       </DiaryPageContainer>
       {modal && <Modal content={"정말 일기를 삭제하시겠습니까?"} closeModal={closeModal} onConfirm={handleDelete}/> }
     </>
@@ -203,3 +194,4 @@ const DiaryPageContainer = styled.div`
     flex-direction: column;
     height: 100vh;
 `
+

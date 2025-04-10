@@ -32,7 +32,8 @@ const LoginForm = () => {
     return(
         <FormContainer onSubmit={handleSubmit}>
             <InputContainer>
-                <Label htmlFor="user_id">ID:
+                <LabelContainer>
+                    <Label htmlFor="user_id">ID:</Label>
                     <Input 
                         id="user_id"
                         type="text"
@@ -41,8 +42,9 @@ const LoginForm = () => {
                         setState={setUserData}
                         setError={setError}
                     />
-                </Label>
-                <Label htmlFor="password">PW:
+                </LabelContainer>
+                <LabelContainer>
+                    <Label htmlFor="password">PW:</Label>
                     <Input 
                         id="password"
                         type="password"
@@ -51,8 +53,8 @@ const LoginForm = () => {
                         setState={setUserData}
                         setError={setError}
                     />
-                </Label>
-                <ErrorMessage message={error}/>
+                    <ErrorMessage message={error}/>
+                </LabelContainer>
             </InputContainer>
             <Button buttonType="login" text="로그인"/>
         </FormContainer>
@@ -77,18 +79,18 @@ const InputContainer = styled.div`
     display: flex;
     flex-direction: column;
     margin-top: 2.5rem;
-    width: 85%;
+    width: 90%;
     height: 150px;
-    gap: 20px;
+    gap: 30px;
+`
+const LabelContainer = styled.label`
+    display: flex;
+    align-items: center;
+    width: 100%;
 `
 
 const Label = styled.label`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width: 100%;
+    width: 60px;
     font-size: 20px;
-    gap: 20px;
-   
 `
 

@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, useRef } from "react";
+import { useState, useEffect, useContext } from "react";
 import { getAnalysis  } from "api/analysis";
 import UserContext from "contexts/UserContext";
 import styled from "styled-components";
@@ -29,7 +29,7 @@ const AnalysisResult = ({date}) => {
         }
     }
 
-    const { comment, text, image } = analysisData;
+    const { comment, text, image, emotion, score, feedback } = analysisData;
     const description = text ? text.split(":")[1] : "";
     
     return(
@@ -39,22 +39,26 @@ const AnalysisResult = ({date}) => {
             </ImageContainer>
             <TextContainer>
                 <RecommendationText>
+                    <Title>
+                        <h1>오늘의 감정 상태</h1>
+                        <p>📝</p>
+                    </Title>
+                    <Description style={{padding:"5px 0"}}>{`${emotion}, ${score}점`}</Description>
+                    <Description>{feedback}</Description>
+                </RecommendationText>
+                <RecommendationText>
                     <Title> 
                         <h1>오늘의 추천 정보</h1>
                         <p>✨</p>
                     </Title>
-                    <Description>
-                       {description}
-                    </Description>
+                    <Description>{description}</Description>
                 </RecommendationText>
                 <RecommendationText style={{ animationDelay: "0.5s" }}>
                     <Title>
                         <h1>오늘의 코멘트</h1>
                         <p>🍀</p>
                     </Title>
-                    <Description>
-                       {comment}
-                    </Description>
+                    <Description>{comment}</Description>
                 </RecommendationText>
             </TextContainer>
        </ResultContainer>
@@ -65,7 +69,8 @@ export default AnalysisResult;
 
 const ResultContainer = styled.div`
     position: relative;
-    top: 4rem;
+    top: 3.5rem;
+    margin-bottom: 5rem;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -93,12 +98,12 @@ const TextContainer = styled.div`
 const RecommendationText = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    height: 7rem;
+    gap: 6px;
+    height: 7.5rem;
     background-color: #FFFF;
     border-radius: 20px;
     padding: 12px;
-    animation:slide-top .5s cubic-bezier(.25,.46,.45,.94) both;
+    animation:slide-top 1s cubic-bezier(.25,.46,.45,.94) both;
 
     @keyframes slide-top {
         0% {
@@ -123,10 +128,10 @@ const Title = styled.div`
     }
     > p {
         font-size: 15px;
+        transform: translateY(5%);
     }
 `
 
 const Description = styled.p`
     font-size: 15px;
-   
 `

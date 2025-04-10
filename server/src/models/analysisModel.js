@@ -1,7 +1,7 @@
 const analysisStorage = require("./analysisStorage");
-const diaryStorage = require("../models/diaryStorage");
+const calculateScore = require("../utils/scoreUtils")
 const requestAnalysis = require("../utils/analysisUtils");
-const AnalysisStorage = require("./analysisStorage");
+const getEmotionFeedBack = require("../utils/emotionUtils");
 
 class Analysis {
 
@@ -40,32 +40,54 @@ class Analysis {
     async analysis() {
         const { user_id, date} =  this.body;
         const userInfo =  this.body;
-
-        if (!user_id || !date || !this.isValidDate(date)){
-            return {code: 400, message: "잘못된 형태의 데이터 입니다."};
-        }
-
-        const diaryContent = await diaryStorage.findDate(user_id, date);
+        
+        const diaryContent = await analysisStorage.findDiary(user_id, date);
        
-        if(!diaryContent) {
-            return { code: 404, message: "해당 날짜의 일기가 존재하지 않습니다." }; 
-        }
-
         // 감정 분석 요청
         const response = await requestAnalysis(diaryContent.content);  
-        const {sentiment, comment,text, image} = response;          
+        const {sentiment, comment, text, image} = response;          
         const [emotion, score] = sentiment.split(",");  // 감정 분류와 점수 분리
+        
+        // 최근 과거 일기의 감정 점수 반환 및 현재 날짜와의 간격 계산
+        const recentInfo = await analysisStorage.dateDiff(user_id, date);
+
+        let finalScore  = score;
+
+        if(recentInfo) {
+            const todayInfo = {
+                todayEmotion: emotion,
+                todayScore: score,
+                todayDiary: diaryContent.content
+            };
+
+            // 현재 날짜를 기준으로, 같은 달에 작성된 과거 일기들을 불러오기
+            const pastDiaries = await analysisStorage.getPastDiaries(user_id, date);
+            
+            // 배열로 변환
+            const pastDiariesArray = Array.isArray(pastDiaries) ? pastDiaries : [{"content": pastDiaries.content, "emotion": pastDiaries.emotion}];
+            
+            const pastInfo = {
+                recentScore: recentInfo.recent_score,
+                dayDiff: recentInfo.day_diff,
+                pastDiaries: pastDiariesArray
+            }
+
+            // 감정 점수 재계산
+            const updateScore = await calculateScore(pastInfo, todayInfo);
+            
+            finalScore = updateScore;
+        }
+        
         userInfo.diary_id = diaryContent.diary_id;
         userInfo.comment = comment;
-        userInfo.emotion = emotion;
-        userInfo.score = score;
+        userInfo.emotion = emotion
+        userInfo.score = finalScore,
         userInfo.image = image;
         userInfo.text = text;
-      
-    
+        
         // 감정 분류 및 점수 결과 저장
         await analysisStorage.insertEmotion(userInfo);
-
+        
         // 코멘트 저장
         await analysisStorage.insertRecommend(userInfo)
 
@@ -75,27 +97,32 @@ class Analysis {
     async recommend() {
         const userInfo =  this.body;
         const {user_id, date} = userInfo;
-
+        
         if (!user_id || !date || !this.isValidDate(date)){
             return {code: 400, message: "잘못된 형태의 데이터 입니다."};
         }
      
-    
         const recommend = await analysisStorage.getRecommend(userInfo);
         
         if(!recommend ) {
             return {code: 404, message: "해당 일기는 감정 분석이 수행되지 않았습니다."}
         }
 
-        return {code: 200,
-                data: {
+        const emotion = await analysisStorage.getEmotionResult(user_id, date);
+        
+        const emotionFeedBack = getEmotionFeedBack(emotion);
+       
+
+        return { code: 200,
+                 data: {
                     comment: recommend.comment,
                     image: recommend.image,
-                    text: recommend.text
-
-                }};
-                
-                }
+                    text: recommend.text,
+                    emotion: emotion.emotion,
+                    score: emotion.score,
+                    feedback: emotionFeedBack,
+                }}; 
+    }
 
     async emotion() {
         const userInfo =  this.body;
@@ -105,7 +132,7 @@ class Analysis {
             return {code: 400, message: "잘못된 형태의 데이터 입니다."};
         }
 
-        const emotion = await AnalysisStorage.getEmotion(userInfo);
+        const emotion = await analysisStorage.getEmotion(userInfo);
 
         if(!emotion) {
             return {code: 404, message: "해당 월에 분석된 일기가 없습니다."}
@@ -124,7 +151,7 @@ class Analysis {
             return {code: 400, message: "잘못된 형태의 데이터 입니다."};
         }
 
-        const score = await AnalysisStorage.getScore(userInfo);
+        const score = await analysisStorage.getScore(userInfo);
 
         if(!score) {
             return {code: 404, message: "해당 연도에 분석된 일기가 없습니다."}
@@ -132,6 +159,6 @@ class Analysis {
 
         return {code: 200, data: Array.isArray(score) ? score : [score]}
     }
- }
+}
 
 module.exports = Analysis;

@@ -1,28 +1,30 @@
-const s3Utils = require('../utils/s3Utils');
-const diaryStorage = require('../models/diaryStorage');
+const s3Utils = require("../utils/s3Utils");
+const diaryStorage = require("./diaryStorage");
+const Analysis = require("./analysisModel");
 
-class Diary{
+class Diary {
+
   constructor(body, file){
         this.body = body;
         this.file = file; 
    }
 
+  // 날짜 유효성 검사
   isValidDate(dateString) {
     const regex = /^\d{4}-\d{1,2}-\d{1,2}$/; 
     return regex.test(dateString);
   }
     
-
   async create() {
     const { user_id, date, title, content} = this.body;
     const image = this.file;  
-
+    
     // content, title, date가 공백이거나 undifined인 경우
     if (!title || !content || !date) {
      return {code: 400, message: "잘못된 형태의 데이터 입니다."}; 
     }
   
-    //날짜형식이 잘못된 경우
+    //날짜 형식이 잘못된 경우
     if (!this.isValidDate(date)) {
       return { code: 400, message: "잘못된 형태의 데이터 입니다." };
     }
@@ -36,9 +38,13 @@ class Diary{
     const createdAt = date;
     const imagePath = image ? await s3Utils.uploadImage("diary_images", image, user_id, createdAt) : null; 
     const diaryInfo = { user_id, title, content, imagePath, created_date: createdAt  };
- 
-    await diaryStorage.createDiary(diaryInfo); 
     
+    await diaryStorage.createDiary(diaryInfo); 
+
+    // 일기 저장이 완료되면 감정 분석 수행
+    const anal = new Analysis({"user_id": user_id, "date" : date });
+    await anal.analysis();
+
     return { code: 201 };
   }
   
@@ -108,7 +114,11 @@ class Diary{
       
     
       await diaryStorage.updateDiary(user_id, date, updatedDiaryInfo);
-  
+
+      // 일기 수정이 완료되면 감정 분석 수행
+      const anal = new Analysis({"user_id": user_id, "date" : date });
+      await anal.analysis();
+      
       return { code: 201 };
     }
 
@@ -131,10 +141,7 @@ class Diary{
       await diaryStorage.deleteDiary(user_id, date);
       return { code: 200 };
     }
-  
   };
   
   
-
-
   module.exports = Diary;
