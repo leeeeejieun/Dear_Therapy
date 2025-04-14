@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from konlpy.tag import Okt
+from collections import Counter
 
 app = Flask(__name__)
 CORS(app)
@@ -24,6 +25,36 @@ def extract_keywords(text):
 def get_emotion_type(emotion):
     return "positive" if emotion == "행복" else "negative"
 
+# 월별 주요 키워드 추출하는 함수
+def get_monthly_keywords(diaries):
+    monthly_keywords = {}
+
+     # 입력이 단일 딕셔너리일 경우 리스트로 감싸기
+    if isinstance(diaries, dict):
+        diaries = [diaries]
+
+    # 각 월별로 키워드를 추출하여 빈도 계산
+    for diary in diaries:
+        month = diary['month']
+        
+        # 키워드 추출
+        keywords = extract_keywords(diary['content'])
+        
+        # 월별로 키워드 누적
+        if month not in monthly_keywords: 
+            monthly_keywords[month] = []   # 해당 월을 키 값으로 빈 리스트 생성
+        monthly_keywords[month].extend(keywords)  # 키워드 저장
+    
+    # 월별 주요 키워드 추출
+    for month in monthly_keywords:
+        count = Counter(monthly_keywords[month])  # 키워드 빈도수 계산  
+       
+        top_keywords = count.most_common(1)        # 가장 자주 등장한 키워드 1개 반환
+        monthly_keywords[month] = top_keywords[0][0]
+      
+    return monthly_keywords
+
+# 점수 조정을 위해 키워드 일치율 확인하는 엔드포인트
 @app.route("/analyze", methods = ["POST"])
 def analyze_text():
     data = request.get_json()
@@ -53,6 +84,14 @@ def analyze_text():
     
     return jsonify({"matchScore": match_score})
 
+# 월별 주요 키워드 제공 엔드포인트
+@app.route("/month_keywords", methods=["POST"])
+def monthly_keywords():
+    data = request.get_json()
+    diaries = data.get("diaries", [])
+    month_keyword = get_monthly_keywords(diaries)
+    
+    return jsonify({"monthKeyword": month_keyword})
 
 if __name__ == '__main__':
     app.run(debug=True)

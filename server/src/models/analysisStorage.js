@@ -130,5 +130,18 @@ class AnalysisStorage {
        
         return result;
     }
+
+    // 해당 연도 모든 일기 데이터 가져오기
+    static async getYearDiaries (user_id, date) {
+        const query = `SELECT month(created_date) month, content
+                       FROM Diary
+                       WHERE year(created_date) = year(?)
+                       AND user_id = ?
+                       ORDER BY created_date;`
+        const result = await db.connection(query, [date, user_id]);
+
+        return result;
+    }
+    
 }
 module.exports = AnalysisStorage;
