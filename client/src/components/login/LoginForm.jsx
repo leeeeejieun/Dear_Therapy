@@ -53,8 +53,8 @@ const LoginForm = () => {
                         setState={setUserData}
                         setError={setError}
                     />
-                    <ErrorMessage message={error}/>
                 </LabelContainer>
+                <ErrorMessage position={'translate(5%, -80%)'} message={error}/>
             </InputContainer>
             <Button buttonType="login" text="로그인"/>
         </FormContainer>
@@ -81,7 +81,7 @@ const InputContainer = styled.div`
     margin-top: 2.5rem;
     width: 90%;
     height: 150px;
-    gap: 30px;
+    gap: 25px;
 `
 const LabelContainer = styled.label`
     display: flex;
@@ -93,4 +93,3 @@ const Label = styled.label`
     width: 60px;
     font-size: 20px;
 `
-

@@ -2,6 +2,7 @@ const analysisStorage = require("./analysisStorage");
 const calculateScore = require("../utils/scoreUtils")
 const requestAnalysis = require("../utils/analysisUtils");
 const getEmotionFeedBack = require("../utils/emotionUtils");
+const getMonthKeywords = require("../utils/monthKeywordUtils")
 
 class Analysis {
 
@@ -28,11 +29,11 @@ class Analysis {
        let data;
        if(Array.isArray(emotion)) {
          data = emotion.map(emotion => ({
-            "day": emotion.day,
-            "emoji": emojis[emotion.emotion],
+            day : emotion.day,
+            emoji: emojis[emotion.emotion],
         }));
        } else {
-        data = [{"day": emotion.day, "emoji": emojis[emotion.emotion]}]
+        data = [{day: emotion.day, emoji: emojis[emotion.emotion]}]
        }
        return data;
     }
@@ -151,13 +152,29 @@ class Analysis {
             return {code: 400, message: "잘못된 형태의 데이터 입니다."};
         }
 
-        const score = await analysisStorage.getScore(userInfo);
-
+        const score = await analysisStorage.getScore(userInfo);  // 월별 평균 감정 점수 가져오기
+    
         if(!score) {
             return {code: 404, message: "해당 연도에 분석된 일기가 없습니다."}
         }
 
-        return {code: 200, data: Array.isArray(score) ? score : [score]}
+        const monthEmotion = await analysisStorage.getMonthEmotion(userInfo);    // 월별 주요 감정 가져오기
+        const yearDiaries = await analysisStorage.getYearDiaries(user_id, date)  // 해당 연도의 모든 일기 내용 가져오기
+        const monthKeyword = await getMonthKeywords(yearDiaries)  // 월별 주요 키워드 가져오기
+        
+        let data;
+        if(Array.isArray(score)) {
+            data = score.map((score, index) => ({
+                ...score,
+                emotion: monthEmotion[index].emotion,
+                keyword: monthKeyword[score.month]
+            }));
+        }
+        else {
+            data= [{...score, emotion: monthEmotion.emotion, keyword: monthKeyword[score.month]}]
+        }
+        
+        return {code: 200, data: data}
     }
 }
 

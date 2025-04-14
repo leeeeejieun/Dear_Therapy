@@ -24,7 +24,7 @@ const getFirstEmotionMessage = (emotion) => {
 // 점수 변화에 따른 멘트 제공
 const getChangeEmotionMessage =  (changeType) => {
     const messages = {
-        상승: "오늘 기분이 좋아진 것 같네요! 긍정적인 변화가 느껴지네요. 😊",
+        상승: "오늘은 기분이 좋아진 것 같네요! 긍정적인 변화가 느껴져요. 😊",
         유지: "변화가 없네요. 지금의 기분이 유지되고 있는 것 같아요. ☁️",
         하락: "어제보다 감정 점수가 더 낮아졌어요. 힘든 시간이지만, 지나갈 거예요. 🌧️"
     };

@@ -26,10 +26,10 @@ const GraphBody = ({currentDate}) => {
   const monthData = months.map((month) => {
       const found = scores.find(score => score.month === parseInt(month));
       if(found) {
-        return {name: month, score: parseFloat(found.score)};
+        return {name: month, "평균 점수": parseFloat(found.score), "주요 감정": found.emotion || "없음", "주요 키워드": found.keyword};
       }
       else {
-        return {name: month, score: 0};
+        return {name: month, "평균 점수": 0, "주요 키워드": "없음"};
       }
   });
   
@@ -51,11 +51,26 @@ const GraphBody = ({currentDate}) => {
               domain={[0, 6]}   // y축에 표시될 데이터 범위 설정
             />
             <Tooltip 
-              
+              labelStyle={{ marginBottom: "6px", fontSize: "18px"}}     
+              itemStyle={{ padding: "5px 2px"}}     
             />
             <Line 
               type="monotone" 
-              dataKey="score" 
+              dataKey="평균 점수" 
+              stroke="#696666" 
+              dot={{ r: 3 }} 
+              activeDot={{ r: 5 }}
+              />
+             <Line 
+              type="monotone" 
+              dataKey="주요 감정" 
+              stroke="#696666" 
+              dot={{ r: 3 }} 
+              activeDot={{ r: 5 }}
+              />
+              <Line 
+              type="monotone" 
+              dataKey="주요 키워드" 
               stroke="#696666" 
               dot={{ r: 3 }} 
               activeDot={{ r: 5 }}
