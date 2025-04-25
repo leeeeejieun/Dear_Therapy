@@ -48,6 +48,7 @@ const StyledLink = styled(Link)`
 const KaKaoButton = styled.button`
   width: 100%;
   height: 50px;
-  background: url("https://diary-project-images.s3.ap-northeast-2.amazonaws.com/frontend/%EC%B9%B4%EC%B9%B4%EC%98%A4+%EB%A1%9C%EA%B7%B8%EC%9D%B8+%EB%B2%84%ED%8A%BC+%EC%9D%B4%EB%AF%B8%EC%A7%80");
+  background: url("https://diary-project-images.s3.ap-northeast-2.amazonaws.com/frontend/kakao_login_large_wide.png");
   background-repeat: no-repeat;
+  background-size: contain;
 `
