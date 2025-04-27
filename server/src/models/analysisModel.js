@@ -43,30 +43,30 @@ class Analysis {
         const userInfo =  this.body;
         
         const diaryContent = await analysisStorage.findDiary(user_id, date);
-       
+    
         // 감정 분석 요청
         const response = await requestAnalysis(diaryContent.content);  
         const {sentiment, comment, text, image} = response;          
         const [emotion, score] = sentiment.split(",");  // 감정 분류와 점수 분리
-
+        
         // 최근 한 달 이내의 과거 점수 가져오기
         const pastScores = await analysisStorage.dateDiff(user_id, date);
-        
+        const { avg_3_days, avg_3_to_7_days, avg_7_to_31_days } = pastScores;
         let finalScore  = score;
        
-        if(pastScores) {
+        if(avg_3_days || avg_3_to_7_days || avg_7_to_31_days) {
             const todayInfo = {
                 todayEmotion: emotion,
                 todayScore: score,
                 todayDiary: diaryContent.content
             };
-            
+          
             // 현재 날짜를 기준으로, 같은 달에 작성된 과거 일기들을 불러오기
             const pastDiaries = await analysisStorage.getPastDiaries(user_id, date);
-           
+            
             // 배열로 변환
             const pastDiariesArray = Array.isArray(pastDiaries) ? pastDiaries : [{"content": pastDiaries.content, "emotion": pastDiaries.emotion}];
-            
+           
             const pastInfo = {
                 pastScores: pastScores,
                 pastDiaries: pastDiariesArray
