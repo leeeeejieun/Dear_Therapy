@@ -1,12 +1,34 @@
 const axios = require("axios");
 
 // 시간 간격에 따른 가중치 반환
-const calculateTimeWeight = (dayDiff) => {  
-   if(dayDiff <= 0 || dayDiff > 31) return 0;  // 과거 0% 현재 100% 반영
-   if(dayDiff <= 3) return 0.3;    // 과거 30% 현재 70% 반영
-   if(dayDiff <= 7) return 0.2;    // 과거 20% 현재 80% 반영
-   if(dayDiff <= 31) return 0.1;   // 과거 10% 현재 90% 반영
-};
+const calculateTimeWeight = (pastScores, todayScore) => {
+    const { avg_3_days, avg_3_to_7_days, avg_7_to_31_days } = pastScores; 
+    const weightInfo = [
+        { weight: 0.3, avgScore: avg_3_days }, // 3일 이내 
+        { weight: 0.2, avgScore: avg_3_to_7_days }, // 7일 이내
+        { weight: 0.1, avgScore: avg_7_to_31_days } // 한 달 이내
+    ];
+    
+    let weightedScore = 0;  // 각 그룹의 계산 결과 합계 저장   
+    let totalCount = 0;     // 계산 횟수
+    
+    // 각 그룹별에 맞는 가중치 적용하여 점수 산출
+    weightInfo.forEach(({ weight, avgScore }) => {
+        if (avgScore !== null) {
+            weightedScore += weight * avgScore + (1 - weight) * todayScore;
+            totalCount += 1;
+        }
+    });
+    
+    // 한 달 이내의 일기가 존재하지 않는 경우
+    if (totalCount === 0) {
+        weightedScore = todayScore;  
+    } else {
+        weightedScore /= totalCount;
+    }
+    return Math.round(weightedScore * 10) / 10; 
+ };
+ 
 
 // 키워드 일치 점수 계산
 const calculateKeywordMatch = async (today, past) => {
@@ -43,18 +65,18 @@ const scoreRange = (emotion, score) => {
 };
 
 
-
 // 키워드 일치율 및 시간에 따른 가중치를 적용한 감정 점수 추산
 const calculateScore = async (pastInfo, todayInfo) => {
-   const { recentScore, dayDiff, pastDiaries } = pastInfo
+   const { pastScores, pastDiaries } = pastInfo
    const { todayEmotion, todayScore, todayDiary } =  todayInfo;
-
-   const weight = calculateTimeWeight(dayDiff);
-   const emaScore = weight * recentScore + (1 - weight) * todayScore;  
+   
+   // 날짜 간격에 따른 가중치 적용
+   const weightedScore = calculateTimeWeight(pastScores, todayScore);
+   // 키워드 일치율에 따른 점수 조정
    const keywordMatchScore = await calculateKeywordMatch({"content": todayDiary, "emotion": todayEmotion}, pastDiaries); 
    
    // 최종 점수 계산
-   const updateScore = scoreRange(todayEmotion, Math.round(emaScore + keywordMatchScore))
+   const updateScore = scoreRange(todayEmotion, Math.round(weightedScore + keywordMatchScore))
    
    return updateScore;   
 }

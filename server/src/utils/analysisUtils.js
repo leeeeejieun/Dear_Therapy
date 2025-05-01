@@ -90,7 +90,6 @@ const recommendation = async(diaryContent, sentiment) =>{
   const [sentiment, comment] = await Promise.all([createSentiment(diaryContent), createComment(diaryContent)]);
   const{ text, image }  = await recommendation(diaryContent, sentiment);
   return {sentiment: sentiment, comment: comment, text: text, image: image };
-  // return {sentiment: sentiment, comment: comment, text: "테스트 중", image: "테스트 중" };
 };
   
   

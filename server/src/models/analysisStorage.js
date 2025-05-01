@@ -85,22 +85,20 @@ class AnalysisStorage {
         
         return result;  
     }
-   
 
-    // 최근 과거 날짜 감정 점수 반환 및 주어진 날짜와의 간격 계산
+    // 한 달 이내의 과거 감정 점수 평균을 시간 간격별로 반환
     static async dateDiff (user_id, date) {
         const query = `SELECT 
-                    ea.score AS recent_score,
-                    CASE
-                        WHEN ea.date IS NOT NULL THEN datediff(?, ea.date)
-                        ELSE 0
-                    END 'day_diff'
-                    FROM EmotionAnalysis ea
-                    WHERE
+                        ROUND(AVG(CASE WHEN datediff(?, ea.date) <= 3 THEN ea.score END)) AS avg_3_days,
+                        ROUND(AVG(CASE WHEN datediff(?, ea.date) > 3 AND datediff(?, ea.date) <= 7 THEN ea.score END)) AS avg_3_to_7_days,
+                        ROUND(AVG(CASE WHEN datediff(?, ea.date) > 7 AND datediff(?, ea.date) <= 31 THEN ea.score END)) AS avg_7_to_31_days
+                       FROM EmotionAnalysis ea
+                       WHERE
                         ea.user_id = ? AND
-                        ea.date = (SELECT max(date) FROM EmotionAnalysis WHERE user_id = ? AND date < ?)`;
-        const result = await db.connection(query, [date, user_id, user_id, date]);
-
+                        ea.date < ? AND
+                        month(ea.date) = month(?)
+                       ORDER BY ea.date DESC;`;
+        const result = await db.connection(query, [date, date, date, date, date, user_id, date, date]);
         return result;
   }
 
