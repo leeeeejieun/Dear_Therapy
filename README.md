@@ -21,7 +21,7 @@
         <td align="center">팀원</td>
     </tr>
     <tr>
-        <td align="center">백엔드 담당</td>
+        <td align="center">프론트엔드 / 백엔드 담당</td>
         <td align="center">백엔드 담당</td>
         <td align="center">프론트엔드 담당</td>
         <td align="center">프론트엔드 담당</td>
